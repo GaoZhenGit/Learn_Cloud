@@ -8,5 +8,6 @@
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="title_icon_width">18dp</dimen>
     <dimen name="margin_left">5dp</dimen>
-    <dimen name="margin_right">5dp</dimen>
+    <dimen name="margin_right">10dp</dimen>
+    <dimen name="button_height">34dp</dimen>
 </resources>

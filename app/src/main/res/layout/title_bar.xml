@@ -48,12 +48,33 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_large" />
 
-    <ImageView
-        android:layout_width="@dimen/title_icon_width"
-        android:layout_height="@dimen/title_icon_width"
+    <RelativeLayout
+        android:id="@+id/title_right_btn"
+        android:layout_width="55dp"
+        android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_right"
-        android:src="@drawable/icon_menu" />
+        android:background="@drawable/btn_selector_titlecolor_light">
+
+        <ImageView
+            android:id="@+id/title_right_img"
+            android:layout_width="@dimen/title_icon_width"
+            android:layout_height="@dimen/title_icon_width"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_right"
+            android:src="@drawable/icon_menu" />
+
+        <TextView
+            android:id="@+id/title_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_right"
+            android:gravity="center"
+            android:text="右边"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large" />
+    </RelativeLayout>
 
 </RelativeLayout>

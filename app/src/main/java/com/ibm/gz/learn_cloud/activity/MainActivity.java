@@ -3,13 +3,13 @@ package com.ibm.gz.learn_cloud.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Adapter.TabPagerAdapter;
+import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
-import com.ibm.gz.learn_cloud.fragment.PhoneFragmet;
+import com.ibm.gz.learn_cloud.fragment.LoginFragment;
 import com.ibm.gz.learn_cloud.listener.OnTabSelectedListener;
 import com.ibm.gz.learn_cloud.myview.TwoPagerTabWidget;
 
@@ -28,8 +28,8 @@ public class MainActivity extends BasePageActivity {
     protected void initLayoutView() {
         setContentView(R.layout.activity_main);
         fragments=new ArrayList<>();
-        fragments.add(PhoneFragmet.newInstance("1","2"));
-        fragments.add(PhoneFragmet.newInstance("2","1"));
+        fragments.add(LoginFragment.newInstance(Constant.FragmentType.PhoneLogin));
+        fragments.add(LoginFragment.newInstance(Constant.FragmentType.EmailLogin));
     }
 
     @Override
@@ -40,9 +40,11 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.title_mid_text).text("快速注册");
         aq.id(R.id.title_left_img).visible();
         aq.id(R.id.title_left_tv).visible().text("退出");
+        aq.id(R.id.title_right_img).gone();
+        aq.id(R.id.title_right_text).text("登录");
         mTabWidget=(TwoPagerTabWidget)findViewById(R.id.two_tab);
-        mTabWidget.setText_first_tab("邮箱注册");
-        mTabWidget.setText_second_tab("手机注册");
+        mTabWidget.setText_first_tab("手机注册");
+        mTabWidget.setText_second_tab("邮箱注册");
 
         mViewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments));
         mTabWidget.setmViewPager(mViewPager);
@@ -66,6 +68,8 @@ public class MainActivity extends BasePageActivity {
                 }
             }
         });
+        aq.id(R.id.title_left_btn).clicked(this, "aq_back");
+        aq.id(R.id.title_right_btn).clicked(this,"");
     }
 
     public void aq_back(){
