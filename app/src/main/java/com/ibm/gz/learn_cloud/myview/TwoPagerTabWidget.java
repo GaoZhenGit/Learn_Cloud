@@ -41,7 +41,8 @@ public class TwoPagerTabWidget extends PagerTabWidget {
         View tab_second = LayoutInflater.from(mContext).inflate(R.layout.two_tab_content, null);
         new AQuery(tab_first).id(R.id.two_tab_bottom).visibility(View.VISIBLE)
                 .id(R.id.two_tab_text).textColorId(R.color.light_green);
-        new AQuery(tab_second).id(R.id.two_tab_bottom).visibility(View.GONE);
+        new AQuery(tab_second).id(R.id.two_tab_bottom).visibility(View.GONE)
+                .id(R.id.two_tab_text).textColorId(R.color.light_grey);
         addTab(tab_first);
         addTab(tab_second);
         mOnTabSelectedListener = new OnTabSelectedListener() {
@@ -50,7 +51,7 @@ public class TwoPagerTabWidget extends PagerTabWidget {
                 int unselected = (position == 0) ? 1 : 0;
                 new AQuery(tabViews.get(position)).id(R.id.two_tab_bottom).visibility(View.VISIBLE)
                         .id(R.id.two_tab_text).textColorId(R.color.light_green);
-                new AQuery(tabViews.get(unselected)).id(R.id.two_tab_text).textColorId(R.color.white);
+                new AQuery(tabViews.get(unselected)).id(R.id.two_tab_text).textColorId(R.color.light_grey);
 
                 Techniques firstAction = (position == 0) ? Techniques.SlideInRight : Techniques.SlideOutRight;
                 Techniques secondAction = (position == 0) ? Techniques.SlideOutLeft : Techniques.SlideInLeft;

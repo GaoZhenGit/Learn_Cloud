@@ -314,4 +314,5 @@
     <!--洋李色 -->
     <color name="gainsboro">#dcdcdc</color>
     <!--淡灰色 -->
+    <color name="light_grey">#b8b8b8</color>
 </resources>
