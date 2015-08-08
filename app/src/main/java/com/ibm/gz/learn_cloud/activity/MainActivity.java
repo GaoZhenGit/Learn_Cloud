@@ -50,7 +50,7 @@ public class MainActivity extends BasePageActivity {
         mTabWidget.setmViewPager(mViewPager);
 
 
-        //ShowToast("hi");
+        ShowToast("hi");
     }
 
     @Override
