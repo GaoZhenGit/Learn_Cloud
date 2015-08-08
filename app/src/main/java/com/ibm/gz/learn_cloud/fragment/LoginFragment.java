@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 
@@ -22,6 +25,8 @@ import com.ibm.gz.learn_cloud.R;
 public class LoginFragment extends Fragment {
 
     private String LoginType;
+
+    private AQuery aq;
 
     private OnFragmentInteractionListener mListener;
     /*
@@ -38,7 +43,7 @@ public class LoginFragment extends Fragment {
     }
 
     public LoginFragment(){
-
+        aq=new AQuery(getActivity());
     }
 
     @Override
@@ -56,9 +61,11 @@ public class LoginFragment extends Fragment {
         switch (LoginType) {
             case Constant.FragmentType.PhoneLogin:
                 contextView=inflater.inflate(R.layout.fragment_phone, container, false);
+                setPhoneLoginView(contextView);
                 break;
             case Constant.FragmentType.EmailLogin:
                 contextView=inflater.inflate(R.layout.fragment_email, container, false);
+                setEmailLoginView(contextView);
                 break;
         }
 
@@ -75,18 +82,33 @@ public class LoginFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    //手机注册登陆界面设置
+    private void setPhoneLoginView(View contextView){
+        Button button=(Button)contextView.findViewById(R.id.regist_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aq_regist();
+            }
+        });
+    }
+
+
+    //邮箱注册登录页面设置
+    private void setEmailLoginView(View contextView){
+
+    }
+
+    public void aq_regist(){
+        Log.i("--tag--","regist");
     }
 
     /**

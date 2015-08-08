@@ -1,4 +1,4 @@
-﻿package com.ibm.gz.learn_cloud.activity;
+package com.ibm.gz.learn_cloud.activity;
 
 
 import android.support.v4.app.Fragment;
