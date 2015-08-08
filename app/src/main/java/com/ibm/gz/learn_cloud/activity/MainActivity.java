@@ -1,4 +1,4 @@
-package com.ibm.gz.learn_cloud.activity;
+﻿package com.ibm.gz.learn_cloud.activity;
 
 
 import android.support.v4.app.Fragment;
@@ -50,7 +50,7 @@ public class MainActivity extends BasePageActivity {
         mTabWidget.setmViewPager(mViewPager);
 
 
-        ShowToast("hi");
+        //ShowToast("hi");
     }
 
     @Override
