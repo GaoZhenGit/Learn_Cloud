@@ -2,13 +2,16 @@ package com.ibm.gz.learn_cloud.activity;
 
 
 import android.os.Bundle;
-import android.widget.Gallery;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
+import android.view.View;
 
-import com.ibm.gz.learn_cloud.Adapter.ImageGalleryAdapter;
+import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.R;
 
 public class MainActivity extends BasePageActivity {
-    Gallery gallery;
+    private DrawerLayout mDrawerLayout;
+    private AQuery aq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,18 +21,55 @@ public class MainActivity extends BasePageActivity {
     @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_main);
+        aq=new AQuery(this);
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
     }
 
     @Override
     protected void initView() {
-        gallery=(Gallery)findViewById(R.id.main_gallery);
-        gallery.setAdapter(new ImageGalleryAdapter(this));
-
+        aq.id(R.id.title_mid_text).text("");
+        aq.id(R.id.title_right_img).visible().image(R.drawable.search);
+        aq.id(R.id.title_right_text).gone();
     }
 
     @Override
     protected void setListener() {
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                aq.id(R.id.title_mid_text).text("个人中心");
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                aq.id(R.id.title_mid_text).text("");
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int key, KeyEvent event){
+        switch (key) {
+            case KeyEvent.KEYCODE_MENU:
+                break;
+            case KeyEvent.KEYCODE_BACK:
+                finish();
+                break;
+
+            default:
+                break;
+        }
+        return false;
     }
 
 

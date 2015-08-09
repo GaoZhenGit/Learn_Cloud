@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/drawer_layout_offset"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/default_avatar"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="27dp"
+            android:layout_marginStart="27dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户名"
+            android:textSize="@dimen/text_size_large"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_alignTop="@+id/avatar"
+            android:layout_toRightOf="@+id/avatar"
+            android:layout_toEndOf="@+id/avatar"
+            android:id="@+id/textView2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="身份"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_alignBottom="@+id/avatar"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学习时长：2小时"
+            android:layout_marginLeft="-5dp"
+            android:textSize="@dimen/text_size_little"
+            android:layout_below="@+id/avatar"
+            android:layout_toRightOf="@+id/avatar"
+            android:layout_toEndOf="@+id/avatar" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史课程"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏课程"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="科普天地圆"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="兴趣标签"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的消息"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的笔记"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/weixin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
+
+
+</LinearLayout>

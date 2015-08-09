@@ -14,7 +14,7 @@ import com.ibm.gz.learn_cloud.R;
  */
 public class ImageGalleryAdapter extends BaseAdapter {
     private Context context;
-    // ÀïÃæËùÓĞµÄ·½·¨±íÊ¾µÄÊÇ¿ÉÒÔ¸ù¾İÖ¸¶¨µÄÏÔÊ¾Í¼Æ¬µÄÊıÁ¿,½øĞĞÃ¿¸öÍ¼Æ¬µÄ´¦Àí
+    // é‡Œé¢æ‰€æœ‰çš„æ–¹æ³•è¡¨ç¤ºçš„æ˜¯å¯ä»¥æ ¹æ®æŒ‡å®šçš„æ˜¾ç¤ºå›¾ç‰‡çš„æ•°é‡,è¿›è¡Œæ¯ä¸ªå›¾ç‰‡çš„å¤„ç†
     private int[] image = new int[] { R.drawable.qq, R.drawable.weibo,
             R.drawable.weixin };
 
@@ -22,24 +22,24 @@ public class ImageGalleryAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public int getCount() { // È¡µÃÒªÏÔÊ¾ÄÚÈİµÄÊıÁ¿
+    public int getCount() { // å–å¾—è¦æ˜¾ç¤ºå†…å®¹çš„æ•°é‡
         return image.length;
     }
 
-    public Object getItem(int position) { // Ã¿¸ö×ÊÔ´µÄÎ»ÖÃ
+    public Object getItem(int position) { // æ¯ä¸ªèµ„æºçš„ä½ç½®
         return image[position];
     }
 
-    public long getItemId(int position) { // È¡µÃÃ¿¸öÏîµÄID
+    public long getItemId(int position) { // å–å¾—æ¯ä¸ªé¡¹çš„ID
         return image[position];
     }
 
-    // ½«×ÊÔ´ÉèÖÃµ½Ò»¸ö×é¼şÖ®ÖĞ£¬ºÜÃ÷ÏÔÕâ¸ö×é¼şÊÇImageView
+    // å°†èµ„æºè®¾ç½®åˆ°ä¸€ä¸ªç»„ä»¶ä¹‹ä¸­ï¼Œå¾ˆæ˜æ˜¾è¿™ä¸ªç»„ä»¶æ˜¯ImageView
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView iv = new ImageView(context);
         iv.setBackgroundColor(0xFFFFFFFF);
-        iv.setImageResource(image[position]);// ¸øImageViewÉèÖÃ×ÊÔ´
-        iv.setScaleType(ImageView.ScaleType.CENTER);// ÉèÖÃ¶ÔÆë·½Ê½
+        iv.setImageResource(image[position]);// ç»™ImageViewè®¾ç½®èµ„æº
+        iv.setScaleType(ImageView.ScaleType.CENTER);// è®¾ç½®å¯¹é½æ–¹å¼
         iv.setLayoutParams(new Gallery.LayoutParams(120,150));
         return iv;
     }
