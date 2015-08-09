@@ -8,12 +8,13 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"/>
 
-    <android.support.v4.widget.DrawerLayout
+    <com.ibm.gz.learn_cloud.myview.left_drawerlayout
         android:id="@+id/drawer_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <TextView
+        <FrameLayout
+            android:id="@+id/main_framelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -24,6 +25,6 @@
             android:layout_width="@dimen/drawer_layout_offset"
             android:layout_height="fill_parent"
             android:layout_gravity="left" />
-    </android.support.v4.widget.DrawerLayout>
+    </com.ibm.gz.learn_cloud.myview.left_drawerlayout>
 </LinearLayout>
 
