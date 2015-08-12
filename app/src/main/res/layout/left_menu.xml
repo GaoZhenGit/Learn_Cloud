@@ -56,16 +56,19 @@
         android:background="@drawable/btn_selector_drawlayout">
 
         <ImageView
+            android:id="@+id/img_history"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/lesson_gray"/>
 
         <TextView
+            android:id="@+id/text_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="历史课程"
+            android:textColor="@color/grey"
             android:textSize="@dimen/text_size_middle"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -78,17 +81,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_collect"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/collect_gray"/>
 
         <TextView
+            android:id="@+id/text_collect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="收藏课程"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
@@ -100,17 +106,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_popularization"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/popularization_gray"/>
 
         <TextView
+            android:id="@+id/text_popularization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="科普天地圆"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
@@ -122,17 +131,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_interest"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/tag_gray"/>
 
         <TextView
+            android:id="@+id/text_interest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="兴趣标签"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
@@ -144,17 +156,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_message"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/msg_gray"/>
 
         <TextView
+            android:id="@+id/text_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的消息"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
@@ -166,17 +181,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_note"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/note_gray"/>
 
         <TextView
+            android:id="@+id/text_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的笔记"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
@@ -188,17 +206,20 @@
         android:layout_height="@dimen/drawer_btn_height">
 
         <ImageView
+            android:id="@+id/img_setting"
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/weixin"/>
+            android:src="@drawable/setting_gray"/>
 
         <TextView
+            android:id="@+id/text_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置"
             android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/grey"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"/>
