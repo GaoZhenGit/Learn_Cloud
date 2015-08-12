@@ -15,7 +15,7 @@
         android:id="@+id/weixin"
         android:layout_width="@dimen/icon_edge"
         android:layout_height="@dimen/icon_edge"
-        android:src="@drawable/weixin"
+        android:src="@drawable/wechat"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
     <ImageView

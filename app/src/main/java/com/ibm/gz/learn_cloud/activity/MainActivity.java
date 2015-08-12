@@ -74,7 +74,7 @@ public class MainActivity extends BasePageActivity {
         //每个左侧按设置监听器
         aq.id(R.id.btn_history).clicked(this, "aq_history").click();
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
-        aq.id(R.id.title_left_img).clicked(new View.OnClickListener() {
+        aq.id(R.id.title_left_img).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
             public void onClick(View v) {
                 if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
@@ -86,20 +86,8 @@ public class MainActivity extends BasePageActivity {
         });
     }
 
-    //用来取消所有左侧按钮被选中状态
-//    public void recoverLeftButton(){
-//        aq.id(R.id.btn_history).background(R.color.white);
-//        aq.id(R.id.btn_collect_course).background(R.color.white);
-//        aq.id(R.id.btn_popularization).background(R.color.white);
-//        aq.id(R.id.btn_interest).background(R.color.white);
-//        aq.id(R.id.btn_message).background(R.color.white);
-//        aq.id(R.id.btn_my_note).background(R.color.white);
-//        aq.id(R.id.btn_setting).background(R.color.white);
-//    }
-
     //历史课程
     public void aq_history(){
-        ShowToast("history");
         if(historyFragment==null){
             historyFragment=new HistoryFragment();
         }
@@ -110,7 +98,6 @@ public class MainActivity extends BasePageActivity {
     //收藏课程
     public void aq_collect_course(){
         aq.id(R.id.btn_collect_course).background(R.color.light_grey);
-        ShowToast("collect");
         if(collectFragment==null){
             collectFragment=new CollectFragment();
         }

@@ -41,6 +41,6 @@ public class CollectFragment extends Fragment {
         super.onResume();
         aq.id(R.id.btn_collect_course).background(R.color.light_grey);
         aq.id(R.id.img_collect).image(R.drawable.collect_red);
-        aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.red));
+        aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.text_red));
     }
 }
