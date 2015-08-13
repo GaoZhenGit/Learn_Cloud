@@ -51,7 +51,8 @@ public class CourseAdapter extends BaseAdapter {
         aq=new AQuery(contextView);
         Course course=videoList.get(position);
         aq.id(R.id.img_video).image(course.getCourse_img());
-        aq.id(R.id.text_video).text(course.getCourse_name());
+        aq.id(R.id.video_name_tv).text(course.getCourse_name());
+        aq.id(R.id.video_detail_tv).text(course.getDetail());
         return contextView;
     }
 
