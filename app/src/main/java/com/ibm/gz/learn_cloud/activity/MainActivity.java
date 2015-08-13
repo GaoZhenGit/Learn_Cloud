@@ -35,6 +35,11 @@ public class MainActivity extends BasePageActivity {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_main);
         aq=new AQuery(this);
@@ -59,7 +64,6 @@ public class MainActivity extends BasePageActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                aq.id(R.id.title_mid_text).text("个人中心");
             }
 
             @Override

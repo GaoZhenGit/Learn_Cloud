@@ -49,10 +49,39 @@
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/btn_firstpage"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true"
+        android:background="@drawable/btn_selector_drawlayout">
+
+        <ImageView
+            android:id="@+id/img_firstpage"
+            android:layout_width="@dimen/drawer_img_edge"
+            android:layout_height="@dimen/drawer_img_edge"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/drawer_margin_left"
+            android:src="@drawable/lesson_gray"/>
+
+        <TextView
+            android:id="@+id/text_firstpage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"/>
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/btn_history"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true"
         android:background="@drawable/btn_selector_drawlayout">
 
         <ImageView
@@ -78,7 +107,8 @@
     <RelativeLayout
         android:id="@+id/btn_collect_course"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_collect"
@@ -103,7 +133,8 @@
     <RelativeLayout
         android:id="@+id/btn_popularization"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_popularization"
@@ -128,7 +159,8 @@
     <RelativeLayout
         android:id="@+id/btn_interest"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_interest"
@@ -153,7 +185,8 @@
     <RelativeLayout
         android:id="@+id/btn_message"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_message"
@@ -178,7 +211,8 @@
     <RelativeLayout
         android:id="@+id/btn_my_note"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_note"
@@ -203,7 +237,8 @@
     <RelativeLayout
         android:id="@+id/btn_setting"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/drawer_btn_height">
+        android:layout_height="@dimen/drawer_btn_height"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/img_setting"

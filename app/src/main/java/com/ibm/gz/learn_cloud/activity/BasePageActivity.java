@@ -25,19 +25,18 @@ public abstract class BasePageActivity extends FragmentActivity {
         initLayoutView();
         initView();
         setListener();
-    }
-
-    protected void initData(){
         mContext=this;
         mIntent=getIntent();
         mBundle=mIntent.getExtras();
     }
 
+    protected abstract void initData();
+
     protected abstract void initLayoutView();
     protected abstract void initView();
     protected abstract void setListener();
     public void ShowToast(String string){
-        Toast.makeText(mContext, string,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, string,Toast.LENGTH_SHORT).show();
     }
 
 }

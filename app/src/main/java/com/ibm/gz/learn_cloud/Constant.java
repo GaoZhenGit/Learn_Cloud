@@ -11,4 +11,8 @@ public interface Constant {
         public static final String PhoneLogin="phone_login";
         public static final String EmailLogin="email_login";
     }
+    class DataKey{
+        public static final String USER="user";
+        public static final String COURSE="course";
+    }
 }

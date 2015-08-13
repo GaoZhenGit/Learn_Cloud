@@ -41,13 +41,26 @@ public class CollectFragment extends ListFragment {
         course.setCourse_name("HTML");
         course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
         course.setDetail("html+css+JavaScript");
+
         Course course2=new Course();
         course2.setCourse_name("与MySQL的零距离接触");
         course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
         course2.setDetail("不花钱的关系数据库，你懂的");
+
+        Course course3=new Course();
+        course3.setCourse_name("css扁平化风格博客");
+        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
+        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
+
+        Course course4=new Course();
+        course4.setCourse_name("Sass入门篇");
+        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
+        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
         collectList=new ArrayList<Course>();
         collectList.add(course);
         collectList.add(course2);
+        collectList.add(course3);
+        collectList.add(course4);
         setListAdapter(new CourseAdapter(getActivity(), collectList));
     }
 
@@ -72,5 +85,6 @@ public class CollectFragment extends ListFragment {
         aq.id(R.id.btn_collect_course).background(R.color.light_grey);
         aq.id(R.id.img_collect).image(R.drawable.collect_red);
         aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.text_red));
+        aq.id(R.id.title_mid_text).text("收藏课程");
     }
 }

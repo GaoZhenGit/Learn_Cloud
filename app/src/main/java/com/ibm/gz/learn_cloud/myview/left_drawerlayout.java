@@ -35,13 +35,13 @@ public class left_drawerlayout extends DrawerLayout {
         if(event.getAction() == MotionEvent.ACTION_UP) {
             up_x=event.getX();
             up_y=event.getY();
-            if(down_x-up_x > 50) {
+            if(down_x-up_x > 150) {
                 down_x=0;
                 down_y=0;
                 up_x=0;
                 up_y=0;
                 this.closeDrawer(Gravity.LEFT);
-            } else if(up_x - down_x > 50) {
+            } else if(up_x - down_x > 150) {
                 down_x=0;
                 down_y=0;
                 up_x=0;

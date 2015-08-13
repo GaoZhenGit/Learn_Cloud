@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="200dp"
             android:text="讲解人：李刚"
-            android:textSize="@dimen/text_size_middle"
+            android:textSize="@dimen/text_size_small"
             android:layout_below="@+id/video_name_tv"
             android:layout_alignLeft="@+id/video_name_tv"
             android:layout_alignStart="@+id/video_name_tv" />

@@ -26,6 +26,11 @@ public class RegisteLoginActivity extends BasePageActivity {
 
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_registe_login);
         fragments=new ArrayList<>();
