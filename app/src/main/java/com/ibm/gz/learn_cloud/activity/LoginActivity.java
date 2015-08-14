@@ -25,12 +25,15 @@ public class LoginActivity extends BasePageActivity {
     protected void initView() {
         aq.id(R.id.title_mid_text).text("登录");
         aq.id(R.id.title_right_text).visible().text("注册");
+        aq.id(R.id.title_left_tv).visible().text("退出");
+        aq.id(R.id.title_left_img).visible();
     }
 
     @Override
     protected void setListener() {
         aq.id(R.id.login_btn).clicked(this,"aq_login");
         aq.id(R.id.title_right_btn).clicked(this, "aq_register");
+        aq.id(R.id.title_left_btn).clicked(this,"finish");
     }
 
     public void aq_register(){
