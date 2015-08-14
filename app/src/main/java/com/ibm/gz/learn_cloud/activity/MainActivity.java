@@ -5,21 +5,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.ibm.gz.learn_cloud.Constant;
+import com.ibm.gz.learn_cloud.Application.CloudApplication;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
-import com.ibm.gz.learn_cloud.fragment.LoginFragment;
 
 public class MainActivity extends BasePageActivity {
     private DrawerLayout mDrawerLayout;
@@ -126,28 +123,20 @@ public class MainActivity extends BasePageActivity {
         fragmentManager.beginTransaction().replace(R.id.main_framelayout, collectFragment).commit();
     }
 
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event){
-        switch (key) {
-            case KeyEvent.KEYCODE_MENU:
-                break;
-            case KeyEvent.KEYCODE_BACK:
-                finish();
-                break;
 
-            default:
-                break;
-        }
-        return false;
-    }
     @Override
-    public void onBackPressed() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(mContext, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            finish();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(mContext, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                ((CloudApplication)getApplication()).exit();
+            }
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
 

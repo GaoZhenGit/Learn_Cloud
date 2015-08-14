@@ -6,14 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Adapter.TabPagerAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
-import com.ibm.gz.learn_cloud.fragment.LoginFragment;
+import com.ibm.gz.learn_cloud.fragment.RegisterFragment;
 import com.ibm.gz.learn_cloud.listener.OnTabSelectedListener;
 import com.ibm.gz.learn_cloud.myview.TwoPagerTabWidget;
 
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RegisteLoginActivity extends BasePageActivity {
+public class RegisterActivity extends BasePageActivity {
     private AQuery aq;
     private TwoPagerTabWidget mTabWidget;
     private ViewPager mViewPager;
@@ -38,8 +36,8 @@ public class RegisteLoginActivity extends BasePageActivity {
     protected void initLayoutView() {
         setContentView(R.layout.activity_registe_login);
         fragments=new ArrayList<>();
-        fragments.add(LoginFragment.newInstance(Constant.FragmentType.PhoneLogin));
-        fragments.add(LoginFragment.newInstance(Constant.FragmentType.EmailLogin));
+        fragments.add(RegisterFragment.newInstance(Constant.FragmentType.PhoneLogin));
+        fragments.add(RegisterFragment.newInstance(Constant.FragmentType.EmailLogin));
     }
 
     @Override
@@ -87,7 +85,7 @@ public class RegisteLoginActivity extends BasePageActivity {
     }
 
     public void aq_login(){
-        Intent intent=new Intent(RegisteLoginActivity.this, MainActivity.class);
+        Intent intent=new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

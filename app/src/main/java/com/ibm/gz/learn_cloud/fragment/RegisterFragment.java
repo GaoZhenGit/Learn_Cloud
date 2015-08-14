@@ -4,28 +4,20 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
-import com.ibm.gz.learn_cloud.activity.RegisteLoginActivity;
 
-import org.json.JSONObject;
+public class RegisterFragment extends Fragment {
 
-public class LoginFragment extends Fragment {
-
-    private String LoginType;
+    private String RegisterType;
     private EditText phone;
     private EditText pwd;
 
@@ -37,15 +29,15 @@ public class LoginFragment extends Fragment {
     *
     *
      */
-    public static LoginFragment newInstance(String loginType) {
-        LoginFragment fragment = new LoginFragment();
+    public static RegisterFragment newInstance(String loginType) {
+        RegisterFragment fragment = new RegisterFragment();
         Bundle bundle=new Bundle();
         bundle.putString(Constant.CODE.KeyValue,loginType);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public LoginFragment(){
+    public RegisterFragment(){
         aq=new AQuery(getActivity());
     }
 
@@ -53,7 +45,7 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            LoginType=getArguments().getString(Constant.CODE.KeyValue);
+            RegisterType=getArguments().getString(Constant.CODE.KeyValue);
         }
     }
 
@@ -61,7 +53,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contextView=null;
-        switch (LoginType) {
+        switch (RegisterType) {
             case Constant.FragmentType.PhoneLogin:
                 contextView=inflater.inflate(R.layout.fragment_phone, container, false);
                 setPhoneLoginView(contextView);

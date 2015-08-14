@@ -1,9 +1,10 @@
 package com.ibm.gz.learn_cloud.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.androidquery.AQuery;
+import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.myview.CircleIndicator;
 
 import java.util.ArrayList;
@@ -23,14 +26,16 @@ import java.util.TimerTask;
 /**
  * Created by host on 2015/8/14.
  */
-public class FirstPageFragment extends Fragment {
+public class FirstPageFragment extends ListFragment {
     private AQuery aq;
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
-    private List<String> images;
+
+
+    private List<String> images;//上方的滑动图片资源
+    private List<Course> courses;//首页推荐课程
     private Timer timer;
 
-    private int possition=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +46,41 @@ public class FirstPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contextView =inflater.inflate(R.layout.fragment_firstpage,container,false);
+        initImageView(contextView);
         initListView(contextView);
 
         return contextView;
     }
 
     private void initListView(View contextView) {
+        Course course=new Course();
+        course.setCourse_name("HTML");
+        course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
+        course.setDetail("html+css+JavaScript");
+
+        Course course2=new Course();
+        course2.setCourse_name("与MySQL的零距离接触");
+        course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
+        course2.setDetail("不花钱的关系数据库，你懂的");
+
+        Course course3=new Course();
+        course3.setCourse_name("css扁平化风格博客");
+        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
+        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
+
+        Course course4=new Course();
+        course4.setCourse_name("Sass入门篇");
+        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
+        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
+        courses=new ArrayList<Course>();
+        courses.add(course);
+        courses.add(course2);
+        courses.add(course3);
+        courses.add(course4);
+        setListAdapter(new CourseAdapter(getActivity(), courses));
+    }
+
+    private void initImageView(View contextView) {
         images=new ArrayList<>();
         images.add("http://img.mukewang.com/55cabf1100013e0806000338-240-135.jpg");
         images.add("http://img.mukewang.com/55c33e400001a88f06000338-240-135.jpg");
@@ -67,7 +101,7 @@ public class FirstPageFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        possition = (++possition) % viewPager.getAdapter().getCount();
+                        int possition = (viewPager.getCurrentItem()+1) % viewPager.getAdapter().getCount();
                         viewPager.setCurrentItem(possition);
                         LogUtil.i("page", possition + "");
                     }
@@ -76,7 +110,7 @@ public class FirstPageFragment extends Fragment {
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 1000, 3000);
+        timer.schedule(timerTask, 1000, 10000);
     }
 
 
@@ -90,9 +124,11 @@ public class FirstPageFragment extends Fragment {
         aq.id(R.id.img_firstpage).image(R.drawable.lesson_gray);//图标
         aq.id(R.id.text_firstpage).getTextView().setTextColor(getResources().getColor(R.color.grey));
 
-        timer.cancel();
-        timer=null;
-        System.gc();
+        if(timer!=null) {
+            timer.cancel();
+            timer = null;
+            System.gc();
+        }
     }
     @Override
     public void onResume(){
@@ -104,6 +140,12 @@ public class FirstPageFragment extends Fragment {
         aq.id(R.id.title_mid_text).text("首页");
     }
 
+
+
+    /*作为viewpager的adapter
+     *
+     *
+     */
     class FirstViewPagerAdapter extends PagerAdapter{
         private List<String> images;
         private AQuery aq;
@@ -118,13 +160,19 @@ public class FirstPageFragment extends Fragment {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
             ImageView imageView = new ImageView(container.getContext());
 
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//设置图片点击事件
+                    LogUtil.i(position+"");
+                }
+            });
 
             new AQuery(imageView).image(images.get(position));
 

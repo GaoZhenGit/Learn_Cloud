@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/defalut"
-    tools:context="com.ibm.gz.learn_cloud.fragment.LoginFragment">
+    tools:context="com.ibm.gz.learn_cloud.fragment.RegisterFragment">
 
     <RelativeLayout
         android:layout_width="fill_parent"

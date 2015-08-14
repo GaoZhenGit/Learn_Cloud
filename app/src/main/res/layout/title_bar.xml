@@ -57,6 +57,7 @@
         android:background="@drawable/btn_selector_titlecolor_light">
 
         <ImageView
+            tool:visibility="visible"
             android:id="@+id/title_right_img"
             android:layout_width="@dimen/title_icon_width"
             android:layout_height="@dimen/title_icon_width"

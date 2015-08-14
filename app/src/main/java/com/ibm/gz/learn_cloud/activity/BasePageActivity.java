@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
+import com.ibm.gz.learn_cloud.Application.CloudApplication;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.ActivityManagerUtils;
 
 /**
  * Created by host on 2015/8/5.
@@ -21,6 +23,7 @@ public abstract class BasePageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManagerUtils.getInstance().addActivity(this);
         initData();
         initLayoutView();
         initView();

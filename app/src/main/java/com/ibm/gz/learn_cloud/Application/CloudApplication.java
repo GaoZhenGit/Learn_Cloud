@@ -2,6 +2,7 @@ package com.ibm.gz.learn_cloud.Application;
 
 import android.app.Application;
 
+import com.ibm.gz.learn_cloud.Utils.ActivityManagerUtils;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 
@@ -14,5 +15,9 @@ public class CloudApplication extends Application {
         super.onCreate();
         VolleyUtils.init(this);
         LogUtil.i("init","application");
+    }
+
+    public void exit(){
+        ActivityManagerUtils.getInstance().removeAllActivity();
     }
 }
