@@ -9,14 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.activity.RegisteLoginActivity;
+
+import org.json.JSONObject;
 
 public class LoginFragment extends Fragment {
 
     private String LoginType;
+    private EditText phone;
+    private EditText pwd;
 
     private AQuery aq;
 
@@ -91,6 +102,8 @@ public class LoginFragment extends Fragment {
                 aq_regist();
             }
         });
+        phone=new AQuery(contextView).id(R.id.login_phone_et).getEditText();
+        pwd=new AQuery(contextView).id(R.id.login_phone_psw_et).getEditText();
     }
 
 
@@ -100,7 +113,13 @@ public class LoginFragment extends Fragment {
     }
 
     public void aq_regist(){
-        Log.i("--tag--","regist");
+        LogUtil.i("--tag--","regist");
+        if (phone==null){
+            LogUtil.i("--tag--","null");
+            return;
+        }
+        LogUtil.i("phone",phone.getText().toString());
+        LogUtil.i("psw",pwd.getText().toString());
     }
 
     /**

@@ -10,23 +10,28 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
+import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
 import com.ibm.gz.learn_cloud.fragment.LoginFragment;
 
 public class MainActivity extends BasePageActivity {
     private DrawerLayout mDrawerLayout;
     private AQuery aq;
+    private FragmentManager fragmentManager;
 
     private Fragment currentFragment;
     //左侧每个fragment的引用
+    private FirstPageFragment firstPageFragment;
     private HistoryFragment historyFragment;
     private CollectFragment collectFragment;
-
+    private long exitTime=0;
 
 
     @Override
@@ -36,7 +41,7 @@ public class MainActivity extends BasePageActivity {
 
     @Override
     protected void initData() {
-
+        fragmentManager=getSupportFragmentManager();
     }
 
     @Override
@@ -52,6 +57,9 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.title_right_img).visible().image(R.drawable.search);
         aq.id(R.id.title_left_img).visible().image(R.drawable.menu);
         aq.id(R.id.title_right_text).gone();
+        //设置初始fragment
+        firstPageFragment=new FirstPageFragment();
+        fragmentManager.beginTransaction().add(R.id.main_framelayout,firstPageFragment).commit();
     }
 
     @Override
@@ -76,18 +84,28 @@ public class MainActivity extends BasePageActivity {
             }
         });
         //每个左侧按设置监听器
-        aq.id(R.id.btn_history).clicked(this, "aq_history").click();
+        aq.id(R.id.btn_firstpage).clicked(this, "aq_firstpage");
+        aq.id(R.id.btn_history).clicked(this, "aq_history");
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
         aq.id(R.id.title_left_img).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
             public void onClick(View v) {
-                if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-                }else {
+                } else {
                     mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
             }
         });
+    }
+
+    //首页
+    public void aq_firstpage(){
+        if (firstPageFragment==null){
+            firstPageFragment=new FirstPageFragment();
+        }
+        currentFragment=firstPageFragment;
+        fragmentManager.beginTransaction().replace(R.id.main_framelayout, firstPageFragment).commit();
     }
 
     //历史课程
@@ -96,7 +114,6 @@ public class MainActivity extends BasePageActivity {
             historyFragment=new HistoryFragment();
         }
         currentFragment=historyFragment;
-        FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_framelayout, historyFragment).commit();
     }
     //收藏课程
@@ -106,7 +123,6 @@ public class MainActivity extends BasePageActivity {
             collectFragment=new CollectFragment();
         }
         currentFragment=collectFragment;
-        FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_framelayout, collectFragment).commit();
     }
 
@@ -124,8 +140,15 @@ public class MainActivity extends BasePageActivity {
         }
         return false;
     }
-
-
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(mContext, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+    }
 
 
 }

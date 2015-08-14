@@ -31,6 +31,7 @@
 
                 <EditText
                     android:id="@+id/login_phone_et"
+                    android:numeric="integer"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_height"
                     android:background="@color/defalut"
@@ -60,6 +61,7 @@
 
                 <EditText
                     android:id="@+id/login_phone_code_et"
+                    android:numeric="integer"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_height"
                     android:background="@color/defalut"
