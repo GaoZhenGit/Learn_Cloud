@@ -24,13 +24,13 @@ public abstract class BasePageActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityManagerUtils.getInstance().addActivity(this);
+        mContext=this;
+        mIntent=getIntent();
+        mBundle=mIntent.getExtras();
         initData();
         initLayoutView();
         initView();
         setListener();
-        mContext=this;
-        mIntent=getIntent();
-        mBundle=mIntent.getExtras();
     }
 
     protected abstract void initData();

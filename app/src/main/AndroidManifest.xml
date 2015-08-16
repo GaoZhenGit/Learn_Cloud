@@ -27,16 +27,23 @@
         <activity
             android:name=".activity.CourseActivity"
             android:label="@string/title_activity_course"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:launchMode="singleTask"
+            android:name=".activity.VideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_video"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
