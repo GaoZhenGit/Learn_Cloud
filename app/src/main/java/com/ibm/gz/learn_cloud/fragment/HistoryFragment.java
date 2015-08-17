@@ -48,10 +48,13 @@ public class HistoryFragment extends ListFragment {
         Course course=new Course();
         course.setCourse_name("第一课");
         course.setCourse_img("http://file.bmob.cn/M01/E8/75/oYYBAFXK7nyAdbG2AAB9dJS_7aY137.jpg");
+        course.setCourse_video("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
         course.setDetail("第一次上课请多指教");
+
         Course course2=new Course();
         course2.setCourse_name("第二课");
         course2.setCourse_img("http://pic3.bbzhi.com/youxibizhi/wushi5/jingxuan_yxjx_291691_15.jpg");
+        course2.setCourse_video("http://192.168.1.107/zl.mp4");
         course2.setDetail("老牌讲师");
         courseList=new ArrayList<Course>();
         courseList.add(course);

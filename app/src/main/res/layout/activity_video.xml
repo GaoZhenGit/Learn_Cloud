@@ -30,6 +30,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/video_control"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -66,5 +67,15 @@
             android:layout_weight="1"
             android:text="横屏" />
     </LinearLayout>
+    <com.ibm.gz.learn_cloud.myview.PagerTabWidget
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/video_tabwidget"
+        android:layout_below="@+id/video_control"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/video_viewpager"
+        android:layout_below="@+id/video_tabwidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
