@@ -12,10 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.entire.Course;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +108,13 @@ public class RegisterFragment extends Fragment {
 
     //邮箱注册登录页面设置
     private void setEmailLoginView(View contextView){
-
+        Button button=(Button)contextView.findViewById(R.id.regist_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aq_email_regist();
+            }
+        });
     }
 
     public void aq_phone_regist(){
@@ -123,7 +131,7 @@ public class RegisterFragment extends Fragment {
         VolleyUtils.post("http://marketonhand.sinaapp.com/home_register.php", param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
-                Toast.makeText(getActivity(),response,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -131,6 +139,17 @@ public class RegisterFragment extends Fragment {
 
             }
         });
+    }
+
+    public void aq_email_regist(){
+        Gson gson=new Gson();
+        Course course=new Course();
+        course.setCourse_name("第一课");
+        course.setCourse_id(2342);
+        course.setDetail("这个是gson测试，哈哈哈");
+        String son=gson.toJson(course);
+        Toast.makeText(getActivity(),son,Toast.LENGTH_LONG).show();
+        LogUtil.i("gson",son);
     }
 
     /**
