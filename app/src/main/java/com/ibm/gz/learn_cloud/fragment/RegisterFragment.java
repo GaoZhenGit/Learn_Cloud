@@ -1,6 +1,7 @@
 package com.ibm.gz.learn_cloud.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,11 @@ import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.activity.LoginActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -123,15 +128,39 @@ public class RegisterFragment extends Fragment {
             LogUtil.i("--tag--","null");
             return;
         }
-        LogUtil.i("phone", phone.getText().toString());
-        LogUtil.i("psw", pwd.getText().toString());
+        String phoneString=phone.getText().toString();
+        String passwordString=pwd.getText().toString();
+        LogUtil.i("phone", phoneString);
+        LogUtil.i("psw", passwordString);
+
+        if(phoneString==null||phoneString.length()!=11){
+            Toast.makeText(getActivity(), "请输入正确手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //设置请求参数
         Map<String,String> param=new HashMap<String,String>();
-        param.put("phone",phone.getText().toString());
-        param.put("password",pwd.getText().toString());
-        VolleyUtils.post("http://marketonhand.sinaapp.com/home_register.php", param, new VolleyUtils.NetworkListener() {
+        param.put("type","register");
+        param.put("phone",phoneString);
+        param.put("password",passwordString);
+        //发起请求
+        VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
-                Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
+                LogUtil.i("volley",response);
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String state=jsonObject.optString("state");
+                    if(state.equals("success")){
+                        Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
+                        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().finish();
+                    }else {
+                        String reason=jsonObject.optString("reason");
+                        Toast.makeText(getActivity(), "注册失败:"+reason, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

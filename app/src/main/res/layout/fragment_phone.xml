@@ -32,6 +32,7 @@
                 <EditText
                     android:id="@+id/login_phone_et"
                     android:numeric="integer"
+                    android:maxLength="11"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_height"
                     android:background="@color/defalut"
@@ -90,6 +91,7 @@
                     android:src="@drawable/password" />
 
                 <EditText
+                    android:password="true"
                     android:id="@+id/login_phone_psw_et"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_height"

@@ -26,7 +26,7 @@ import static android.support.v4.view.ViewPager.OnPageChangeListener;
 
 public class CircleIndicator extends LinearLayout implements OnPageChangeListener {
 
-    private final static int DEFAULT_INDICATOR_WIDTH = 5;
+    private final static int DEFAULT_INDICATOR_WIDTH = 8;
     private ViewPager mViewpager;
     private ImageView ivLeftArrow;
     private ImageView ivRightArrow;
