@@ -5,7 +5,7 @@ package com.ibm.gz.learn_cloud;
  */
 public interface Constant {
     class URL{
-        public static final String Register="http://192.168.1.100/cloude_test.php";
+        public static final String Register="http://marketonhand.sinaapp.com/cloude_test.php";
     }
     class CODE{
         public static final String KeyValue="key_value";

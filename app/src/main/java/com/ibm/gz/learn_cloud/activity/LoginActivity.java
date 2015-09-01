@@ -66,7 +66,7 @@ public class LoginActivity extends BasePageActivity {
     public void aq_login(){
         String accountString=account.getText().toString();
         String passwordString=password.getText().toString();
-        if(accountString==null||accountString.length()==0){
+        if(accountString==null||accountString.length()!=11){
             ShowToast("请填写手机号或邮箱");
             return;
         }

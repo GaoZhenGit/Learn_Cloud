@@ -32,8 +32,10 @@
 
                 <EditText
                     android:id="@+id/login_phone_et"
+                    android:numeric="integer"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_height"
+                    android:maxLength="11"
                     android:background="@color/defalut"
                     android:hint="邮箱/手机号" />
             </LinearLayout>
