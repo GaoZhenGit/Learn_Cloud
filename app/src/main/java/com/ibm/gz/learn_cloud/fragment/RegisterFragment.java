@@ -9,11 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
@@ -91,7 +96,7 @@ public class RegisterFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aq_regist();
+                aq_phone_regist();
             }
         });
         phone=new AQuery(contextView).id(R.id.login_phone_et).getEditText();
@@ -104,14 +109,28 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    public void aq_regist(){
+    public void aq_phone_regist(){
         LogUtil.i("--tag--","regist");
         if (phone==null){
             LogUtil.i("--tag--","null");
             return;
         }
-        LogUtil.i("phone",phone.getText().toString());
-        LogUtil.i("psw",pwd.getText().toString());
+        LogUtil.i("phone", phone.getText().toString());
+        LogUtil.i("psw", pwd.getText().toString());
+        Map<String,String> param=new HashMap<String,String>();
+        param.put("phone",phone.getText().toString());
+        param.put("password",pwd.getText().toString());
+        VolleyUtils.post("http://marketonhand.sinaapp.com/home_register.php", param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                Toast.makeText(getActivity(),response,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
     }
 
     /**
