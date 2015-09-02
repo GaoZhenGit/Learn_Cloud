@@ -11,6 +11,8 @@ public class User implements Serializable{
     private String pwd;
     private String user_mail;
     private String user_tel;
+    private String avater;
+    private String detail;
 
     public int getU_id() {
         return u_id;
@@ -50,5 +52,21 @@ public class User implements Serializable{
 
     public void setUser_tel(String user_tel) {
         this.user_tel = user_tel;
+    }
+
+    public String getAvater() {
+        return avater;
+    }
+
+    public void setAvater(String avater) {
+        this.avater = avater;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

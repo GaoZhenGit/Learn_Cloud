@@ -37,6 +37,8 @@ public class DetailFgm extends Fragment{
         aq.id(R.id.detail_course_detail).text(course.getDetail());
         if(course.getTeacher()!=null) {
             aq.id(R.id.detail_teacher_name).text(course.getTeacher().getUsername());
+            aq.id(R.id.detail_teacher_avater).image(course.getTeacher().getAvater());
+            aq.id(R.id.detail_teacher_detail).text(course.getTeacher().getDetail());
         }
     }
 }

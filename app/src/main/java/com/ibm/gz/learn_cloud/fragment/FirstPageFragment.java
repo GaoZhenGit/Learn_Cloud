@@ -12,14 +12,24 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
+import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.myview.CircleIndicator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,7 +87,16 @@ public class FirstPageFragment extends ListFragment {
         courses.add(course2);
         courses.add(course3);
         courses.add(course4);
-        setListAdapter(new CourseAdapter(getActivity(), courses));
+        refleshData(courses);
+    }
+    private void refleshData(List<Course> list){
+        if(getListAdapter()==null){
+            setListAdapter(new CourseAdapter(getActivity(), courses));
+        }else {
+            courses.clear();
+            courses.addAll(list);
+            getListAdapter().notify();
+        }
     }
 
     private void initImageView(View contextView) {
@@ -140,6 +159,31 @@ public class FirstPageFragment extends ListFragment {
         aq.id(R.id.title_mid_text).text("首页");
     }
 
+    private void requestFirstPageCourse(){
+        Map<String,String> param=new HashMap<>();
+        param.put("type","firstpagecourse");
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    String[] checks=response.split("\\]");
+                    JSONObject jsonObject=new JSONObject(checks[0]+"]");
+                    Gson gson= new GsonBuilder().disableHtmlEscaping().create();
+                    List<Course> courses=gson.fromJson(jsonObject.toString(), new TypeToken<List<Course>>() {}.getType());
+                    refleshData(courses);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
+    }
 
 
     /*作为viewpager的adapter

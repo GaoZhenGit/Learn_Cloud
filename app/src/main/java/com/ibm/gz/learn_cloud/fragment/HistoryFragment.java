@@ -10,11 +10,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
+import com.ibm.gz.learn_cloud.entire.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +57,35 @@ public class HistoryFragment extends ListFragment {
         course2.setCourse_img("http://pic3.bbzhi.com/youxibizhi/wushi5/jingxuan_yxjx_291691_15.jpg");
         course2.setCourse_video("http://192.168.1.107/zl.mp4");
         course2.setDetail("老牌讲师");
+
+        Course son=new Course();
+        son.setCourse_name("Gson的使用方法");
+        son.setCourse_img("http://img.mukewang.com/542376b20001374c06000338-280-160.jpg");
+        son.setCourse_video("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
+        son.setDetail("关于微客的基本知识和进阶");
+        User teacher =new User();
+        teacher.setU_id(1234578);
+        teacher.setUser_mail("hotdog@gmail.com");
+        teacher.setUsername("热狗");
+        teacher.setDetail("最热门的老师，教你微商技术");
+        teacher.setAvater("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1506454338,1185755782&fm=116&gp=0.jpg");
+        son.setTeacher(teacher);
+
+        Gson gson=new GsonBuilder().disableHtmlEscaping().create();
+        String gCourse=gson.toJson(son);
+        List<Course> courses=new ArrayList<>();
+        courses.add(course);
+        courses.add(course2);
+        courses.add(son);
+        String gCs=gson.toJson(courses);
+        LogUtil.i("---------------json object",gCourse);
+        LogUtil.i("-------json ssss",gCs);
+        Course course3=gson.fromJson(gCourse,Course.class);
+
         courseList=new ArrayList<Course>();
         courseList.add(course);
         courseList.add(course2);
+        courseList.add(course3);
         setListAdapter(new CourseAdapter(getActivity(), courseList));
     }
 
