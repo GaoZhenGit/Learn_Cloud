@@ -64,6 +64,7 @@ public class CollectFragment extends ListFragment {
         setListAdapter(new CourseAdapter(getActivity(), collectList));
     }
 
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
     }

@@ -1,5 +1,6 @@
 package com.ibm.gz.learn_cloud.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -20,9 +23,11 @@ import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.myview.CircleIndicator;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,34 +68,39 @@ public class FirstPageFragment extends ListFragment {
     }
 
     private void initListView(View contextView) {
-        Course course=new Course();
-        course.setCourse_name("HTML");
-        course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
-        course.setDetail("html+css+JavaScript");
-
-        Course course2=new Course();
-        course2.setCourse_name("与MySQL的零距离接触");
-        course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
-        course2.setDetail("不花钱的关系数据库，你懂的");
-
-        Course course3=new Course();
-        course3.setCourse_name("css扁平化风格博客");
-        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
-        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
-
-        Course course4=new Course();
-        course4.setCourse_name("Sass入门篇");
-        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
-        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
+//        Course course=new Course();
+//        course.setCourse_name("HTML");
+//        course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
+//        course.setDetail("html+css+JavaScript");
+//
+//        Course course2=new Course();
+//        course2.setCourse_name("与MySQL的零距离接触");
+//        course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
+//        course2.setDetail("不花钱的关系数据库，你懂的");
+//
+//        Course course3=new Course();
+//        course3.setCourse_name("css扁平化风格博客");
+//        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
+//        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
+//
+//        Course course4=new Course();
+//        course4.setCourse_name("Sass入门篇");
+//        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
+//        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
         courses=new ArrayList<Course>();
-        courses.add(course);
-        courses.add(course2);
-        courses.add(course3);
-        courses.add(course4);
-        refleshData(courses);
+//        courses.add(course);
+//        courses.add(course2);
+//        courses.add(course3);
+//        courses.add(course4);
+//        Gson gson=new GsonBuilder().disableHtmlEscaping().create();
+//        String listC=gson.toJson(courses);
+//        LogUtil.i("------gson-----",listC);
+//        refleshData(courses);
+        requestFirstPageCourse();
     }
     private void refleshData(List<Course> list){
         if(getListAdapter()==null){
+            courses.addAll(list);
             setListAdapter(new CourseAdapter(getActivity(), courses));
         }else {
             courses.clear();
@@ -161,15 +171,16 @@ public class FirstPageFragment extends ListFragment {
 
     private void requestFirstPageCourse(){
         Map<String,String> param=new HashMap<>();
-        param.put("type","firstpagecourse");
+        param.put("type", "firstpagecourse");
         VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
-                    String[] checks=response.split("\\]");
-                    JSONObject jsonObject=new JSONObject(checks[0]+"]");
-                    Gson gson= new GsonBuilder().disableHtmlEscaping().create();
-                    List<Course> courses=gson.fromJson(jsonObject.toString(), new TypeToken<List<Course>>() {}.getType());
+                    String[] checks = response.split("\\]");
+                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
                     refleshData(courses);
 
 
@@ -185,6 +196,15 @@ public class FirstPageFragment extends ListFragment {
         });
     }
 
+    //这个是视频点击的事件
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Bundle bundle=new Bundle();
+        bundle.putSerializable(Constant.DataKey.COURSE,courses.get(position));
+        Intent intent=new Intent(getActivity(), CourseActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
     /*作为viewpager的adapter
      *
