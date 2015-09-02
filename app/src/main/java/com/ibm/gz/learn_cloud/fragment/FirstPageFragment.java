@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -68,34 +66,7 @@ public class FirstPageFragment extends ListFragment {
     }
 
     private void initListView(View contextView) {
-//        Course course=new Course();
-//        course.setCourse_name("HTML");
-//        course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
-//        course.setDetail("html+css+JavaScript");
-//
-//        Course course2=new Course();
-//        course2.setCourse_name("与MySQL的零距离接触");
-//        course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
-//        course2.setDetail("不花钱的关系数据库，你懂的");
-//
-//        Course course3=new Course();
-//        course3.setCourse_name("css扁平化风格博客");
-//        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
-//        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
-//
-//        Course course4=new Course();
-//        course4.setCourse_name("Sass入门篇");
-//        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
-//        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
         courses=new ArrayList<Course>();
-//        courses.add(course);
-//        courses.add(course2);
-//        courses.add(course3);
-//        courses.add(course4);
-//        Gson gson=new GsonBuilder().disableHtmlEscaping().create();
-//        String listC=gson.toJson(courses);
-//        LogUtil.i("------gson-----",listC);
-//        refleshData(courses);
         requestFirstPageCourse();
     }
     private void refleshData(List<Course> list){
@@ -169,6 +140,7 @@ public class FirstPageFragment extends ListFragment {
         aq.id(R.id.title_mid_text).text("首页");
     }
 
+    //请求网络访问获得首页视频数据
     private void requestFirstPageCourse(){
         Map<String,String> param=new HashMap<>();
         param.put("type", "firstpagecourse");
