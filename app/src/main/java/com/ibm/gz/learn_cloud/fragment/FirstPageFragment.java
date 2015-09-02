@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
@@ -73,6 +74,7 @@ public class FirstPageFragment extends ListFragment {
         if(getListAdapter()==null){
             courses.addAll(list);
             setListAdapter(new CourseAdapter(getActivity(), courses));
+            DensityUtil.setListViewHeightBasedOnChildren(getListView());
         }else {
             courses.clear();
             courses.addAll(list);
