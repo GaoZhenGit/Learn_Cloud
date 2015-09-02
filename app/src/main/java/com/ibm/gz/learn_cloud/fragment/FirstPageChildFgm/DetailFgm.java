@@ -5,14 +5,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.activity.CourseActivity;
+import com.ibm.gz.learn_cloud.entire.Course;
 
 /**
  * Created by host on 2015/8/18.
  */
 public class DetailFgm extends Fragment{
+    private View converView;
+    private AQuery aq;
+    private Course course;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +25,18 @@ public class DetailFgm extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView contextView =new TextView(getActivity());
-        contextView.setText("细节");
-        return contextView;
+        converView=inflater.inflate(R.layout.fragment_firstpage_detail,container,false);
+        course=((CourseActivity)getActivity()).getCourse();
+        initView(converView);
+        return converView;
+    }
+
+    private void initView(View converView){
+        aq=new AQuery(converView);
+        aq.id(R.id.detail_course_title).text(course.getCourse_name());
+        aq.id(R.id.detail_course_detail).text(course.getDetail());
+        if(course.getTeacher()!=null) {
+            aq.id(R.id.detail_teacher_name).text(course.getTeacher().getUsername());
+        }
     }
 }

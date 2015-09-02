@@ -1,11 +1,8 @@
 package com.ibm.gz.learn_cloud.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,7 @@ import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
-import com.ibm.gz.learn_cloud.activity.VideoActivity;
+import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 
 import java.util.ArrayList;
@@ -67,7 +64,7 @@ public class HistoryFragment extends ListFragment {
         Toast.makeText(getActivity(),courseList.get(position).getCourse_name(),Toast.LENGTH_SHORT).show();
         Bundle bundle=new Bundle();
         bundle.putSerializable(Constant.DataKey.COURSE,courseList.get(position));
-        Intent intent=new Intent(getActivity(), VideoActivity.class);
+        Intent intent=new Intent(getActivity(), CourseActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }

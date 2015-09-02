@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/detail_course_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="android volley 详解"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_size_middle"
+        android:paddingLeft="@dimen/margin_left"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        layout="@layout/separate"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="讲师"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_size_middle"
+        android:paddingLeft="@dimen/margin_left"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/detail_teacher_avater"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/default_avatar"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/detail_teacher_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="纸巾老师"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/detail_teacher_avater"
+            android:layout_toEndOf="@+id/detail_teacher_avater"
+            android:layout_marginLeft="@dimen/margin_left"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="280dp"
+            android:maxLines="4"
+            android:text="纸巾老师好好玩纸巾老师好好玩纸巾老师好好玩纸巾老师好好玩纸巾老师好好玩纸巾老师好好玩"
+            android:layout_below="@+id/detail_teacher_name"
+            android:layout_toRightOf="@+id/detail_teacher_avater"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="15dp"/>
+
+    </RelativeLayout>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        layout="@layout/separate"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="课程简介"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_size_middle"
+        android:paddingLeft="@dimen/margin_left"/>
+    <TextView
+        android:id="@+id/detail_course_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。暴走大事件，让王尼玛陪你聊天，么么哒。"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_size_small"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
+</LinearLayout>
+</ScrollView>

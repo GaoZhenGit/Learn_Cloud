@@ -17,9 +17,11 @@ import com.google.gson.Gson;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.LoginActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
+import com.ibm.gz.learn_cloud.entire.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -151,6 +153,12 @@ public class RegisterFragment extends Fragment {
                     JSONObject jsonObject=new JSONObject(response);
                     String state=jsonObject.optString("state");
                     if(state.equals("success")){
+                        Gson gson=new Gson();
+                        String userJson=jsonObject.optString("user");//"{\"u_id\":\"123123\",\"user_tel\":\"13622847209\"}";
+                        User user=gson.fromJson(userJson,User.class);
+                        LogUtil.i("gson test ", "u_id:" + user.getU_id() + "  phone:" + user.getUser_tel());
+                        SpUtils sp=new SpUtils(getActivity());
+                        sp.setValue("user",userJson);
                         Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
                         getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                         getActivity().finish();
@@ -158,7 +166,7 @@ public class RegisterFragment extends Fragment {
                         String reason=jsonObject.optString("reason");
                         Toast.makeText(getActivity(), "注册失败:"+reason, Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

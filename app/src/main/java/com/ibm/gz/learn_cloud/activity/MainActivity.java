@@ -11,9 +11,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
 import com.ibm.gz.learn_cloud.Application.CloudApplication;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.SpUtils;
+import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
@@ -22,6 +25,7 @@ public class MainActivity extends BasePageActivity {
     private DrawerLayout mDrawerLayout;
     private AQuery aq;
     private FragmentManager fragmentManager;
+    private User user;
 
     private Fragment currentFragment;
     //左侧每个fragment的引用
@@ -39,6 +43,9 @@ public class MainActivity extends BasePageActivity {
     @Override
     protected void initData() {
         fragmentManager=getSupportFragmentManager();
+        SpUtils sp=new SpUtils(this);
+        Gson gson =new Gson();
+        user=gson.fromJson(sp.getValue("user",""),User.class);
     }
 
     @Override

@@ -11,6 +11,7 @@ public class Course implements Serializable{
     private String course_video;
     private String course_img;
     private String detail;
+    private User teacher;
 
     public int getCourse_id() {
         return course_id;
@@ -50,5 +51,13 @@ public class Course implements Serializable{
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 }
