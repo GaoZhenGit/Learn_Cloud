@@ -12,12 +12,14 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.entire.Course;
+import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectFragment extends ListFragment {
+public class CollectFragment extends ListFragment implements LeftHideShow {
     private AQuery aq;
     private List<Course> collectList;
 
@@ -32,6 +34,7 @@ public class CollectFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View contextView =inflater.inflate(R.layout.fragment_collect,container,false);
         initListView();
+        leftOn();
         return contextView;
     }
 
@@ -74,15 +77,21 @@ public class CollectFragment extends ListFragment {
 
 
     @Override
-    public void onPause(){
-        super.onPause();
+    public void leftOff(){
+        LogUtil.i("left", "collect off");
+        if(aq==null){
+            aq=new AQuery(getActivity());
+        }
         aq.id(R.id.btn_collect_course).background(R.color.white);//背景色
         aq.id(R.id.img_collect).image(R.drawable.collect_gray);//图标
         aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.grey));
     }
     @Override
-    public void onResume() {
-        super.onResume();
+    public void leftOn() {
+        LogUtil.i("left", "collect on");
+        if(aq==null){
+            aq=new AQuery(getActivity());
+        }
         aq.id(R.id.btn_collect_course).background(R.color.light_grey);
         aq.id(R.id.img_collect).image(R.drawable.collect_red);
         aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.text_red));

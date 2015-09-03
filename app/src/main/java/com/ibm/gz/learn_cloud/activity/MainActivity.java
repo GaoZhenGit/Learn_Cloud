@@ -4,6 +4,7 @@ package com.ibm.gz.learn_cloud.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -20,6 +21,7 @@ import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
+import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
 public class MainActivity extends BasePageActivity {
     private DrawerLayout mDrawerLayout;
@@ -63,7 +65,8 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.title_right_text).gone();
         //设置初始fragment
         firstPageFragment=new FirstPageFragment();
-        fragmentManager.beginTransaction().add(R.id.main_framelayout,firstPageFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.main_framelayout, firstPageFragment).commit();
+        currentFragment=firstPageFragment;
     }
 
     @Override
@@ -91,7 +94,7 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_firstpage).clicked(this, "aq_firstpage");
         aq.id(R.id.btn_history).clicked(this, "aq_history");
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
-        aq.id(R.id.title_left_img).clicked(new View.OnClickListener() {//左上方按键设置开关效果
+        aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
             public void onClick(View v) {
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -103,13 +106,38 @@ public class MainActivity extends BasePageActivity {
         });
     }
 
+
+    /**
+     * 切换fragment，可以不必重新加载
+     * @param to 转换到的Fragment
+     */
+    public void switchContent(Fragment to) {
+        if (currentFragment != to) {
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            if (!to.isAdded()) { // 先判断是否被add过
+                transaction.hide(currentFragment).add(R.id.main_framelayout, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                LeftHideShow current = (LeftHideShow) currentFragment;
+                current.leftOff();
+                currentFragment=to;
+            } else {
+                transaction.hide(currentFragment).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                //左侧菜单
+                LeftHideShow current = (LeftHideShow) currentFragment;
+                current.leftOff();
+                currentFragment = to;
+                current = (LeftHideShow) to;
+                current.leftOn();
+            }
+        }
+    }
+
     //首页
     public void aq_firstpage(){
-        if (firstPageFragment==null){
-            firstPageFragment=new FirstPageFragment();
+        if (firstPageFragment==null) {
+            firstPageFragment = new FirstPageFragment();
         }
-        currentFragment=firstPageFragment;
-        fragmentManager.beginTransaction().replace(R.id.main_framelayout, firstPageFragment).commit();
+        switchContent(firstPageFragment);
     }
 
     //历史课程
@@ -117,17 +145,14 @@ public class MainActivity extends BasePageActivity {
         if(historyFragment==null){
             historyFragment=new HistoryFragment();
         }
-        currentFragment=historyFragment;
-        fragmentManager.beginTransaction().replace(R.id.main_framelayout, historyFragment).commit();
+        switchContent(historyFragment);
     }
     //收藏课程
     public void aq_collect_course(){
-        aq.id(R.id.btn_collect_course).background(R.color.light_grey);
         if(collectFragment==null){
             collectFragment=new CollectFragment();
         }
-        currentFragment=collectFragment;
-        fragmentManager.beginTransaction().replace(R.id.main_framelayout, collectFragment).commit();
+        switchContent(collectFragment);
     }
 
 
