@@ -1,15 +1,14 @@
 package com.ibm.gz.learn_cloud.fragment;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -30,9 +29,10 @@ import java.util.List;
 /**
  * Created by host on 2015/8/9.
  */
-public class HistoryFragment extends ListFragment implements LeftHideShow{
+public class HistoryFragment extends Fragment implements LeftHideShow{
     private AQuery aq;
     private List<Course> courseList;
+    private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class HistoryFragment extends ListFragment implements LeftHideShow{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contextView =inflater.inflate(R.layout.fragment_history,container,false);
+        listView=(ListView)contextView.findViewById(R.id.listview);
         initListView();
         leftOn();
         return contextView;
@@ -81,7 +82,7 @@ public class HistoryFragment extends ListFragment implements LeftHideShow{
         courses.add(course);
         courses.add(course2);
         courses.add(son);
-        String gCs=gson.toJson(courses);
+        String gCs = gson.toJson(courses);
         LogUtil.i("---------------json object",gCourse);
         LogUtil.i("-------json ssss",gCs);
         Course course3=gson.fromJson(gCourse,Course.class);
@@ -90,14 +91,20 @@ public class HistoryFragment extends ListFragment implements LeftHideShow{
         courseList.add(course);
         courseList.add(course2);
         courseList.add(course3);
-        setListAdapter(new CourseAdapter(getActivity(), courseList));
+        listView.setAdapter(new CourseAdapter(getActivity(), courseList));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onListItemClick(null,null,position,id);
+            }
+        });
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
 //        Toast.makeText(getActivity(),""+position,Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(),courseList.get(position).getCourse_name(),Toast.LENGTH_SHORT).show();
         Bundle bundle=new Bundle();
-        bundle.putSerializable(Constant.DataKey.COURSE,courseList.get(position));
+        bundle.putSerializable(Constant.DataKey.COURSE, courseList.get(position));
         Intent intent=new Intent(getActivity(), CourseActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);

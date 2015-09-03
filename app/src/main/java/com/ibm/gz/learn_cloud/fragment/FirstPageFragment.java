@@ -13,12 +13,15 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
@@ -48,6 +51,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private View contextView;
+    private PullToRefreshScrollView scrollView;
 
 
     private List<String> images;//上方的滑动图片资源
@@ -67,6 +71,20 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
         initImageView();
         initListView();
         leftOn();
+        scrollView=(PullToRefreshScrollView)contextView.findViewById(R.id.pull_scroll);
+        scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                LogUtil.i("reflesh", "pull to reflesh");
+                requestFirstPageCourse();
+//                scrollView.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        scrollView.onRefreshComplete();
+//                    }
+//                }, 1000);
+            }
+        });
         return contextView;
     }
 
@@ -85,6 +103,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             ((BaseAdapter)getListAdapter()).notifyDataSetChanged();
             DensityUtil.setListViewHeightBasedOnChildren((ListView) contextView.findViewById(android.R.id.list));
         }
+        scrollView.onRefreshComplete();
     }
 
     private void initImageView() {
