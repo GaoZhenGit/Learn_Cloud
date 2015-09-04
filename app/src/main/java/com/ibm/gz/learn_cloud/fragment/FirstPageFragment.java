@@ -65,10 +65,10 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         contextView =inflater.inflate(R.layout.fragment_firstpage,container,false);
-        initImageView();
-        initListView();
-        leftOn();
-        initRefreshView();
+        initImageView();//初始化横栏界面，包括获取网络资源
+        initListView();//初始化课程列表，网络请求
+        leftOn();//在左侧菜单中字体图片颜色改为红
+        initRefreshView();//初始化下拉上拉界面
         return contextView;
     }
 
@@ -109,7 +109,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             setListAdapter(new CourseAdapter(getActivity(), courses));
             DensityUtil.setListViewHeightBasedOnChildren(getListView());
         }else {
-            if(isReflesh)
+            if(isReflesh)//刷新则清空
                 courses.clear();
             courses.addAll(list);
             ((BaseAdapter)getListAdapter()).notifyDataSetChanged();

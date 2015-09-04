@@ -65,6 +65,7 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.title_mid_text).text("");
         aq.id(R.id.title_right_img).visible().image(R.drawable.search);
         aq.id(R.id.title_left_img).visible().image(R.drawable.menu);
+        aq.id(R.id.title_left_tv).visible().text("  ");
         aq.id(R.id.title_right_text).gone();
         //设置初始fragment
         firstPageFragment=new FirstPageFragment();
