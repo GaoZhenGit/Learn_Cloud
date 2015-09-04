@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.widget.EditText;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.entire.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +77,10 @@ public class LoginActivity extends BasePageActivity {
             ShowToast("请填写密码");
             return;
         }
+        //初始化
+        final User user=new User();
+        user.setUsername("学云");
+        user.setDetail("遍身罗绮者，不是养蚕人");
 
         Map<String,String> param=new HashMap<>();
         param.put("type","login");
@@ -81,10 +88,12 @@ public class LoginActivity extends BasePageActivity {
             //手机号登录
             param.put("phone", accountString);
             param.put("password", passwordString);
+            user.setUser_tel(accountString);
         }else {
             //邮箱登录
             param.put("email", accountString);
-            param.put("password", accountString);
+            param.put("password", passwordString);
+            user.setUser_mail(accountString);
         }
         VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
             @Override
@@ -97,7 +106,10 @@ public class LoginActivity extends BasePageActivity {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         ShowToast("登录成功");
                         SpUtils sp=new SpUtils(LoginActivity.this);
+                        Gson gson= new GsonBuilder().disableHtmlEscaping().create();
+                        String userJson=gson.toJson(user);
                         sp.setValue(Constant.DataKey.FIRSTSTART,false);
+                        sp.setValue(Constant.DataKey.USER,userJson);
                         finish();
                     } else {
                         String reason = jsonObject.optString("reason");

@@ -53,9 +53,8 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     private View contextView;
     private PullToRefreshScrollView scrollView;
 
-
-    private List<String> images;//上方的滑动图片资源
     private List<Course> courses;//首页推荐课程
+    private List<Course> lineCourses;
     private Timer timer;
 
     @Override
@@ -77,12 +76,6 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 LogUtil.i("reflesh", "pull to reflesh");
                 requestFirstPageCourse();
-//                scrollView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        scrollView.onRefreshComplete();
-//                    }
-//                }, 1000);
             }
         });
         return contextView;
@@ -106,40 +99,63 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
         scrollView.onRefreshComplete();
     }
 
+    //初始化横栏图片视频
     private void initImageView() {
-        images=new ArrayList<>();
-        images.add("http://img.mukewang.com/55cabf1100013e0806000338-240-135.jpg");
-        images.add("http://img.mukewang.com/55c33e400001a88f06000338-240-135.jpg");
-        images.add("http://img.mukewang.com/55a5f5f8000161a806000338-240-135.jpg");
-        images.add("http://img.mukewang.com/55badcc300017b7006000338-240-135.jpg");
-        images.add("http://img.mukewang.com/55c17abe0001ffd506000338-240-135.jpg");
-        images.add("http://img.mukewang.com/55c16f5a000159d406000338-240-135.jpg");
-
+//        images=new ArrayList<>();
+//        images.add("http://img.mukewang.com/55cabf1100013e0806000338-240-135.jpg");
+//        images.add("http://img.mukewang.com/55c33e400001a88f06000338-240-135.jpg");
+//        images.add("http://img.mukewang.com/55a5f5f8000161a806000338-240-135.jpg");
+//        images.add("http://img.mukewang.com/55badcc300017b7006000338-240-135.jpg");
+//        images.add("http://img.mukewang.com/55c17abe0001ffd506000338-240-135.jpg");
+//        images.add("http://img.mukewang.com/55c16f5a000159d406000338-240-135.jpg");
         viewPager=(ViewPager)contextView.findViewById(R.id.viewPager);
         circleIndicator=(CircleIndicator)contextView.findViewById(R.id.indicator);
 
-        viewPager.setAdapter(new FirstViewPagerAdapter(images));
-        circleIndicator.setViewPager(viewPager);
-
-        TimerTask timerTask=new TimerTask() {
+        Map<String,String> param=new HashMap<>();
+        param.put("type", "firstpagecourse");
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
-            public void run() {
-                if(getActivity()==null){
-                    return;
+            public void onSuccess(String response) {
+                try {
+                    String[] checks = response.split("\\]");
+                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
+                    lineCourses = courses;
+                    viewPager.setAdapter(new FirstViewPagerAdapter(lineCourses));
+                    circleIndicator.setViewPager(viewPager);
+
+                    //定时翻页
+                    TimerTask timerTask=new TimerTask() {
+                        @Override
+                        public void run() {
+                            if(getActivity()==null){
+                                return;
+                            }
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int possition = (viewPager.getCurrentItem()+1) % viewPager.getAdapter().getCount();
+                                    viewPager.setCurrentItem(possition);
+                                    LogUtil.i("page", possition + "");
+                                }
+                            });
+
+                        }
+                    };
+                    timer = new Timer();
+                    timer.schedule(timerTask, 1000, 10000);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int possition = (viewPager.getCurrentItem()+1) % viewPager.getAdapter().getCount();
-                        viewPager.setCurrentItem(possition);
-                        LogUtil.i("page", possition + "");
-                    }
-                });
+            }
+
+            @Override
+            public void onFail(String error) {
 
             }
-        };
-        timer = new Timer();
-        timer.schedule(timerTask, 1000, 10000);
+        });
     }
 
     //请求网络访问获得首页视频数据
@@ -189,9 +205,6 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     @Override
     public void leftOff(){
         LogUtil.i("left", "first page off");
-        if(aq==null){
-            aq=new AQuery(getActivity());
-        }
         aq.id(R.id.btn_firstpage).background(R.color.white);//背景色
         aq.id(R.id.img_firstpage).image(R.drawable.lesson_gray);//图标
         aq.id(R.id.text_firstpage).getTextView().setTextColor(getResources().getColor(R.color.grey));
@@ -216,16 +229,16 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
      *
      */
     class FirstViewPagerAdapter extends PagerAdapter{
-        private List<String> images;
+        private List<Course> lineCourse;
         private AQuery aq;
 
-        public FirstViewPagerAdapter(List<String> images){
-            this.images=images;
+        public FirstViewPagerAdapter(List<Course> lineCourse){
+            this.lineCourse=lineCourse;
         }
 
         @Override
         public int getCount() {
-            return images.size();
+            return lineCourse.size();
         }
 
         @Override
@@ -240,10 +253,15 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                 @Override
                 public void onClick(View v) {//设置图片点击事件
                     LogUtil.i(position+"");
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable(Constant.DataKey.COURSE, courses.get(position));
+                    Intent intent=new Intent(getActivity(), CourseActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
 
-            new AQuery(imageView).image(images.get(position));
+            new AQuery(imageView).image(lineCourse.get(position).getCourse_img());
 
             container.addView(imageView);
 
