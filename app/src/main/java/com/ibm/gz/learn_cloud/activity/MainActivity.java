@@ -57,6 +57,7 @@ public class MainActivity extends BasePageActivity {
         setContentView(R.layout.activity_main);
         aq=new AQuery(this);
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        aq.id(R.id.username_tv).text(user.getUsername());
     }
 
     @Override

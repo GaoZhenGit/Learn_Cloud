@@ -1,6 +1,5 @@
 package com.ibm.gz.learn_cloud.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -14,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -70,28 +68,49 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
         initImageView();
         initListView();
         leftOn();
+        initRefreshView();
+        return contextView;
+    }
+
+    private void initRefreshView() {
         scrollView=(PullToRefreshScrollView)contextView.findViewById(R.id.pull_scroll);
-        scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+        scrollView.setMode(PullToRefreshBase.Mode.BOTH);
+        scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                LogUtil.i("reflesh", "pull to reflesh");
+            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                LogUtil.i("reflesh", "pull down reflesh");
                 requestFirstPageCourse();
             }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                LogUtil.i("reflesh","pull up refresh");
+                requestLoadMore();
+            }
+
         });
-        return contextView;
+        //设置PullRefreshListView上提加载时的加载提示
+        scrollView.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
+        scrollView.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
+        scrollView.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
+        // 设置PullRefreshListView下拉加载时的加载提示
+        scrollView.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新...");
+        scrollView.getLoadingLayoutProxy(true, false).setRefreshingLabel("正在刷新...");
+        scrollView.getLoadingLayoutProxy(true, false).setReleaseLabel("松开刷新...");
     }
 
     private void initListView() {
         courses=new ArrayList<Course>();
         requestFirstPageCourse();
     }
-    private void refleshData(List<Course> list){
+    private void refleshData(List<Course> list,boolean isReflesh){
         if(getListAdapter()==null){
             courses.addAll(list);
             setListAdapter(new CourseAdapter(getActivity(), courses));
             DensityUtil.setListViewHeightBasedOnChildren(getListView());
         }else {
-            courses.clear();
+            if(isReflesh)
+                courses.clear();
             courses.addAll(list);
             ((BaseAdapter)getListAdapter()).notifyDataSetChanged();
             DensityUtil.setListViewHeightBasedOnChildren((ListView) contextView.findViewById(android.R.id.list));
@@ -127,16 +146,16 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                     circleIndicator.setViewPager(viewPager);
 
                     //定时翻页
-                    TimerTask timerTask=new TimerTask() {
+                    TimerTask timerTask = new TimerTask() {
                         @Override
                         public void run() {
-                            if(getActivity()==null){
+                            if (getActivity() == null) {
                                 return;
                             }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    int possition = (viewPager.getCurrentItem()+1) % viewPager.getAdapter().getCount();
+                                    int possition = (viewPager.getCurrentItem() + 1) % viewPager.getAdapter().getCount();
                                     viewPager.setCurrentItem(possition);
                                     LogUtil.i("page", possition + "");
                                 }
@@ -172,9 +191,36 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
-                    refleshData(courses);
+                    refleshData(courses,true);
 
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
+    }
+
+    //加载更多请求
+    public void requestLoadMore(){
+        LogUtil.i("first page", "request more");
+        Map<String,String> param=new HashMap<>();
+        param.put("type", "firstpagecourse_more");
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    String[] checks = response.split("\\]");
+                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
+                    refleshData(courses,false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
