@@ -27,6 +27,6 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile files('libs/universal-image-loader-1.9.4.jar')
-    compile files('libs/gson.jar')
     compile project(':library')
+    compile files('libs/gson-2.1.jar')
 }
