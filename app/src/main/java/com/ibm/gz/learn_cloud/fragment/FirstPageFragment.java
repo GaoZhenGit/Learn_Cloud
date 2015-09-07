@@ -137,7 +137,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             public void onSuccess(String response) {
                 try {
                     String[] checks = response.split("\\]");
-                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    JSONArray jsonArray = new JSONArray(response);
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
@@ -187,7 +187,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             public void onSuccess(String response) {
                 try {
                     String[] checks = response.split("\\]");
-                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    JSONArray jsonArray = new JSONArray(response);
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
@@ -216,7 +216,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             public void onSuccess(String response) {
                 try {
                     String[] checks = response.split("\\]");
-                    JSONArray jsonArray = new JSONArray(checks[0] + "]");
+                    JSONArray jsonArray = new JSONArray(response);
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());

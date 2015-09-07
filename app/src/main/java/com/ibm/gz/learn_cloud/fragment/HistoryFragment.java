@@ -57,7 +57,7 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
         course.setCourse_img("http://file.bmob.cn/M01/E8/75/oYYBAFXK7nyAdbG2AAB9dJS_7aY137.jpg");
         Video video=new Video();
         video.setName("hellokitty");
-        video.setUri("http://www.ydtsystem.com/CardImage/21/Video/20140305/20140305124807_37734.mp4");
+        video.setUri("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
         course.addVideo(video);
         course.setDetail("第一次上课请多指教");
 
@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
         son.setCourse_img("http://img.mukewang.com/542376b20001374c06000338-280-160.jpg");
         video=new Video();
         video.setName("third");
-        video.setUri("http://www.ydtsystem.com/CardImage/21/Video/20140305/20140305124807_37734.mp4");
+        video.setUri("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
         son.addVideo(video);
         son.setDetail("关于微客的基本知识和进阶");
         User teacher =new User();
