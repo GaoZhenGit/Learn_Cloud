@@ -127,6 +127,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 
         if(course!=null) {
             videoView.setVideoURI(Uri.parse(course.getCourse_videos().get(0).getUri()));
+            LogUtil.i("----video uri------",course.getCourse_videos().get(0).getUri());
         }
         videoView.setOnErrorListener(this);
     }
