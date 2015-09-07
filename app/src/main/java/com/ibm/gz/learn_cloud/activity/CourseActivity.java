@@ -126,9 +126,13 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         mediaController.setBringView(aq.id(R.id.btn_fullscreen).getView());
 
         if(course!=null) {
-            videoView.setVideoURI(Uri.parse(course.getCourse_video()));
+            videoView.setVideoURI(Uri.parse(course.getCourse_videos().get(0).getUri()));
         }
         videoView.setOnErrorListener(this);
+    }
+    public void reSetVideoUri(String uri){
+        videoView.stopPlayback();
+        videoView.setVideoURI(Uri.parse(uri));
     }
 
     @Override

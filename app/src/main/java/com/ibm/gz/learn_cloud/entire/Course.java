@@ -1,6 +1,8 @@
 package com.ibm.gz.learn_cloud.entire;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by host on 2015/8/9.
@@ -8,7 +10,7 @@ import java.io.Serializable;
 public class Course implements Serializable{
     private int course_id;
     private String course_name;
-    private String course_video;
+    private List<Video> course_videos;
     private String course_img;
     private String detail;
     private User teacher;
@@ -27,14 +29,6 @@ public class Course implements Serializable{
 
     public void setCourse_name(String course_name) {
         this.course_name = course_name;
-    }
-
-    public String getCourse_video() {
-        return course_video;
-    }
-
-    public void setCourse_video(String course_video) {
-        this.course_video = course_video;
     }
 
     public String getCourse_img() {
@@ -59,5 +53,19 @@ public class Course implements Serializable{
 
     public void setTeacher(User teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Video> getCourse_videos() {
+        return course_videos;
+    }
+
+    public void setCourse_videos(List<Video> course_videos) {
+        this.course_videos = course_videos;
+    }
+    public void addVideo(Video video){
+        if(course_videos==null){
+            course_videos=new ArrayList<>();
+        }
+        course_videos.add(video);
     }
 }

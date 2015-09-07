@@ -21,6 +21,7 @@ import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.entire.User;
+import com.ibm.gz.learn_cloud.entire.Video;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
 import java.util.ArrayList;
@@ -54,19 +55,28 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
         Course course=new Course();
         course.setCourse_name("第一课");
         course.setCourse_img("http://file.bmob.cn/M01/E8/75/oYYBAFXK7nyAdbG2AAB9dJS_7aY137.jpg");
-        course.setCourse_video("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
+        Video video=new Video();
+        video.setName("hellokitty");
+        video.setUri("http://www.ydtsystem.com/CardImage/21/Video/20140305/20140305124807_37734.mp4");
+        course.addVideo(video);
         course.setDetail("第一次上课请多指教");
 
         Course course2=new Course();
         course2.setCourse_name("第二课");
         course2.setCourse_img("http://pic3.bbzhi.com/youxibizhi/wushi5/jingxuan_yxjx_291691_15.jpg");
-        course2.setCourse_video("http://192.168.1.107/zl.mp4");
+        video=new Video();
+        video.setName("helloword");
+        video.setUri("http://192.168.1.107/zl.mp4");
+        course2.addVideo(video);
         course2.setDetail("老牌讲师");
 
         Course son=new Course();
         son.setCourse_name("Gson的使用方法");
         son.setCourse_img("http://img.mukewang.com/542376b20001374c06000338-280-160.jpg");
-        son.setCourse_video("http://www.ydtsystem.com/CardImage/21/video/20140305/20140305124807_37734.mp4");
+        video=new Video();
+        video.setName("third");
+        video.setUri("http://www.ydtsystem.com/CardImage/21/Video/20140305/20140305124807_37734.mp4");
+        son.addVideo(video);
         son.setDetail("关于微客的基本知识和进阶");
         User teacher =new User();
         teacher.setU_id(1234578);
