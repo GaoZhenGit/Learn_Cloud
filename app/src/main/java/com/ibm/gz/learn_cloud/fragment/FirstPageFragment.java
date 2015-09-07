@@ -52,7 +52,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     private PullToRefreshScrollView scrollView;
 
     private List<Course> courses;//首页推荐课程
-    private List<Course> lineCourses;
+    private List<Course> lineCourses;//viewPager的课程
     private Timer timer;
 
     @Override
@@ -142,7 +142,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
                     lineCourses = courses;
-                    viewPager.setAdapter(new FirstViewPagerAdapter(lineCourses));
+                    viewPager.setAdapter(new FirstViewPagerAdapter());
                     circleIndicator.setViewPager(viewPager);
 
                     //定时翻页
@@ -275,16 +275,10 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
      *
      */
     class FirstViewPagerAdapter extends PagerAdapter{
-        private List<Course> lineCourse;
-        private AQuery aq;
-
-        public FirstViewPagerAdapter(List<Course> lineCourse){
-            this.lineCourse=lineCourse;
-        }
 
         @Override
         public int getCount() {
-            return lineCourse.size();
+            return lineCourses.size();
         }
 
         @Override
@@ -300,14 +294,14 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                 public void onClick(View v) {//设置图片点击事件
                     LogUtil.i(position+"");
                     Bundle bundle=new Bundle();
-                    bundle.putSerializable(Constant.DataKey.COURSE, courses.get(position));
+                    bundle.putSerializable(Constant.DataKey.COURSE, lineCourses.get(position));
                     Intent intent=new Intent(getActivity(), CourseActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });
 
-            new AQuery(imageView).image(lineCourse.get(position).getCourse_img());
+            new AQuery(imageView).image(lineCourses.get(position).getCourse_img());
 
             container.addView(imageView);
 
