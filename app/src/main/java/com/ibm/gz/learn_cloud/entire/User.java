@@ -6,20 +6,20 @@ import java.io.Serializable;
  * Created by host on 2015/8/13.
  */
 public class User implements Serializable{
-    private int u_id;
+    private int id;
     private String username;
     private String pwd;
-    private String user_mail;
-    private String user_tel;
+    private String mail;
+    private String phone;
     private String avater;
     private String detail;
 
-    public int getU_id() {
-        return u_id;
+    public int getId() {
+        return id;
     }
 
-    public void setU_id(int u_id) {
-        this.u_id = u_id;
+    public void setId(int u_id) {
+        this.id = u_id;
     }
 
     public String getUsername() {
@@ -38,22 +38,6 @@ public class User implements Serializable{
         this.pwd = pwd;
     }
 
-    public String getUser_mail() {
-        return user_mail;
-    }
-
-    public void setUser_mail(String user_mail) {
-        this.user_mail = user_mail;
-    }
-
-    public String getUser_tel() {
-        return user_tel;
-    }
-
-    public void setUser_tel(String user_tel) {
-        this.user_tel = user_tel;
-    }
-
     public String getAvater() {
         return avater;
     }
@@ -68,5 +52,21 @@ public class User implements Serializable{
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -141,7 +141,7 @@ public class RegisterFragment extends Fragment {
         }
         //设置请求参数
         Map<String,String> param=new HashMap<String,String>();
-        param.put("type","register");
+        param.put("type","register_phone");
         param.put("phone",phoneString);
         param.put("password",passwordString);
         //发起请求
@@ -156,7 +156,7 @@ public class RegisterFragment extends Fragment {
                         Gson gson=new Gson();
                         String userJson=jsonObject.optString("user");//"{\"u_id\":\"123123\",\"user_tel\":\"13622847209\"}";
                         User user=gson.fromJson(userJson,User.class);
-                        LogUtil.i("gson test ", "u_id:" + user.getU_id() + "  phone:" + user.getUser_tel());
+                        LogUtil.i("gson test ", "id:" + user.getId() + "  phone:" + user.getPhone());
                         SpUtils sp=new SpUtils(getActivity());
                         sp.setValue("user",userJson);
                         Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();

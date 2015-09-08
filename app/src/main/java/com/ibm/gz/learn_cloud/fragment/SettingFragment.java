@@ -49,11 +49,11 @@ public class SettingFragment extends Fragment implements LeftHideShow{
         AQuery inaq=new AQuery(convertView);
         inaq.id(R.id.setting_name).text(user.getUsername());
         inaq.id(R.id.setting_detail).text(user.getDetail());
-        if(user.getUser_tel()!=null){
-            inaq.id(R.id.setting_phone).text(user.getUser_tel());
+        if(user.getPhone()!=null){
+            inaq.id(R.id.setting_phone).text(user.getPhone());
         }
-        if(user.getUser_mail()!=null){
-            inaq.id(R.id.setting_mail).text(user.getUser_mail());
+        if(user.getMail()!=null){
+            inaq.id(R.id.setting_mail).text(user.getMail());
         }
     }
 

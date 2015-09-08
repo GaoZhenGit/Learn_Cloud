@@ -83,17 +83,18 @@ public class LoginActivity extends BasePageActivity {
         user.setDetail("遍身罗绮者，不是养蚕人");
 
         Map<String,String> param=new HashMap<>();
-        param.put("type","login");
         if(accountString.matches("[0-9]+")) {
             //手机号登录
+			param.put("type","login_phone");
             param.put("phone", accountString);
             param.put("password", passwordString);
-            user.setUser_tel(accountString);
+            user.setPhone(accountString);
         }else {
             //邮箱登录
+			param.put("type","login_email");
             param.put("email", accountString);
             param.put("password", passwordString);
-            user.setUser_mail(accountString);
+            user.setMail(accountString);
         }
         VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
             @Override

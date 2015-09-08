@@ -79,8 +79,8 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
         son.addVideo(video);
         son.setDetail("关于微客的基本知识和进阶");
         User teacher =new User();
-        teacher.setU_id(1234578);
-        teacher.setUser_mail("hotdog@gmail.com");
+        teacher.setId(1234578);
+        teacher.setMail("hotdog@gmail.com");
         teacher.setUsername("热狗");
         teacher.setDetail("最热门的老师，教你微商技术");
         teacher.setAvater("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1506454338,1185755782&fm=116&gp=0.jpg");
