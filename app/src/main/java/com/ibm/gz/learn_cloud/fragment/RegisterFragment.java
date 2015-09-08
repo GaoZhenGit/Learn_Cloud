@@ -153,12 +153,12 @@ public class RegisterFragment extends Fragment {
                     JSONObject jsonObject=new JSONObject(response);
                     String state=jsonObject.optString("state");
                     if(state.equals("success")){
-                        Gson gson=new Gson();
-                        String userJson=jsonObject.optString("user");//"{\"u_id\":\"123123\",\"user_tel\":\"13622847209\"}";
-                        User user=gson.fromJson(userJson,User.class);
-                        LogUtil.i("gson test ", "id:" + user.getId() + "  phone:" + user.getPhone());
-                        SpUtils sp=new SpUtils(getActivity());
-                        sp.setValue("user",userJson);
+//                        Gson gson=new Gson();
+//                        String userJson=jsonObject.optString("user");//"{\"u_id\":\"123123\",\"user_tel\":\"13622847209\"}";
+//                        User user=gson.fromJson(userJson,User.class);
+//                        LogUtil.i("gson test ", "id:" + user.getId() + "  phone:" + user.getPhone());
+//                        SpUtils sp=new SpUtils(getActivity());
+//                        sp.setValue("user",userJson);
                         Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
                         getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                         getActivity().finish();
