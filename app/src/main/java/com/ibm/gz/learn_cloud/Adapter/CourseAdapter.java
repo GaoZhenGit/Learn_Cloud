@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -47,13 +51,15 @@ public class CourseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View contextView=listContainer.inflate(R.layout.course_adapter,null);
-        aq=new AQuery(contextView);
+        if(convertView==null) {
+            convertView = listContainer.inflate(R.layout.course_adapter, null);
+        }
+        aq=new AQuery(convertView);
         Course course=videoList.get(position);
         aq.id(R.id.img_video).image(course.getCourse_img());
         aq.id(R.id.video_name_tv).text(course.getCourse_name());
         aq.id(R.id.video_detail_tv).text(course.getDetail());
-        return contextView;
+        return convertView;
     }
 
     public void refresh(){

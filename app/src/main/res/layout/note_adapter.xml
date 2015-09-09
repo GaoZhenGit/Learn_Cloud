@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_date"
+        android:text="2015-9-9"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/margin_left"
+        android:layout_marginLeft="@dimen/margin_left"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_course_name"
+        android:text="html+css+javascrip"
+        android:textSize="@dimen/text_size_middle"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"/>
+    <TextView
+        android:id="@+id/note_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginBottom="10dp"
+        android:text="这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，这个是笔记吗，应该是的，"/>
+
+</RelativeLayout>
