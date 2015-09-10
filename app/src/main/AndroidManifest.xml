@@ -34,11 +34,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:launchMode="singleTask"
             android:name=".activity.CourseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_video"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.NoteActivity"
+            android:label="@string/title_activity_note" >
         </activity>
     </application>
 

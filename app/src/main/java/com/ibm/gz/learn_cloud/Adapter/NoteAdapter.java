@@ -49,7 +49,7 @@ public class NoteAdapter extends BaseAdapter {
         Note note=noteList.get(position);
         aq.id(R.id.note_date).text(note.getTime());
         aq.id(R.id.note_course_name).text(note.getCourseName());
-        aq.id(R.id.note_list).text(note.getText());
+        aq.id(R.id.note_text).text(note.getText());
         return convertView;
     }
 }

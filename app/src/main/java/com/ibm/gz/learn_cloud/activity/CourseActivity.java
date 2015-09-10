@@ -1,5 +1,6 @@
 package com.ibm.gz.learn_cloud.activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
@@ -141,6 +142,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         aq.id(R.id.title_mid_text).text(course.getCourse_name());
         aq.id(R.id.title_left_img).visible();
         aq.id(R.id.title_left_tv).visible().text("退出");
+        aq.id(R.id.title_right_img).visible().image(R.drawable.note);
     }
 
     @Override
@@ -149,21 +151,22 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 //        aq.id(R.id.btn_stop).clicked(this, "aq_stop_video");
 //        aq.id(R.id.btn_pause).clicked(this, "aq_pause_video");
 //        aq.id(R.id.btn_landscape).clicked(this, "aq_landscape");
-        aq.id(R.id.btn_fullscreen).clicked(this,"aq_landscape");
+        aq.id(R.id.btn_fullscreen).clicked(this, "aq_landscape");
         aq.id(R.id.title_left_btn).clicked(this, "finish");
+        aq.id(R.id.title_right_btn).clicked(this, "aq_note");
     }
 
-    public void aq_start_video() {
-        videoView.start();
-        mediaController.show();
-    }
-    public void aq_pause_video(){
-        videoView.pause();
-    }
-
-    public void aq_stop_video() {
-        videoView.stopPlayback();
-    }
+//    public void aq_start_video() {
+//        videoView.start();
+//        mediaController.show();
+//    }
+//    public void aq_pause_video(){
+//        videoView.pause();
+//    }
+//
+//    public void aq_stop_video() {
+//        videoView.stopPlayback();
+//    }
 
     public void aq_landscape() {
         switch (getRequestedOrientation()) {
@@ -176,6 +179,14 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
                 setLandscapeView();
                 break;
         }
+    }
+
+    public void aq_note(){
+        Bundle bundle=new Bundle();
+        bundle.putString(Constant.DataKey.COURSE, course.getCourse_name());
+        Intent intent=new Intent(this,NoteActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

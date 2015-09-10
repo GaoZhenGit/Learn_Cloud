@@ -18,5 +18,6 @@ public interface Constant {
         public static final String USER="user";
         public static final String COURSE="course";
         public static final String FIRSTSTART="first_start";
+        public static final String NOTE="note";
     }
 }

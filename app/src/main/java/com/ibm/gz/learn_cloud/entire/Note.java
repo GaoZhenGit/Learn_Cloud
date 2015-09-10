@@ -1,9 +1,11 @@
 package com.ibm.gz.learn_cloud.entire;
 
+import java.io.Serializable;
+
 /**
  * Created by host on 2015/9/9.
  */
-public class Note {
+public class Note implements Serializable{
     private int id;
     private String time;
     private String courseName;
