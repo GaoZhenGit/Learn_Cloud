@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.R;
@@ -17,6 +19,7 @@ import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 public class PopularizationFragment extends Fragment implements LeftHideShow{
 
     private View mView;
+    private WebView webView;
     private AQuery aq;
 
     @Override
@@ -31,7 +34,15 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
     }
 
     private void initData() {
-
+        webView=(WebView)mView.findViewById(R.id.webview);
+        webView.loadUrl("http://www.baidu.com");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
     }
 
     private void initView() {
