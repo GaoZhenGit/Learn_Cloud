@@ -156,9 +156,6 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
             courses.addAll(list);
             courseAdapter.notifyDataSetChanged();
         }
-        //先释放listview焦点，再滑动到顶端，就这样做就好了，别问为什么，不然无效
-        listView.setFocusable(false);
-        scrollView.scrollTo(0,0);
 
         //刷新后，将记录缓存
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -191,6 +188,8 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         }
         viewPager.setAdapter(new FirstViewPagerAdapter());
         circleIndicator.setViewPager(viewPager);
+        //先释放listview焦点，再滑动到顶端，就这样做就好了，别问为什么，不然无效
+        listView.setFocusable(false);
         scrollView.scrollTo(0,0);
         //请求网络更新横栏数据
         Map<String, String> param = new HashMap<>();
@@ -203,13 +202,9 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     JSONArray jsonArray = new JSONArray(response);
                     lineCourses= gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
-                    viewPager.setAdapter(new FirstViewPagerAdapter());
-                    circleIndicator.setViewPager(viewPager);
 
                     //存储缓存
                     sp.setValue(Constant.DataKey.COURSE_LINE_CACHE,jsonArray.toString());
-                    //回到顶端
-//                    scrollView.scrollTo(0, 0);
                     //定时翻页
                     TimerTask timerTask = new TimerTask() {
                         @Override
