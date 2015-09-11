@@ -101,13 +101,16 @@ public class NoteFgm extends Fragment{
     private void checkDBForNote(){
         try {
             if(noteList==null) {
-                noteList = db.findAll(Selector.from(Note.class)
+                noteList= db.findAll(Selector.from(Note.class)
                         .where("courseName", "=", course.getCourse_name()).orderBy("id",true));
+                if(noteList==null)//数据库查询为空时，list也为空，所以……
+                    noteList=new ArrayList<>();
             }else {
                 noteList.clear();
                 List<Note> temp= db.findAll(Selector.from(Note.class)
                         .where("courseName", "=", course.getCourse_name()).orderBy("id",true));
-                noteList.addAll(temp);
+                if(temp!=null)
+                    noteList.addAll(temp);
             }
             if(noteAdapter==null) {//首次查询数据库
                 noteAdapter = new NoteAdapter(getActivity(), noteList);
