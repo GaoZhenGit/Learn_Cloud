@@ -107,7 +107,6 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 LogUtil.i("reflesh", "pull down reflesh");
                 requestFirstPageCourse();
-                requestLineCourse();
             }
 
             @Override
@@ -190,12 +189,6 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         viewPager.setAdapter(new FirstViewPagerAdapter());
         circleIndicator.setViewPager(viewPager);
         //请求网络更新横栏数据
-
-    }
-
-    //请求网络访问获得首页视频数据
-    private void requestFirstPageCourse() {
-        LogUtil.i("first page", "request");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
         VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
@@ -204,39 +197,10 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                 try {
                     String[] checks = response.split("\\]");
                     JSONArray jsonArray = new JSONArray(response);
-                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    lineCourses= gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
-                    refleshData(courses, true);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-
-            }
-        });
-    }
-    //网络请求获得横栏视频数据
-    private void requestLineCourse(){
-        Map<String, String> param = new HashMap<>();
-        param.put("type", "firstpagecourse");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    String[] checks = response.split("\\]");
-                    JSONArray jsonArray = new JSONArray(response);
-                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
-                    }.getType());
-                    lineCourses = courses;
-//                    viewPager.setAdapter(new FirstViewPagerAdapter());
-//                    circleIndicator.setViewPager(viewPager);
-                    viewPager.getAdapter().notifyDataSetChanged();
+                    viewPager.setAdapter(new FirstViewPagerAdapter());
+                    circleIndicator.setViewPager(viewPager);
 
                     //存储缓存
                     sp.setValue(Constant.DataKey.COURSE_LINE_CACHE,jsonArray.toString());
@@ -262,6 +226,35 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     };
                     timer = new Timer();
                     timer.schedule(timerTask, 1000, 10000);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
+    }
+
+    //请求网络访问获得首页视频数据
+    private void requestFirstPageCourse() {
+        LogUtil.i("first page", "request");
+        Map<String, String> param = new HashMap<>();
+        param.put("type", "firstpagecourse");
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    String[] checks = response.split("\\]");
+                    JSONArray jsonArray = new JSONArray(response);
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
+                    refleshData(courses, true);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
