@@ -2,12 +2,14 @@ package com.ibm.gz.learn_cloud.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,11 +27,13 @@ import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 import com.ibm.gz.learn_cloud.myview.CircleIndicator;
+import com.ibm.gz.learn_cloud.myview.ScrollListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,12 +48,16 @@ import java.util.TimerTask;
 /**
  * Created by host on 2015/8/14.
  */
-public class FirstPageFragment extends ListFragment implements LeftHideShow {
+public class FirstPageFragment extends Fragment implements LeftHideShow {
     private AQuery aq;
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private View contextView;
     private PullToRefreshScrollView scrollView;
+    private CourseAdapter courseAdapter;
+    private ScrollListView listView;
+    private SpUtils sp;
+    private Gson gson;
 
     private List<Course> courses;//首页推荐课程
     private List<Course> lineCourses;//viewPager的课程
@@ -58,33 +66,53 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        aq=new AQuery(getActivity());
+        aq = new AQuery(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        contextView =inflater.inflate(R.layout.fragment_firstpage,container,false);
-        initImageView();//初始化横栏界面，包括获取网络资源
-        initListView();//初始化课程列表，网络请求
+        contextView = inflater.inflate(R.layout.fragment_firstpage, container, false);
+        listView=(ScrollListView)contextView.findViewById(R.id.course_listview);
+        sp=new SpUtils(getActivity());
+        gson=new GsonBuilder().disableHtmlEscaping().create();
+
+
         leftOn();//在左侧菜单中字体图片颜色改为红
         initRefreshView();//初始化下拉上拉界面
+        initListView();//初始化课程列表，包括获取本地缓存资源
+        initImageView();//初始化横栏界面，包括获取网络缓存资源
         return contextView;
     }
 
     private void initRefreshView() {
-        scrollView=(PullToRefreshScrollView)contextView.findViewById(R.id.pull_scroll);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //这个是视频点击的事件
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.DataKey.COURSE, courses.get(position));
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+
+
+        scrollView = (PullToRefreshScrollView) contextView.findViewById(R.id.pull_scroll);
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 LogUtil.i("reflesh", "pull down reflesh");
                 requestFirstPageCourse();
+                requestLineCourse();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                LogUtil.i("reflesh","pull up refresh");
+                LogUtil.i("reflesh", "pull up refresh");
                 requestLoadMore();
             }
 
@@ -100,21 +128,41 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
     }
 
     private void initListView() {
-        courses=new ArrayList<Course>();
-        requestFirstPageCourse();
-    }
-    private void refleshData(List<Course> list,boolean isReflesh){
-        if(getListAdapter()==null){
-            courses.addAll(list);
-            setListAdapter(new CourseAdapter(getActivity(), courses));
-            DensityUtil.setListViewHeightBasedOnChildren(getListView());
-        }else {
-            if(isReflesh)//刷新则清空
-                courses.clear();
-            courses.addAll(list);
-            ((BaseAdapter)getListAdapter()).notifyDataSetChanged();
-            DensityUtil.setListViewHeightBasedOnChildren((ListView) contextView.findViewById(android.R.id.list));
+        courses = new ArrayList<>();
+//        requestFirstPageCourse();
+        //从缓存中取出首页课程
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        SpUtils sp = new SpUtils(getActivity());
+        String coursecache = sp.getValue(Constant.DataKey.COURSE_LIST_CACHE, "");
+//        LogUtil.i("---------------course cache",coursecache);
+        //从json解析出来
+        List<Course> temp= gson.fromJson(coursecache, new TypeToken<List<Course>>() {
+        }.getType());
+        if(temp==null){//第一次进入应用，没有数据就请求网络
+            requestFirstPageCourse();
+        }else {//否则从缓存中获取
+            refleshData(temp, true);
         }
+    }
+
+    private void refleshData(List<Course> list, boolean isReflesh) {
+        if (courseAdapter == null) {
+            courses.addAll(list);
+            courseAdapter=new CourseAdapter(getActivity(), courses);
+            listView.setAdapter(courseAdapter);
+        } else {
+            if (isReflesh)//刷新则清空
+                courses.clear();
+//            LogUtil.i("-----count-----",courses.size()+"");
+            courses.addAll(list);
+            courseAdapter.notifyDataSetChanged();
+        }
+
+        //刷新后，将记录缓存
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        String refreshCache = gson.toJson(courses);
+        SpUtils sp = new SpUtils(getActivity());
+        sp.setValue(Constant.DataKey.COURSE_LIST_CACHE, refreshCache);
         scrollView.onRefreshComplete();
     }
 
@@ -127,10 +175,28 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
 //        images.add("http://img.mukewang.com/55badcc300017b7006000338-240-135.jpg");
 //        images.add("http://img.mukewang.com/55c17abe0001ffd506000338-240-135.jpg");
 //        images.add("http://img.mukewang.com/55c16f5a000159d406000338-240-135.jpg");
-        viewPager=(ViewPager)contextView.findViewById(R.id.viewPager);
-        circleIndicator=(CircleIndicator)contextView.findViewById(R.id.indicator);
+        viewPager = (ViewPager) contextView.findViewById(R.id.viewPager);
+        circleIndicator = (CircleIndicator) contextView.findViewById(R.id.indicator);
 
-        Map<String,String> param=new HashMap<>();
+        //先从缓存中获取横栏数据
+        String lineCache=sp.getValue(Constant.DataKey.COURSE_LINE_CACHE,"");
+        List<Course> temp=gson.fromJson(lineCache,new TypeToken<List<Course>>(){
+        }.getType());
+        if(temp!=null){
+            lineCourses=temp;
+        }else {
+            lineCourses=new ArrayList<>();
+        }
+        viewPager.setAdapter(new FirstViewPagerAdapter());
+        circleIndicator.setViewPager(viewPager);
+        //请求网络更新横栏数据
+
+    }
+
+    //请求网络访问获得首页视频数据
+    private void requestFirstPageCourse() {
+        LogUtil.i("first page", "request");
+        Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
         VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
@@ -141,10 +207,41 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
-                    lineCourses = courses;
-                    viewPager.setAdapter(new FirstViewPagerAdapter());
-                    circleIndicator.setViewPager(viewPager);
+                    refleshData(courses, true);
 
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
+    }
+    //网络请求获得横栏视频数据
+    private void requestLineCourse(){
+        Map<String, String> param = new HashMap<>();
+        param.put("type", "firstpagecourse");
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    String[] checks = response.split("\\]");
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
+                    lineCourses = courses;
+//                    viewPager.setAdapter(new FirstViewPagerAdapter());
+//                    circleIndicator.setViewPager(viewPager);
+                    viewPager.getAdapter().notifyDataSetChanged();
+
+                    //存储缓存
+                    sp.setValue(Constant.DataKey.COURSE_LINE_CACHE,jsonArray.toString());
+                    //回到顶端
+//                    scrollView.fullScroll(View.FOCUS_UP);
                     //定时翻页
                     TimerTask timerTask = new TimerTask() {
                         @Override
@@ -177,39 +274,10 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
         });
     }
 
-    //请求网络访问获得首页视频数据
-    private void requestFirstPageCourse(){
-        LogUtil.i("first page","request");
-        Map<String,String> param=new HashMap<>();
-        param.put("type", "firstpagecourse");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    String[] checks = response.split("\\]");
-                    JSONArray jsonArray = new JSONArray(response);
-                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
-                    }.getType());
-                    refleshData(courses,true);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-
-            }
-        });
-    }
-
     //加载更多请求
-    public void requestLoadMore(){
+    public void requestLoadMore() {
         LogUtil.i("first page", "request more");
-        Map<String,String> param=new HashMap<>();
+        Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse_more");
         VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
@@ -220,7 +288,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
-                    refleshData(courses,false);
+                    refleshData(courses, false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -233,36 +301,31 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
         });
     }
 
-    //这个是视频点击的事件
+
+
+
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(Constant.DataKey.COURSE, courses.get(position));
-        Intent intent=new Intent(getActivity(), CourseActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-    @Override
-    public void onDestroy(){
+    public void onDestroy() {
         LogUtil.i("---------------", "first page destroy");
         super.onDestroy();
     }
 
     @Override
-    public void leftOff(){
+    public void leftOff() {
         LogUtil.i("left", "first page off");
         aq.id(R.id.btn_firstpage).background(R.color.white);//背景色
         aq.id(R.id.img_firstpage).image(R.drawable.lesson_gray);//图标
         aq.id(R.id.text_firstpage).getTextView().setTextColor(getResources().getColor(R.color.grey));
 
-        if(timer!=null) {
+        if (timer != null) {
             timer.cancel();
             timer = null;
             System.gc();
         }
     }
+
     @Override
-    public void leftOn(){
+    public void leftOn() {
         LogUtil.i("left", "first page on");
         aq.id(R.id.btn_firstpage).background(R.color.light_grey);
         aq.id(R.id.img_firstpage).image(R.drawable.lesson_red);
@@ -274,7 +337,7 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
      *
      *
      */
-    class FirstViewPagerAdapter extends PagerAdapter{
+    class FirstViewPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -292,10 +355,10 @@ public class FirstPageFragment extends ListFragment implements LeftHideShow {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {//设置图片点击事件
-                    LogUtil.i(position+"");
-                    Bundle bundle=new Bundle();
+                    LogUtil.i(position + "");
+                    Bundle bundle = new Bundle();
                     bundle.putSerializable(Constant.DataKey.COURSE, lineCourses.get(position));
-                    Intent intent=new Intent(getActivity(), CourseActivity.class);
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

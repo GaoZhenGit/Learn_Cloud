@@ -17,6 +17,8 @@ public interface Constant {
     class DataKey{
         public static final String USER="user";
         public static final String COURSE="course";
+        public static final String COURSE_LIST_CACHE="course_list_cache";
+        public static final String COURSE_LINE_CACHE="course_line_cache";
         public static final String FIRSTSTART="first_start";
         public static final String NOTE="note";
     }
