@@ -21,6 +21,7 @@ import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
+import com.ibm.gz.learn_cloud.fragment.MyNoteFragment;
 import com.ibm.gz.learn_cloud.fragment.SettingFragment;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
@@ -35,6 +36,7 @@ public class MainActivity extends BasePageActivity {
     private FirstPageFragment firstPageFragment;
     private HistoryFragment historyFragment;
     private CollectFragment collectFragment;
+    private MyNoteFragment myNoteFragment;
     private SettingFragment settingFragment;
     private long exitTime=0;
 
@@ -98,6 +100,7 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_firstpage).clicked(this, "aq_firstpage");
         aq.id(R.id.btn_history).clicked(this, "aq_history");
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
+        aq.id(R.id.btn_my_note).clicked(this,"aq_my_note");
         aq.id(R.id.btn_setting).clicked(this, "aq_setting");
         aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
@@ -158,6 +161,13 @@ public class MainActivity extends BasePageActivity {
             collectFragment=new CollectFragment();
         }
         switchContent(collectFragment);
+    }
+    //笔记
+    public void aq_my_note(){
+        if(myNoteFragment==null){
+            myNoteFragment=new MyNoteFragment();
+        }
+        switchContent(myNoteFragment);
     }
     //个人设置
     public void aq_setting(){
