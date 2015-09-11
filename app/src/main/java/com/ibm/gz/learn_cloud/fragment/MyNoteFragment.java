@@ -123,7 +123,7 @@ public class MyNoteFragment extends Fragment implements LeftHideShow{
 
     @Override
     public void leftOff(){
-        LogUtil.i("left", "histroy off");
+        LogUtil.i("left", "my note off");
         if(aq==null){
             aq=new AQuery(getActivity());
         }
@@ -133,13 +133,13 @@ public class MyNoteFragment extends Fragment implements LeftHideShow{
     }
     @Override
     public void leftOn(){
-        LogUtil.i("left", "histroy on");
+        LogUtil.i("left", "my note on");
         if(aq==null){
             aq=new AQuery(getActivity());
         }
         aq.id(R.id.btn_my_note).background(R.color.light_grey);
         aq.id(R.id.img_note).image(R.drawable.note_red);
         aq.id(R.id.text_note).getTextView().setTextColor(getResources().getColor(R.color.text_red));
-        aq.id(R.id.title_mid_text).text("历史课程");
+        aq.id(R.id.title_mid_text).text("我的笔记");
     }
 }
