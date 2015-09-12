@@ -3,12 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--<ListView-->
-        <!--android:id="@+id/popularization_list"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
-    <WebView
-        android:id="@+id/webview"
+    <ListView
+        android:id="@+id/popularization_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

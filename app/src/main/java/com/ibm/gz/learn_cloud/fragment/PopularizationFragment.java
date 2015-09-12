@@ -7,11 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListView;
 
 import com.androidquery.AQuery;
+import com.ibm.gz.learn_cloud.Adapter.PopularizationAdapter;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.entire.PopularizationCourse;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gz on 15/9/11.
@@ -19,8 +25,9 @@ import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 public class PopularizationFragment extends Fragment implements LeftHideShow{
 
     private View mView;
-    private WebView webView;
+    private ListView listView;
     private AQuery aq;
+    private List<PopularizationCourse> courses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,19 +41,27 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
     }
 
     private void initData() {
-        webView=(WebView)mView.findViewById(R.id.webview);
-        webView.loadUrl("http://www.baidu.com");
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
+        courses=new ArrayList<>();
+        PopularizationCourse course1 = new PopularizationCourse();
+        course1.setTitle("servelet");
+        course1.setTitle("教你使用servelet");
+        course1.setPageImage("http://img.mukewang.com/549bbf110001019406000338-280-160.jpg");
+        PopularizationCourse course2=new PopularizationCourse();
+        course2.setTitle("ipad");
+        course2.setDetail("用ipad编程");
+        course2.setPageImage("http://img.mukewang.com/55dfcb37000114b104000200.jpg");
+        PopularizationCourse course3=new PopularizationCourse();
+        course3.setTitle("hahha");
+        course3.setDetail("来点击我");
+        course3.setPageImage("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
+        courses.add(course1);
+        courses.add(course2);
+        courses.add(course3);
+        listView=(ListView)mView.findViewById(R.id.popularization_list);
     }
 
     private void initView() {
-
+        listView.setAdapter(new PopularizationAdapter(getActivity(),courses));
     }
 
     private void setListener() {

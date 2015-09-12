@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/popularization_image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:src="@drawable/default_avatar"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/btn_selector_drawlayout"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right">
+        <TextView
+            android:id="@+id/popularization_title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            tools:text="这个是科普的标题"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/black"
+            android:maxLines="1"/>
+        <TextView
+            android:id="@+id/popularization_detail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/popularization_title"
+            android:layout_alignParentBottom="true"
+            tools:text="这个是科普的简介这个是科普的简介这个是科普的简介这个是科普的简介这个是科普的简介这个是科普的简介"/>
+    </RelativeLayout>
+</LinearLayout>
