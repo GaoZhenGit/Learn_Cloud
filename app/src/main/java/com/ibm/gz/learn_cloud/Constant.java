@@ -21,5 +21,6 @@ public interface Constant {
         public static final String COURSE_LINE_CACHE="course_line_cache";
         public static final String FIRSTSTART="first_start";
         public static final String NOTE="note";
+        public static final String POPULARIZATION="popularization";
     }
 }

@@ -44,6 +44,10 @@
             android:name=".activity.NoteActivity"
             android:label="@string/title_activity_note" >
         </activity>
+        <activity
+            android:name=".activity.ShowPopuActivity"
+            android:label="@string/title_activity_show_popu" >
+        </activity>
     </application>
 
 </manifest>

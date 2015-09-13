@@ -8,4 +8,13 @@
         <attr name="ci_animator_reverse" format="reference" />
         <attr name="ci_drawable" format="reference" />
     </declare-styleable>
+    <declare-styleable name="CircleIndicators">
+        <attr name="aci_width" format="dimension"/>
+        <attr name="aci_height" format="dimension"/>
+        <attr name="aci_margin" format="dimension"/>
+        <attr name="aci_animator" format="reference"/>
+        <attr name="aci_animator_reverse" format="reference"/>
+        <attr name="aci_drawable" format="reference"/>
+        <attr name="aci_drawable_unselected" format="reference"/>
+    </declare-styleable>
 </resources>
