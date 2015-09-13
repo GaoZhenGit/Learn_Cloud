@@ -32,7 +32,7 @@ import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
-import com.ibm.gz.learn_cloud.myview.CircleIndicator;
+import com.ibm.gz.learn_cloud.myview.CircleIndicators;
 import com.ibm.gz.learn_cloud.myview.ScrollListView;
 
 import org.json.JSONArray;
@@ -51,10 +51,11 @@ import java.util.TimerTask;
 public class FirstPageFragment extends Fragment implements LeftHideShow {
     private AQuery aq;
     private ViewPager viewPager;
-    private CircleIndicator circleIndicator;
+    private CircleIndicators circleIndicator;
     private View contextView;
     private PullToRefreshScrollView scrollView;
     private CourseAdapter courseAdapter;
+    private FirstViewPagerAdapter firstViewPagerAdapter;
     private ScrollListView listView;
     private SpUtils sp;
     private Gson gson;
@@ -175,19 +176,21 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
 //        images.add("http://img.mukewang.com/55c17abe0001ffd506000338-240-135.jpg");
 //        images.add("http://img.mukewang.com/55c16f5a000159d406000338-240-135.jpg");
         viewPager = (ViewPager) contextView.findViewById(R.id.viewPager);
-        circleIndicator = (CircleIndicator) contextView.findViewById(R.id.indicator);
+        circleIndicator = (CircleIndicators) contextView.findViewById(R.id.indicator);
 
         //先从缓存中获取横栏数据
         String lineCache=sp.getValue(Constant.DataKey.COURSE_LINE_CACHE,"");
         List<Course> temp=gson.fromJson(lineCache,new TypeToken<List<Course>>(){
         }.getType());
+
+        //如果不是第一次进入应用，则缓存数据不为空，则可以直接初始化横栏界面（不然circleindicator会有错，内容不能为空）
         if(temp!=null){
             lineCourses=temp;
-        }else {
-            lineCourses=new ArrayList<>();
+            firstViewPagerAdapter=new FirstViewPagerAdapter();
+            viewPager.setAdapter(firstViewPagerAdapter);
+            circleIndicator.setViewPager(viewPager);
         }
-        viewPager.setAdapter(new FirstViewPagerAdapter());
-        circleIndicator.setViewPager(viewPager);
+
         //先释放listview焦点，再滑动到顶端，就这样做就好了，别问为什么，不然无效
         listView.setFocusable(false);
         scrollView.scrollTo(0,0);
@@ -202,6 +205,14 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     JSONArray jsonArray = new JSONArray(response);
                     lineCourses= gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
+
+                    if(firstViewPagerAdapter==null){//第一次进入应用在这里初始化横栏界面
+                        firstViewPagerAdapter=new FirstViewPagerAdapter();
+                        viewPager.setAdapter(firstViewPagerAdapter);
+                        circleIndicator.setViewPager(viewPager);
+                    }else {//否则为更新数据adapter
+                        firstViewPagerAdapter.notifyDataSetChanged();
+                    }
 
                     //存储缓存
                     sp.setValue(Constant.DataKey.COURSE_LINE_CACHE,jsonArray.toString());
@@ -224,7 +235,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                         }
                     };
                     timer = new Timer();
-                    timer.schedule(timerTask, 5000, 10000);
+                    timer.schedule(timerTask, 3000, 10000);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
