@@ -224,7 +224,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                         }
                     };
                     timer = new Timer();
-                    timer.schedule(timerTask, 1000, 10000);
+                    timer.schedule(timerTask, 5000, 10000);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

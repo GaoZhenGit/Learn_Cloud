@@ -2,8 +2,10 @@ package com.ibm.gz.learn_cloud.activity;
 
 
 
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxStatus;
+import com.androidquery.callback.BitmapAjaxCallback;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.entire.PopularizationCourse;
@@ -67,17 +71,36 @@ public class ShowPopuActivity extends BasePageActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
+            LayoutInflater inflatet=LayoutInflater.from(container.getContext());
+            View view=inflatet.inflate(R.layout.adapter_show_pop, container, false);
+            final AQuery aq=new AQuery(view);
+            aq.id(R.id.show_pop_img).image(course.getImages().get(position),true,true,0,0,new BitmapAjaxCallback() {
+                @Override
+                protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
+                    super.callback(url, iv, bm, status);
+                    aq.id(R.id.progressBar1).gone();
+                }
+            });
+//            ImageView imageView = new ImageView(container.getContext());
+//            RelativeLayout relativeLayout=new RelativeLayout(container.getContext());
+//            relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+//                    RelativeLayout.LayoutParams.MATCH_PARENT));
+//
+//
+//            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//            imageView.setLayoutParams(new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+//                    RelativeLayout.LayoutParams.MATCH_PARENT));
+//
+//            new AQuery(imageView).image(course.getImages().get(position),true,true,0,0,new BitmapAjaxCallback(){
+//                @Override
+//                protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
+//                    super.callback(url,iv,bm,status);
+//
+//                }
+//            });
+            container.addView(view);
 
-            ImageView imageView = new ImageView(container.getContext());
-
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setLayoutParams(new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.MATCH_PARENT));
-
-            new AQuery(imageView).image(course.getImages().get(position));
-            container.addView(imageView);
-
-            return imageView;
+            return view;
         }
 
         @Override

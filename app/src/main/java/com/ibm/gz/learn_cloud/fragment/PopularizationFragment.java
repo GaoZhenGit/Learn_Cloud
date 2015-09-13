@@ -47,11 +47,11 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
     private void initData() {
         courses=new ArrayList<>();
         List<String> images=new ArrayList<>();
-        images.add("http://img4.imgtn.bdimg.com/it/u=2589604648,1000775040&fm=21&gp=0.jpg");
-        images.add("http://img3.imgtn.bdimg.com/it/u=3266247292,2128658319&fm=21&gp=0.jpg");
-        images.add("http://img5.imgtn.bdimg.com/it/u=3841178296,720639329&fm=21&gp=0.jpg");
-        images.add("http://img.mukewang.com/549bbf110001019406000338-280-160.jpg");
-        images.add("http://img.mukewang.com/55dfcb37000114b104000200.jpg");
+        images.add("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/12002127_1441035878900_160x240.jpg");
+        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002127_1441035878900_1080x1920.jpg");
+        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002128_1441035880811_1080x1920.jpg");
+        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002152_1441035884238_1080x1920.jpg");
+        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002130_1441035885744_1080x1920.jpg");
         images.add("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
 
         PopularizationCourse course1 = new PopularizationCourse();
