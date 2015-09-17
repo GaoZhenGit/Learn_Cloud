@@ -8,17 +8,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.MediaController;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.ibm.gz.learn_cloud.Adapter.TabPagerAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.ChapterFgm;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.DetailFgm;
@@ -44,6 +47,8 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     private List<Fragment> fragments;
 
 
+    private Gson gson;
+    private SpUtils sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +93,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         mTabWidget.setmOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onSelected(List<View> tabViews, int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         aq.id(R.id.tab_detail_v).visible();
                         aq.id(R.id.tab_detail_tv).textColor(getResources().getColor(R.color.light_green));
@@ -131,6 +136,13 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
             LogUtil.i("----video uri------",course.getCourse_videos().get(0).getUri());
         }
         videoView.setOnErrorListener(this);
+        videoView.setOnVideoStartListener(new FullScreenVideoView.onVideoStartListener() {
+            @Override
+            public void onStart() {
+                //设置历史记录，在播放视频后
+                saveHistroy();
+            }
+        });
     }
     public void reSetVideoUri(String uri){
         videoView.stopPlayback();
@@ -270,5 +282,25 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 
     public Course getCourse(){
         return course;
+    }
+
+    public void saveHistroy(){
+        if(gson==null){
+            gson=new GsonBuilder().disableHtmlEscaping().create();
+        }
+        if(sp==null){
+            sp=new SpUtils(this);
+        }
+        List<Course> history=gson.fromJson(sp.getValue(Constant.DataKey.HISTORY, ""),
+                new TypeToken<List<Course>>() {
+                }.getType());
+        if (history==null){
+            history=new ArrayList<>();
+        }
+        if(!history.contains(this.course)) {
+            String his = gson.toJson(this.course);
+            history.add(this.course);
+            sp.setValue(Constant.DataKey.HISTORY,gson.toJson(history));
+        }
     }
 }

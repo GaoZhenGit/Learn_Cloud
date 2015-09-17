@@ -13,6 +13,7 @@ public class FullScreenVideoView extends VideoView {
 
     private int videoWidth;
     private int videoHeight;
+    private onVideoStartListener onVideoStartListener;
 
     public FullScreenVideoView(Context context) {
         super(context);
@@ -39,6 +40,13 @@ public class FullScreenVideoView extends VideoView {
         }
         setMeasuredDimension(width, height);
     }
+    @Override
+    public void start(){
+        super.start();
+        if(onVideoStartListener!=null){
+            onVideoStartListener.onStart();
+        }
+    }
 
     public int getVideoWidth() {
         return videoWidth;
@@ -56,4 +64,11 @@ public class FullScreenVideoView extends VideoView {
         this.videoHeight = videoHeight;
     }
 
+    public void setOnVideoStartListener(FullScreenVideoView.onVideoStartListener onVideoStartListener) {
+        this.onVideoStartListener = onVideoStartListener;
+    }
+
+    public interface onVideoStartListener{
+        void onStart();
+    }
 }
