@@ -1,11 +1,14 @@
 package com.ibm.gz.learn_cloud.entire;
 
+import com.lidroid.xutils.db.annotation.Id;
+
 import java.io.Serializable;
 
 /**
  * Created by host on 2015/9/9.
  */
 public class Note implements Serializable{
+    @Id(column = "id")
     private int id;
     private String time;
     private String courseName;

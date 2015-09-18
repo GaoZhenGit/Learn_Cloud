@@ -23,6 +23,7 @@ import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.entire.Course;
+import com.ibm.gz.learn_cloud.entire.HistoryCourse;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.ChapterFgm;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.DetailFgm;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.NoteFgm;
@@ -30,9 +31,14 @@ import com.ibm.gz.learn_cloud.listener.OnTabSelectedListener;
 import com.ibm.gz.learn_cloud.myview.FullScreenMediaController;
 import com.ibm.gz.learn_cloud.myview.FullScreenVideoView;
 import com.ibm.gz.learn_cloud.myview.PagerTabWidget;
+import com.lidroid.xutils.DbUtils;
+import com.lidroid.xutils.db.sqlite.Selector;
+import com.lidroid.xutils.exception.DbException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CourseActivity extends BasePageActivity implements MediaPlayer.OnErrorListener{
     private AQuery aq;
@@ -49,6 +55,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 
     private Gson gson;
     private SpUtils sp;
+    private DbUtils db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -288,19 +295,32 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         if(gson==null){
             gson=new GsonBuilder().disableHtmlEscaping().create();
         }
-        if(sp==null){
-            sp=new SpUtils(this);
+//        if(sp==null){
+//            sp=new SpUtils(this);
+//        }
+//        List<Course> history=gson.fromJson(sp.getValue(Constant.DataKey.HISTORY, ""),
+//                new TypeToken<List<Course>>() {
+//                }.getType());
+//        if (history==null){
+//            history=new ArrayList<>();
+//        }
+//        if(!history.contains(this.course)) {
+//            String his = gson.toJson(this.course);
+//            history.add(this.course);
+//            sp.setValue(Constant.DataKey.HISTORY,gson.toJson(history));
+//        }
+        if(db==null){
+            db=DbUtils.create(this);
         }
-        List<Course> history=gson.fromJson(sp.getValue(Constant.DataKey.HISTORY, ""),
-                new TypeToken<List<Course>>() {
-                }.getType());
-        if (history==null){
-            history=new ArrayList<>();
-        }
-        if(!history.contains(this.course)) {
-            String his = gson.toJson(this.course);
-            history.add(this.course);
-            sp.setValue(Constant.DataKey.HISTORY,gson.toJson(history));
+        try {
+            HistoryCourse historyCourse=new HistoryCourse();
+            historyCourse.setCourse(this.course);
+            HistoryCourse dup=db.findFirst(Selector.from(HistoryCourse.class).where("id", "=", this.course.getCourse_id()));
+            if(dup==null) {
+                db.saveBindingId(historyCourse);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
         }
     }
 }
