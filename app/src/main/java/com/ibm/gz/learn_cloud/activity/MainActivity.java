@@ -21,6 +21,7 @@ import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
+import com.ibm.gz.learn_cloud.fragment.InterestFragment;
 import com.ibm.gz.learn_cloud.fragment.MyNoteFragment;
 import com.ibm.gz.learn_cloud.fragment.PopularizationFragment;
 import com.ibm.gz.learn_cloud.fragment.SettingFragment;
@@ -38,6 +39,7 @@ public class MainActivity extends BasePageActivity {
     private HistoryFragment historyFragment;
     private CollectFragment collectFragment;
     private PopularizationFragment popularizationFragment;
+    private InterestFragment interestFragment;
     private MyNoteFragment myNoteFragment;
     private SettingFragment settingFragment;
     private long exitTime=0;
@@ -103,6 +105,7 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_history).clicked(this, "aq_history");
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
         aq.id(R.id.btn_popularization).clicked(this,"aq_popularization");
+        aq.id(R.id.btn_interest).clicked(this,"aq_interest");
         aq.id(R.id.btn_my_note).clicked(this,"aq_my_note");
         aq.id(R.id.btn_setting).clicked(this, "aq_setting");
         aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
@@ -171,6 +174,13 @@ public class MainActivity extends BasePageActivity {
             popularizationFragment=new PopularizationFragment();
         }
         switchContent(popularizationFragment);
+    }
+    //兴趣
+    public void aq_interest(){
+        if(interestFragment==null){
+            interestFragment=new InterestFragment();
+        }
+        switchContent(interestFragment);
     }
     //笔记
     public void aq_my_note(){
