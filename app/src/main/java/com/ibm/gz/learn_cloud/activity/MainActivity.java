@@ -22,6 +22,7 @@ import com.ibm.gz.learn_cloud.fragment.CollectFragment;
 import com.ibm.gz.learn_cloud.fragment.FirstPageFragment;
 import com.ibm.gz.learn_cloud.fragment.HistoryFragment;
 import com.ibm.gz.learn_cloud.fragment.InterestFragment;
+import com.ibm.gz.learn_cloud.fragment.MessageFragment;
 import com.ibm.gz.learn_cloud.fragment.MyNoteFragment;
 import com.ibm.gz.learn_cloud.fragment.PopularizationFragment;
 import com.ibm.gz.learn_cloud.fragment.SettingFragment;
@@ -40,6 +41,7 @@ public class MainActivity extends BasePageActivity {
     private CollectFragment collectFragment;
     private PopularizationFragment popularizationFragment;
     private InterestFragment interestFragment;
+    private MessageFragment messageFragment;
     private MyNoteFragment myNoteFragment;
     private SettingFragment settingFragment;
     private long exitTime=0;
@@ -107,6 +109,7 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_popularization).clicked(this,"aq_popularization");
         aq.id(R.id.btn_interest).clicked(this,"aq_interest");
         aq.id(R.id.btn_my_note).clicked(this,"aq_my_note");
+        aq.id(R.id.btn_message).clicked(this,"aq_message");
         aq.id(R.id.btn_setting).clicked(this, "aq_setting");
         aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
@@ -143,6 +146,7 @@ public class MainActivity extends BasePageActivity {
                 current = (LeftHideShow) to;
                 current.leftOn();
             }
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
         }
     }
 
@@ -182,6 +186,13 @@ public class MainActivity extends BasePageActivity {
         }
         switchContent(interestFragment);
     }
+    //我的消息
+    public void aq_message(){
+        if(messageFragment==null){
+            messageFragment=new MessageFragment();
+        }
+        switchContent(messageFragment);
+    }
     //笔记
     public void aq_my_note(){
         if(myNoteFragment==null){
@@ -209,6 +220,9 @@ public class MainActivity extends BasePageActivity {
                 ((CloudApplication)getApplication()).exit();
             }
             return true;
+        }
+        if(keyCode==KeyEvent.KEYCODE_MENU){
+            aq.id(R.id.title_left_btn).click();
         }
         return super.onKeyDown(keyCode, event);
     }
