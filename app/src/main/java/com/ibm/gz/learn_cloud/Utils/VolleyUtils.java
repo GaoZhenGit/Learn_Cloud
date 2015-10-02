@@ -46,7 +46,7 @@ public class VolleyUtils {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                LogUtil.i("volley error", error.getMessage());
+                LogUtil.i("volley error", error.getMessage()+"");
                 networkListener.onFail(error.getMessage());
             }
         }) {

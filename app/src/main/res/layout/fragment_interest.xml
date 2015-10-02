@@ -2,56 +2,56 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/defalut"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag1"
             style="@style/tagStyle"
-            android:backgroundTint="@color/skyblue"
+            app:tcv_tagColor="@color/skyblue"
             android:layout_toLeftOf="@+id/tag2"
             android:text="one"
             tools:visibility="visible"/>
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag2"
             style="@style/tagStyle"
-            android:backgroundTint="@color/violet"
+            app:tcv_tagColor="@color/violet"
             android:layout_centerHorizontal="true"
             android:text="two"
             tools:visibility="visible"/>
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag3"
             style="@style/tagStyle"
-            android:backgroundTint="@color/yellow"
+            app:tcv_tagColor="@color/yellow"
             android:layout_toRightOf="@+id/tag2"
             android:text="three"
             tools:visibility="visible"/>
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag4"
             style="@style/tagStyle"
-            android:backgroundTint="@color/greenyellow"
+            app:tcv_tagColor="@color/greenyellow"
             android:layout_toLeftOf="@+id/tag5"
             android:layout_below="@+id/tag2"
             android:text="four"
             tools:visibility="visible"/>
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag5"
             style="@style/tagStyle"
-            android:backgroundTint="@color/tomato"
+            app:tcv_tagColor="@color/tomato"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tag2"
             android:text="five"
             tools:visibility="visible"/>
-        <TextView
+        <com.ibm.gz.learn_cloud.myview.TagColorView
             android:id="@+id/tag6"
             style="@style/tagStyle"
-            android:backgroundTint="@color/lightsteelblue"
+            app:tcv_tagColor="@color/lightsteelblue"
             android:layout_toRightOf="@+id/tag5"
             android:layout_below="@+id/tag2"
             android:text="six"
@@ -59,36 +59,81 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.CardView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        apps:cardCornerRadius="3dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="100dp">
+        <EditText
+            android:gravity="center"
+            android:id="@+id/et_self_tag"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/choice_tag"
+            android:background="@drawable/tag_stroke"
+            android:hint="自定义标签"
+            android:maxLength="5"/>
+        <Button
+            android:id="@+id/btn_tag_comfirm"
+            android:layout_width="60dp"
+            android:layout_height="@dimen/button_height"
+            android:text="确认"
+            android:layout_alignRight="@+id/gl_tag_grid"
+            android:background="@drawable/btn_selector_titlecolor_light"/>
+        <TextView
+            android:id="@+id/choice_tag"
+            android:layout_height="44dp"
+            android:layout_width="130dp"
+            android:layout_marginLeft="25dp"
+            android:text="选择兴趣标签"
+            android:textSize="@dimen/text_size_large"
+            android:gravity="center"
+            android:background="@color/defalut"/>
+        <GridLayout
+            android:id="@+id/gl_tag_grid"
+            android:background="@color/defalut"
             android:layout_height="wrap_content"
-            android:background="@color/defalut">
-            <EditText
-                android:password="true"
-                android:gravity="center"
-                android:id="@+id/et_self_tag"
-                android:layout_width="160dp"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginRight="@dimen/margin_right"
-                android:layout_marginLeft="@dimen/margin_left"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/tag_stroke"
-                android:hint="请输入自定义标签" />
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/et_self_tag">
-                <TextView
-                    android:id="@+id/choice_tag2"
-                    style="@style/tagStyle"
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+            android:layout_width="match_parent"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:paddingBottom="10dp"
+            android:columnCount="3"
+            android:layout_below="@+id/et_self_tag">
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag1"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/lightcyan"
+                android:text="tag1"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag2"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/gold"
+                android:text="tag2"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag3"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/violet"
+                android:text="tag3"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag4"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/greenyellow"
+                android:text="tag4"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag5"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/red"
+                android:text="tag5"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag6"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag6"/>
+        </GridLayout>
+    </RelativeLayout>
 
 </LinearLayout>

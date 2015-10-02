@@ -5,7 +5,10 @@ package com.ibm.gz.learn_cloud;
  */
 public interface Constant {
     class URL{
-        public static final String Register="http://marketonhand.sinaapp.com/cloude_test.php";
+        public static final String Register="http://2.learncloud.sinaapp.com/registerCheck.php";
+        public static final String Login="http://2.learncloud.sinaapp.com/login.php";
+//        public static final String RequestCourse="http://2.learncloud.sinaapp.com/postRequest.php";
+        public static final String RequestCourse="http://1.marketonhand.sinaapp.com/requestTest.php";
     }
     class CODE{
         public static final String KeyValue="key_value";

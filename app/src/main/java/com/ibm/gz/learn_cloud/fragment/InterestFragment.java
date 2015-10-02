@@ -1,10 +1,12 @@
 package com.ibm.gz.learn_cloud.fragment;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.R;
@@ -16,6 +18,7 @@ import com.ibm.gz.learn_cloud.listener.LeftHideShow;
  */
 public class InterestFragment extends Fragment implements LeftHideShow {
     private AQuery aq;
+    private View contextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class InterestFragment extends Fragment implements LeftHideShow {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View contextView =inflater.inflate(R.layout.fragment_interest,container,false);
+        contextView =inflater.inflate(R.layout.fragment_interest,container,false);
         initListView();
         leftOn();
         return contextView;

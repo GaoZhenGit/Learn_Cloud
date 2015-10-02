@@ -17,4 +17,7 @@
         <attr name="aci_drawable" format="reference"/>
         <attr name="aci_drawable_unselected" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="TagColorView">
+        <attr name="tcv_tagColor" format="color"/>
+    </declare-styleable>
 </resources>

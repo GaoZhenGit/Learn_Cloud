@@ -96,7 +96,7 @@ public class LoginActivity extends BasePageActivity {
             param.put("password", passwordString);
             user.setMail(accountString);
         }
-        VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.Login, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 LogUtil.i("volley", response);
