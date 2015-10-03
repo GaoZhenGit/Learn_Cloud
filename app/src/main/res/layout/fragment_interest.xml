@@ -7,7 +7,10 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
+    <GridLayout
+        android:columnCount="3"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
@@ -57,7 +60,7 @@
             android:text="six"
             tools:visibility="visible"/>
 
-    </RelativeLayout>
+    </GridLayout>
 
 
     <RelativeLayout
@@ -74,9 +77,9 @@
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@+id/choice_tag"
-            android:background="@drawable/tag_stroke"
+            android:background="@drawable/input_et"
             android:hint="自定义标签"
-            android:maxLength="5"/>
+            android:maxLength="4"/>
         <Button
             android:id="@+id/btn_tag_comfirm"
             android:layout_width="60dp"
@@ -133,6 +136,36 @@
                 style="@style/tagStyle"
                 app:tcv_tagColor="@color/light_blue"
                 android:text="tag6"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag7"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag7"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag8"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag8"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag9"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag9"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag10"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag10"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag11"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag11"/>
+            <com.ibm.gz.learn_cloud.myview.TagColorView
+                android:id="@+id/choice_tag12"
+                style="@style/tagStyle"
+                app:tcv_tagColor="@color/light_blue"
+                android:text="tag12"/>
         </GridLayout>
     </RelativeLayout>
 

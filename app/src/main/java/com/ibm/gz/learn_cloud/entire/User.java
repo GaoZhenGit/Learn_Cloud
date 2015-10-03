@@ -1,6 +1,7 @@
 package com.ibm.gz.learn_cloud.entire;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by host on 2015/8/13.
@@ -13,6 +14,7 @@ public class User implements Serializable{
     private String phone;
     private String avater;
     private String detail;
+    private List<Interest> interests;
 
     public int getId() {
         return id;
@@ -68,5 +70,13 @@ public class User implements Serializable{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests = interests;
     }
 }

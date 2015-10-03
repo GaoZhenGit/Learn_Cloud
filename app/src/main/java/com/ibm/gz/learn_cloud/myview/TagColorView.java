@@ -35,6 +35,8 @@ public class TagColorView extends TextView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         GradientDrawable myGrad = (GradientDrawable)this.getBackground();
+        if(typedArray==null)
+            return;
         myGrad.setColor(typedArray.getColor(R.styleable.TagColorView_tcv_tagColor,0));
         myGrad.setStroke(0,0);
     }
