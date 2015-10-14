@@ -47,9 +47,9 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
     private void initData() {
         courses=new ArrayList<>();
         List<String> images=new ArrayList<>();
-        images.add("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/12002127_1441035878900_160x240.jpg");
-        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002127_1441035878900_1080x1920.jpg");
-        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002128_1441035880811_1080x1920.jpg");
+        images.add("http://1.marketonhand.sinaapp.com/ss1.png");
+        images.add("http://1.marketonhand.sinaapp.com/ss2.png");
+        images.add("http://1.marketonhand.sinaapp.com/ss3.png");
         images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002152_1441035884238_1080x1920.jpg");
         images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002130_1441035885744_1080x1920.jpg");
         images.add("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
@@ -67,9 +67,9 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
         course2.setImages(images);
 
         PopularizationCourse course3=new PopularizationCourse();
-        course3.setTitle("hahha");
-        course3.setDetail("来点击我");
-        course3.setPageImage("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
+        course3.setTitle("世界首个通用计算机S/360");
+        course3.setDetail("");
+        course3.setPageImage("http://1.marketonhand.sinaapp.com/ss0.png");
         course3.setImages(images);
 
         courses.add(course1);

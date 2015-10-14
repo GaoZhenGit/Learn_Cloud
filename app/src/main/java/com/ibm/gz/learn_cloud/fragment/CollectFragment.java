@@ -1,5 +1,6 @@
 package com.ibm.gz.learn_cloud.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -11,9 +12,12 @@ import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
+import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
+import com.ibm.gz.learn_cloud.entire.Video;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
 import java.util.ArrayList;
@@ -40,9 +44,14 @@ public class CollectFragment extends ListFragment implements LeftHideShow {
 
 
     private void initListView() {
+        Video video =new Video();
+        video.setUri("http://192.168.1.101/show_baofeng.flv");
+        List<Video> videos=new ArrayList<>();
+        videos.add(video);
         Course course=new Course();
         course.setCourse_name("HTML");
         course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
+        course.setCourse_videos(videos);
         course.setDetail("html+css+JavaScript");
 
         Course course2=new Course();
@@ -69,6 +78,13 @@ public class CollectFragment extends ListFragment implements LeftHideShow {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        if(position==0){
+            Bundle bundle=new Bundle();
+            bundle.putSerializable(Constant.DataKey.COURSE,collectList.get(0));
+            Intent intent=new Intent(getActivity(), CourseActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
         Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
     }
 
