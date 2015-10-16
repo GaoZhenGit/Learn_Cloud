@@ -1,6 +1,10 @@
 package com.ibm.gz.learn_cloud.Application;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.SystemClock;
 
 import com.ibm.gz.learn_cloud.Utils.ActivityManagerUtils;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
@@ -19,5 +23,14 @@ public class CloudApplication extends Application {
 
     public void exit(){
         ActivityManagerUtils.getInstance().removeAllActivity();
+        startNotifiService();
+    }
+
+    private void startNotifiService(){
+        Intent intent=new Intent();
+        intent.setAction("notifi");
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
+        AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
+        manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+10000,pendingIntent);
     }
 }

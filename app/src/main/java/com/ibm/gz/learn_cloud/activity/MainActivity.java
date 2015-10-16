@@ -1,6 +1,7 @@
 package com.ibm.gz.learn_cloud.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -106,10 +107,10 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_firstpage).clicked(this, "aq_firstpage");
         aq.id(R.id.btn_history).clicked(this, "aq_history");
         aq.id(R.id.btn_collect_course).clicked(this, "aq_collect_course");
-        aq.id(R.id.btn_popularization).clicked(this,"aq_popularization");
-        aq.id(R.id.btn_interest).clicked(this,"aq_interest");
-        aq.id(R.id.btn_my_note).clicked(this,"aq_my_note");
-        aq.id(R.id.btn_message).clicked(this,"aq_message");
+        aq.id(R.id.btn_popularization).clicked(this, "aq_popularization");
+        aq.id(R.id.btn_interest).clicked(this, "aq_interest");
+        aq.id(R.id.btn_my_note).clicked(this, "aq_my_note");
+        aq.id(R.id.btn_message).clicked(this, "aq_message");
         aq.id(R.id.btn_setting).clicked(this, "aq_setting");
         aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
             @Override
@@ -121,6 +122,16 @@ public class MainActivity extends BasePageActivity {
                 }
             }
         });
+
+
+
+        aq.id(R.id.title_right_btn).clicked(this,"serv");
+    }
+    public void serv(){
+        Intent intent=new Intent();
+        intent.setAction("notifi");
+        LogUtil.i("-------------start service","start");
+        startService(intent);
     }
 
 
