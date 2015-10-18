@@ -63,7 +63,7 @@
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/drawer_margin_left"
-            android:src="@drawable/lesson_gray"/>
+            android:src="@drawable/index_gray"/>
 
         <TextView
             android:id="@+id/text_firstpage"

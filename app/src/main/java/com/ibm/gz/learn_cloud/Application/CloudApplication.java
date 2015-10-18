@@ -19,11 +19,11 @@ public class CloudApplication extends Application {
         super.onCreate();
         VolleyUtils.init(this);
         LogUtil.i("init","application");
+        startNotifiService();
     }
 
     public void exit(){
         ActivityManagerUtils.getInstance().removeAllActivity();
-        startNotifiService();
     }
 
     private void startNotifiService(){

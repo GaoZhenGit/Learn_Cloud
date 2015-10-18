@@ -33,7 +33,7 @@ public class LoginActivity extends BasePageActivity {
         boolean firstStart=sp.getValue(Constant.DataKey.FIRSTSTART,true);
         LogUtil.i("first start",firstStart+"");
         if(!firstStart){
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }

@@ -317,7 +317,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
     public void leftOff() {
         LogUtil.i("left", "first page off");
         aq.id(R.id.btn_firstpage).background(R.color.white);//背景色
-        aq.id(R.id.img_firstpage).image(R.drawable.lesson_gray);//图标
+        aq.id(R.id.img_firstpage).image(R.drawable.index_gray);//图标
         aq.id(R.id.text_firstpage).getTextView().setTextColor(getResources().getColor(R.color.grey));
 
         if (timer != null) {
@@ -331,7 +331,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
     public void leftOn() {
         LogUtil.i("left", "first page on");
         aq.id(R.id.btn_firstpage).background(R.color.light_grey);
-        aq.id(R.id.img_firstpage).image(R.drawable.lesson_red);
+        aq.id(R.id.img_firstpage).image(R.drawable.index_red);
         aq.id(R.id.text_firstpage).getTextView().setTextColor(getResources().getColor(R.color.text_red));
         aq.id(R.id.title_mid_text).text("首页");
     }

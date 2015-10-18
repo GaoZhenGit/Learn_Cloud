@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.ibm.gz.learn_cloud.Application.CloudApplication;
+import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
@@ -77,9 +78,9 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.title_left_tv).visible().text("  ");
         aq.id(R.id.title_right_text).gone();
         //设置初始fragment
-        firstPageFragment=new FirstPageFragment();
+        firstPageFragment = new FirstPageFragment();
         fragmentManager.beginTransaction().add(R.id.main_framelayout, firstPageFragment).commit();
-        currentFragment=firstPageFragment;
+        currentFragment = firstPageFragment;
     }
 
     @Override

@@ -26,5 +26,6 @@ public interface Constant {
         public static final String NOTE="note";
         public static final String POPULARIZATION="popularization";
         public static final String HISTORY="history";
+        public static final String NOTIFISTART="notifi_start";
     }
 }

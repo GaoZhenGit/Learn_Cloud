@@ -6,9 +6,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
 
+import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.activity.LoginActivity;
 
@@ -29,7 +31,8 @@ public class NotifiyService extends Service {
     public void onCreate() {
         super.onCreate();
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        pendingIntent=PendingIntent.getActivity(this,0,new Intent(this,LoginActivity.class),0);
+        Intent intent = new Intent(this,LoginActivity.class);
+        pendingIntent=PendingIntent.getActivity(this,0,intent,0);
         noti();
         stopSelf();
     }
