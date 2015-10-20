@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -272,7 +273,8 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
 
             @Override
             public void onFail(String error) {
-
+                scrollView.onRefreshComplete();
+                Toast.makeText(getActivity(),"网络情况不佳，请稍后再试",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -299,7 +301,8 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
 
             @Override
             public void onFail(String error) {
-
+                scrollView.onRefreshComplete();
+                Toast.makeText(getActivity(),"网络情况不佳，请稍后再试",Toast.LENGTH_SHORT).show();
             }
         });
     }

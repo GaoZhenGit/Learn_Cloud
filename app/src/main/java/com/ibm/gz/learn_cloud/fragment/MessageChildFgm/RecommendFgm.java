@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -99,7 +100,8 @@ public class RecommendFgm extends Fragment {
 
             @Override
             public void onFail(String error) {
-
+                listView.onRefreshComplete();
+                Toast.makeText(getActivity(), "网络情况不佳，请稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
     }
