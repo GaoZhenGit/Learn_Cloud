@@ -3,17 +3,14 @@ package com.ibm.gz.learn_cloud.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -26,7 +23,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
-import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
@@ -75,9 +71,9 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         contextView = inflater.inflate(R.layout.fragment_firstpage, container, false);
-        listView=(ScrollListView)contextView.findViewById(R.id.course_listview);
-        sp=new SpUtils(getActivity());
-        gson=new GsonBuilder().disableHtmlEscaping().create();
+        listView = (ScrollListView) contextView.findViewById(R.id.course_listview);
+        sp = new SpUtils(getActivity());
+        gson = new GsonBuilder().disableHtmlEscaping().create();
 
 
         leftOn();//在左侧菜单中字体图片颜色改为红
@@ -99,7 +95,6 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                 startActivity(intent);
             }
         });
-
 
 
         scrollView = (PullToRefreshScrollView) contextView.findViewById(R.id.pull_scroll);
@@ -137,11 +132,11 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         String coursecache = sp.getValue(Constant.DataKey.COURSE_LIST_CACHE, "");
 //        LogUtil.i("---------------course cache",coursecache);
         //从json解析出来
-        List<Course> temp= gson.fromJson(coursecache, new TypeToken<List<Course>>() {
+        List<Course> temp = gson.fromJson(coursecache, new TypeToken<List<Course>>() {
         }.getType());
-        if(temp==null){//第一次进入应用，没有数据就请求网络
+        if (temp == null) {//第一次进入应用，没有数据就请求网络
             requestFirstPageCourse();
-        }else {//否则从缓存中获取
+        } else {//否则从缓存中获取
             refleshData(temp, true);
         }
     }
@@ -149,7 +144,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
     private void refleshData(List<Course> list, boolean isReflesh) {
         if (courseAdapter == null) {
             courses.addAll(list);
-            courseAdapter=new CourseAdapter(getActivity(), courses);
+            courseAdapter = new CourseAdapter(getActivity(), courses);
             listView.setAdapter(courseAdapter);
         } else {
             if (isReflesh)//刷新则清空
@@ -180,43 +175,43 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         circleIndicator = (CircleIndicators) contextView.findViewById(R.id.indicator);
 
         //先从缓存中获取横栏数据
-        String lineCache=sp.getValue(Constant.DataKey.COURSE_LINE_CACHE,"");
-        List<Course> temp=gson.fromJson(lineCache,new TypeToken<List<Course>>(){
+        String lineCache = sp.getValue(Constant.DataKey.COURSE_LINE_CACHE, "");
+        List<Course> temp = gson.fromJson(lineCache, new TypeToken<List<Course>>() {
         }.getType());
 
         //如果不是第一次进入应用，则缓存数据不为空，则可以直接初始化横栏界面（不然circleindicator会有错，内容不能为空）
-        if(temp!=null){
-            lineCourses=temp;
-            firstViewPagerAdapter=new FirstViewPagerAdapter();
+        if (temp != null) {
+            lineCourses = temp;
+            firstViewPagerAdapter = new FirstViewPagerAdapter();
             viewPager.setAdapter(firstViewPagerAdapter);
             circleIndicator.setViewPager(viewPager);
         }
 
         //先释放listview焦点，再滑动到顶端，就这样做就好了，别问为什么，不然无效
         listView.setFocusable(false);
-        scrollView.scrollTo(0,0);
+        scrollView.scrollTo(0, 0);
         //请求网络更新横栏数据
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", getActivity(), param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
                     String[] checks = response.split("\\]");
                     JSONArray jsonArray = new JSONArray(response);
-                    lineCourses= gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    lineCourses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
 
-                    if(firstViewPagerAdapter==null){//第一次进入应用在这里初始化横栏界面
-                        firstViewPagerAdapter=new FirstViewPagerAdapter();
+                    if (firstViewPagerAdapter == null) {//第一次进入应用在这里初始化横栏界面
+                        firstViewPagerAdapter = new FirstViewPagerAdapter();
                         viewPager.setAdapter(firstViewPagerAdapter);
                         circleIndicator.setViewPager(viewPager);
-                    }else {//否则为更新数据adapter
+                    } else {//否则为更新数据adapter
                         firstViewPagerAdapter.notifyDataSetChanged();
                     }
 
                     //存储缓存
-                    sp.setValue(Constant.DataKey.COURSE_LINE_CACHE,jsonArray.toString());
+                    sp.setValue(Constant.DataKey.COURSE_LINE_CACHE, jsonArray.toString());
                     //定时翻页
                     TimerTask timerTask = new TimerTask() {
                         @Override
@@ -229,7 +224,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                                 public void run() {
                                     int possition = (viewPager.getCurrentItem() + 1) % viewPager.getAdapter().getCount();
                                     viewPager.setCurrentItem(possition);
-                                    LogUtil.i("page", possition + "");
+//                                    LogUtil.i("page", possition + "");
                                 }
                             });
 
@@ -254,7 +249,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         LogUtil.i("first page", "request");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post(Constant.URL.RequestCourse, param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestCourse, getActivity(), param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -274,7 +269,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
             @Override
             public void onFail(String error) {
                 scrollView.onRefreshComplete();
-                Toast.makeText(getActivity(),"网络情况不佳，请稍后再试",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络情况不佳，请稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -284,7 +279,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         LogUtil.i("first page", "request more");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse_more");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", getActivity(), param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -302,12 +297,10 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
             @Override
             public void onFail(String error) {
                 scrollView.onRefreshComplete();
-                Toast.makeText(getActivity(),"网络情况不佳，请稍后再试",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络情况不佳，请稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
 
 
     @Override

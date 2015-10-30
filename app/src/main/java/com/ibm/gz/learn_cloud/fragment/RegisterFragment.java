@@ -145,7 +145,7 @@ public class RegisterFragment extends Fragment {
         param.put("phone",phoneString);
         param.put("password",passwordString);
         //发起请求
-        VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.Register,getActivity(), param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 LogUtil.i("volley",response);

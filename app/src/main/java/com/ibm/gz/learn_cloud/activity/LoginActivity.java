@@ -27,12 +27,13 @@ public class LoginActivity extends BasePageActivity {
     private AQuery aq;
     private EditText account;
     private EditText password;
+
     @Override
     protected void initData() {
-        SpUtils sp=new SpUtils(this);
-        boolean firstStart=sp.getValue(Constant.DataKey.FIRSTSTART,true);
-        LogUtil.i("first start",firstStart+"");
-        if(!firstStart){
+        SpUtils sp = new SpUtils(this);
+        boolean firstStart = sp.getValue(Constant.DataKey.FIRSTSTART, true);
+        LogUtil.i("first start", firstStart + "");
+        if (!firstStart) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
@@ -41,9 +42,9 @@ public class LoginActivity extends BasePageActivity {
     @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_login);
-        aq=new AQuery(this);
-        account=(EditText)findViewById(R.id.login_phone_et);
-        password=(EditText)findViewById(R.id.login_phone_psw_et);
+        aq = new AQuery(this);
+        account = (EditText) findViewById(R.id.login_phone_et);
+        password = (EditText) findViewById(R.id.login_phone_psw_et);
     }
 
     @Override
@@ -56,47 +57,48 @@ public class LoginActivity extends BasePageActivity {
 
     @Override
     protected void setListener() {
-        aq.id(R.id.login_btn).clicked(this,"aq_login");
+        aq.id(R.id.login_btn).clicked(this, "aq_login");
         aq.id(R.id.title_right_btn).clicked(this, "aq_register");
-        aq.id(R.id.title_left_btn).clicked(this,"finish");
+        aq.id(R.id.title_left_btn).clicked(this, "finish");
     }
 
-    public void aq_register(){
-        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+    public void aq_register() {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         finish();
     }
 
-    public void aq_login(){
-        String accountString=account.getText().toString();
-        String passwordString=password.getText().toString();
-        if(accountString==null||accountString.length()!=11){
+    public void aq_login() {
+        String accountString = account.getText().toString();
+        String passwordString = password.getText().toString();
+        if (accountString == null || accountString.length() != 11) {
             ShowToast("请填写手机号或邮箱");
             return;
         }
-        if(passwordString==null||passwordString.length()==0){
+        if (passwordString == null || passwordString.length() == 0) {
             ShowToast("请填写密码");
             return;
         }
         //初始化
-        final User user=new User();
+        final User user = new User();
         user.setUsername("学云");
         user.setDetail("遍身罗绮者，不是养蚕人");
 
-        Map<String,String> param=new HashMap<>();
-        if(accountString.matches("[0-9]+")) {
+        Map<String, String> param = new HashMap<>();
+        if (accountString.matches("[0-9]+")) {
             //手机号登录
-			param.put("type","login_phone");
+            param.put("type", "login_phone");
             param.put("phone", accountString);
             param.put("password", passwordString);
             user.setPhone(accountString);
-        }else {
+        } else {
             //邮箱登录
-			param.put("type","login_email");
+            param.put("type", "login_email");
             param.put("email", accountString);
             param.put("password", passwordString);
             user.setMail(accountString);
         }
-        VolleyUtils.post(Constant.URL.Login, param, new VolleyUtils.NetworkListener() {
+        LogUtil.i("------------>login");
+        VolleyUtils.login(Constant.URL.Login, this, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 LogUtil.i("volley", response);
@@ -106,11 +108,11 @@ public class LoginActivity extends BasePageActivity {
                     if (state.equals("success")) {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         ShowToast("登录成功");
-                        SpUtils sp=new SpUtils(LoginActivity.this);
-                        Gson gson= new GsonBuilder().disableHtmlEscaping().create();
-                        String userJson=gson.toJson(user);
-                        sp.setValue(Constant.DataKey.FIRSTSTART,false);
-                        sp.setValue(Constant.DataKey.USER,userJson);
+                        SpUtils sp = new SpUtils(LoginActivity.this);
+                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        String userJson = gson.toJson(user);
+                        sp.setValue(Constant.DataKey.FIRSTSTART, false);
+                        sp.setValue(Constant.DataKey.USER, userJson);
                         finish();
                     } else {
                         String reason = jsonObject.optString("reason");

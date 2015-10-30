@@ -6,16 +6,16 @@ import java.io.Serializable;
  * Created by gz on 15/9/7.
  */
 public class Video implements Serializable{
-    private String Uri;
+    private String uri;
     private String name;
     private int order;
 
     public String getUri() {
-        return Uri;
+        return uri;
     }
 
     public void setUri(String uri) {
-        Uri = uri;
+        this.uri = uri;
     }
 
     public String getName() {

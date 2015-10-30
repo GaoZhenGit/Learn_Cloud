@@ -5,10 +5,13 @@ package com.ibm.gz.learn_cloud;
  */
 public interface Constant {
     class URL{
+//        public static final String Register="http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=register";
         public static final String Register="http://2.learncloud.sinaapp.com/registerCheck.php";
-        public static final String Login="http://2.learncloud.sinaapp.com/login.php";
+        public static final String Login="http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=login";
+//        public static final String Login="http://2.learncloud.sinaapp.com/login.php";
 //        public static final String RequestCourse="http://2.learncloud.sinaapp.com/postRequest.php";
         public static final String RequestCourse="http://1.marketonhand.sinaapp.com/requestTest.php";
+//        public static final String RequestCourse="http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=firstpagecourse";
     }
     class CODE{
         public static final String KeyValue="key_value";
@@ -27,5 +30,6 @@ public interface Constant {
         public static final String POPULARIZATION="popularization";
         public static final String HISTORY="history";
         public static final String NOTIFISTART="notifi_start";
+        public static final String SESS="sess";
     }
 }

@@ -85,7 +85,7 @@ public class RecommendFgm extends Fragment {
     private void requestNet(){
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post(Constant.URL.RequestCourse, param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestCourse, getActivity(),param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {

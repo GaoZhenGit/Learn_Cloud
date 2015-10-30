@@ -66,6 +66,8 @@ public class SettingFragment extends Fragment implements LeftHideShow{
         SpUtils sp=new SpUtils(getActivity());
         sp.setValue(Constant.DataKey.FIRSTSTART,true);
         sp.setValue(Constant.DataKey.USER,null);
+        sp.setValue(Constant.DataKey.SESS,null);
+        sp.clear();
         ActivityManagerUtils.getInstance().removeAllActivity();
         getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
