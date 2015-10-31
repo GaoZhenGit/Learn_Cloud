@@ -43,6 +43,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * 首页
  * Created by host on 2015/8/14.
  */
 public class FirstPageFragment extends Fragment implements LeftHideShow {
@@ -193,7 +194,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         //请求网络更新横栏数据
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", getActivity(), param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -249,7 +250,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         LogUtil.i("first page", "request");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post(Constant.URL.RequestCourse, getActivity(), param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestCourse, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -279,7 +280,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         LogUtil.i("first page", "request more");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse_more");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", getActivity(), param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {

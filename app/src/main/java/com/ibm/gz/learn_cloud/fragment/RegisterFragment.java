@@ -140,12 +140,12 @@ public class RegisterFragment extends Fragment {
             return;
         }
         //设置请求参数
-        Map<String,String> param=new HashMap<String,String>();
+        Map<String,String> param=new HashMap<>();
         param.put("type","register_phone");
         param.put("phone",phoneString);
         param.put("password",passwordString);
         //发起请求
-        VolleyUtils.post(Constant.URL.Register,getActivity(), param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.Register, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 LogUtil.i("volley",response);
@@ -200,8 +200,7 @@ public class RegisterFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

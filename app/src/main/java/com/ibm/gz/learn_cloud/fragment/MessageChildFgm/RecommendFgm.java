@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 推荐课程
  * Created by host on 2015/10/2.
  */
 public class RecommendFgm extends Fragment {
@@ -85,7 +86,7 @@ public class RecommendFgm extends Fragment {
     private void requestNet(){
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post(Constant.URL.RequestCourse, getActivity(),param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestCourse,param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {

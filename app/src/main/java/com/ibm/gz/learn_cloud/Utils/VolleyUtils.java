@@ -24,11 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * volley网络
  * Created by host on 2015/8/14.
  */
 public class VolleyUtils {
     private static RequestQueue mQueue;
     private static boolean isInit = false;
+    private static Context context;
 
     public static RequestQueue getmQueue() throws Exception {
         if (isInit) {
@@ -40,11 +42,12 @@ public class VolleyUtils {
 
     public static void init(Context context) {
         mQueue = Volley.newRequestQueue(context);
+        VolleyUtils.context = context;
         isInit = true;
     }
 
-    public static void post(String httpurl, Context context, final Map<String, String> params, final NetworkListener networkListener) {
-        StringRequest stringRequest = new StringRequest8(Request.Method.POST, context, httpurl,
+    public static void post(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        StringRequest stringRequest = new StringRequest8(Request.Method.POST, VolleyUtils.context, httpurl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -67,8 +70,8 @@ public class VolleyUtils {
         mQueue.add(stringRequest);
     }
 
-    public static void login(String httpurl, Context context, final Map<String, String> params, final NetworkListener networkListener) {
-        StringRequest stringRequest = new CookieStoreRequest(Request.Method.POST, context, httpurl,
+    public static void login(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        StringRequest stringRequest = new CookieStoreRequest(Request.Method.POST, VolleyUtils.context, httpurl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

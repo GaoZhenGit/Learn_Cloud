@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 登录
  * Created by host on 2015/8/15.
  */
 public class LoginActivity extends BasePageActivity {
@@ -98,7 +99,7 @@ public class LoginActivity extends BasePageActivity {
             user.setMail(accountString);
         }
         LogUtil.i("------------>login");
-        VolleyUtils.login(Constant.URL.Login, this, param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.login(Constant.URL.Login, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 LogUtil.i("volley", response);
