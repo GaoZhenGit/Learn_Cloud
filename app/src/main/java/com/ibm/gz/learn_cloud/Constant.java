@@ -5,15 +5,20 @@ package com.ibm.gz.learn_cloud;
  * Created by host on 2015/8/8.
  */
 public interface Constant {
+    class ServerIp {
+        public static final boolean isWin = false;
+        public static final String IP = isWin ? "192.168.1.101" : "139.129.18.117";
+    }
+
     class URL {
-        //        public static final String Register="http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=register";
-        public static final String Register = "http://2.learncloud.sinaapp.com/registerCheck.php";
-        public static final String Login = "http://192.168.1.101/LearnCloud/index.php?m=Home&c=Index&a=login";
+        public static final String Register = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=register";
+//        public static final String Register = "http://2.learncloud.sinaapp.com/registerCheck.php";
+        public static final String Login = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=login";
         //        public static final String Login="http://2.learncloud.sinaapp.com/login.php";
 //        public static final String RequestCourse="http://2.learncloud.sinaapp.com/postRequest.php";
 //        public static final String RequestCourse="http://1.marketonhand.sinaapp.com/requestTest.php";
-        public static final String RequestCourse = "http://139.129.18.117/LearnCloud/index.php?m=Home&c=Index&a=firstpagecourse";
-        public static final String SearchCourse = "http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=search";
+        public static final String RequestCourse = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=firstpagecourse";
+        public static final String SearchCourse = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=search";
     }
 
     class CODE {

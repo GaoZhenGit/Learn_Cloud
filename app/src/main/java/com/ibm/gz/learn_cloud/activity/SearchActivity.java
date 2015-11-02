@@ -89,12 +89,14 @@ public class SearchActivity extends BasePageActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(SearchActivity.this, "数据异常", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFail(String error) {
                 Toast.makeText(SearchActivity.this, error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

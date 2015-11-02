@@ -194,7 +194,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         //请求网络更新横栏数据
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestCourse, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
