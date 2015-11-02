@@ -113,7 +113,8 @@ public class MainActivity extends BasePageActivity {
         aq.id(R.id.btn_my_note).clicked(this, "aq_my_note");
         aq.id(R.id.btn_message).clicked(this, "aq_message");
         aq.id(R.id.btn_setting).clicked(this, "aq_setting");
-        aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {//左上方按键设置开关效果
+        aq.id(R.id.title_left_btn).clicked(new View.OnClickListener() {
+            //左上方按键设置开关效果
             @Override
             public void onClick(View v) {
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -126,13 +127,19 @@ public class MainActivity extends BasePageActivity {
 
 
 
-        aq.id(R.id.title_right_btn).clicked(this,"serv");
+        aq.id(R.id.title_right_btn).clicked(this,"aq_search");
     }
     public void serv(){
         Intent intent=new Intent();
         intent.setAction("notifi");
-        LogUtil.i("-------------start service","start");
+        intent.setPackage("com.ibm.gz.learn_cloud");
+        LogUtil.i("-------------start service", "start");
         startService(intent);
+    }
+
+    public void aq_search() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 
 

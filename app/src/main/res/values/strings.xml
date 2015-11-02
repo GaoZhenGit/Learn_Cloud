@@ -11,4 +11,7 @@
     <string name="title_activity_video">VideoActivity</string>
     <string name="title_activity_note">NoteActivity</string>
     <string name="title_activity_show_popu">ShowPopuActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+    <string name="search">搜索</string>
 </resources>

@@ -68,7 +68,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         if (mBundle != null && mBundle.getSerializable(Constant.DataKey.COURSE) != null) {
             course = (Course) mBundle.getSerializable(Constant.DataKey.COURSE);
         }
-        fragments=new ArrayList<Fragment>();
+        fragments=new ArrayList<>();
         fragments.add(new DetailFgm());
         fragments.add(new NoteFgm());
         fragments.add(new ChapterFgm());
@@ -160,7 +160,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     protected void initView() {
         aq.id(R.id.title_mid_text).text(course.getCourse_name());
         aq.id(R.id.title_left_img).visible();
-        aq.id(R.id.title_left_tv).visible().text("退出");
+//        aq.id(R.id.title_left_tv).visible().text("退出");
         aq.id(R.id.title_right_img).visible().image(R.drawable.note);
     }
 

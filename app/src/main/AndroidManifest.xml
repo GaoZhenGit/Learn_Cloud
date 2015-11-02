@@ -51,7 +51,10 @@
             android:name=".activity.ShowPopuActivity"
             android:label="@string/title_activity_show_popu" >
         </activity>
-
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_search"/>
         <service
             android:name=".service.NotifiyService"
             android:enabled="true"
