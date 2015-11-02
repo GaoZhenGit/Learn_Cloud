@@ -71,18 +71,18 @@ public class LoginActivity extends BasePageActivity {
     public void aq_login() {
         String accountString = account.getText().toString();
         String passwordString = password.getText().toString();
-        if (accountString == null || accountString.length() != 11) {
+        if (accountString.length() == 0) {
             ShowToast("请填写手机号或邮箱");
             return;
         }
-        if (passwordString == null || passwordString.length() == 0) {
+        if (passwordString.length() == 0) {
             ShowToast("请填写密码");
             return;
         }
         //初始化
         final User user = new User();
-        user.setUsername("学云");
-        user.setDetail("遍身罗绮者，不是养蚕人");
+        user.setUsername("用户");
+        user.setDetail("这个用户很懒~什么也没留下");
 
         Map<String, String> param = new HashMap<>();
         if (accountString.matches("[0-9]+")) {
@@ -90,13 +90,13 @@ public class LoginActivity extends BasePageActivity {
             param.put("type", "login_phone");
             param.put("phone", accountString);
             param.put("password", passwordString);
-            user.setPhone(accountString);
+            user.setUser_tel(accountString);
         } else {
             //邮箱登录
             param.put("type", "login_email");
             param.put("email", accountString);
             param.put("password", passwordString);
-            user.setMail(accountString);
+            user.setUser_mail(accountString);
         }
         LogUtil.i("------------>login");
         VolleyUtils.login(Constant.URL.Login, param, new VolleyUtils.NetworkListener() {
@@ -109,9 +109,10 @@ public class LoginActivity extends BasePageActivity {
                     if (state.equals("success")) {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         ShowToast("登录成功");
+                        String userJson = jsonObject.optString("user");
                         SpUtils sp = new SpUtils(LoginActivity.this);
-                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        String userJson = gson.toJson(user);
+//                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+//                        String userJson = gson.toJson(user);
                         sp.setValue(Constant.DataKey.FIRSTSTART, false);
                         sp.setValue(Constant.DataKey.USER, userJson);
                         finish();

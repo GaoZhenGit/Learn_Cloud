@@ -10,8 +10,8 @@ public class User implements Serializable{
     private int id;
     private String username;
     private String pwd;
-    private String mail;
-    private String phone;
+    private String user_mail;
+    private String user_tel;
     private String avater;
     private String detail;
     private List<Interest> interests;
@@ -56,27 +56,27 @@ public class User implements Serializable{
         this.detail = detail;
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public List<Interest> getInterests() {
         return interests;
     }
 
     public void setInterests(List<Interest> interests) {
         this.interests = interests;
+    }
+
+    public String getUser_tel() {
+        return user_tel;
+    }
+
+    public void setUser_tel(String user_tel) {
+        this.user_tel = user_tel;
+    }
+
+    public String getUser_mail() {
+        return user_mail;
+    }
+
+    public void setUser_mail(String user_mail) {
+        this.user_mail = user_mail;
     }
 }

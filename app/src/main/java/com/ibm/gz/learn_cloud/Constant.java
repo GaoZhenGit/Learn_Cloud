@@ -6,7 +6,7 @@ package com.ibm.gz.learn_cloud;
  */
 public interface Constant {
     class ServerIp {
-        public static final boolean isWin = true;
+        public static final boolean isWin = false;
         public static final String IP = isWin ? "192.168.1.101" : "139.129.18.117";
     }
 

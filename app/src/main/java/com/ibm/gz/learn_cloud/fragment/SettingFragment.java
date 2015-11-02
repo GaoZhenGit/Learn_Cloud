@@ -38,6 +38,8 @@ public class SettingFragment extends Fragment implements LeftHideShow {
     User user;
     AQuery aq;
 
+    SpUtils sp;
+    Gson gson;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,9 +53,9 @@ public class SettingFragment extends Fragment implements LeftHideShow {
     }
 
     private void fetchUser() {
-        SpUtils sp = new SpUtils(getActivity());
+        sp = new SpUtils(getActivity());
         String userJson = sp.getValue(Constant.DataKey.USER, "{}");
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        gson = new GsonBuilder().disableHtmlEscaping().create();
         user = gson.fromJson(userJson, User.class);
     }
 
@@ -61,11 +63,14 @@ public class SettingFragment extends Fragment implements LeftHideShow {
         AQuery inaq = new AQuery(convertView);
         inaq.id(R.id.setting_name).text(user.getUsername());
         inaq.id(R.id.setting_detail).text(user.getDetail());
-        if (user.getPhone() != null) {
-            inaq.id(R.id.setting_phone).text(user.getPhone());
+        if (user.getUser_tel() != null) {
+            inaq.id(R.id.setting_phone).text(user.getUser_tel());
+            inaq.id(R.id.btn_setting_phone).visible();
+            inaq.id(R.id.sp_setting_phone).visible();
         }
-        if (user.getMail() != null) {
-            inaq.id(R.id.setting_mail).text(user.getMail());
+        if (user.getUser_mail() != null) {
+            inaq.id(R.id.setting_mail).text(user.getUser_mail());
+            inaq.id(R.id.btn_setting_mail).visible();
         }
     }
 
@@ -126,6 +131,10 @@ public class SettingFragment extends Fragment implements LeftHideShow {
                                 String state = jsonObject.optString("state");
                                 if (state.equals("success")) {
                                     aq.id(R.id.setting_name).text(result);
+                                    //写入本地文件
+                                    user.setUsername(result);
+                                    sp.setValue(Constant.DataKey.USER,gson.toJson(user));
+
                                     Toast.makeText(getActivity(), "姓名修改成功", Toast.LENGTH_SHORT).show();
                                 } else {
                                     LogUtil.i("modify fail",response);
@@ -157,6 +166,9 @@ public class SettingFragment extends Fragment implements LeftHideShow {
                                 String state = jsonObject.optString("state");
                                 if (state.equals("success")) {
                                     aq.id(R.id.setting_detail).text(result);
+                                    //写入本地文件
+                                    user.setDetail(result);
+                                    sp.setValue(Constant.DataKey.USER, gson.toJson(user));
                                     Toast.makeText(getActivity(), "个性签名修改成功", Toast.LENGTH_SHORT).show();
                                 } else {
                                     LogUtil.i("modify fail",response);
