@@ -1,10 +1,12 @@
 package com.ibm.gz.learn_cloud.fragment.MessageChildFgm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 
 import org.json.JSONArray;
@@ -68,15 +71,25 @@ public class RecommendFgm extends Fragment {
     }
 
     //请求内部刷新
-    private void requestRefresh(List<Course> courseList){
+    private void requestRefresh(List<Course> courses){
         if(this.courseList==null){
             this.courseList=new ArrayList<>();
         }
         this.courseList.clear();
-        this.courseList.addAll(courseList);
+        this.courseList.addAll(courses);
         if(courseAdapter==null){//
             courseAdapter=new CourseAdapter(getActivity(),this.courseList);
             listView.setAdapter(courseAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.DataKey.COURSE, courseList.get(position));
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
         }else {
             courseAdapter.notifyDataSetChanged();
         }

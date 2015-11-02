@@ -8,7 +8,7 @@ public interface Constant {
     class URL {
         //        public static final String Register="http://192.168.1.101/learncloud/index.php?m=Home&c=Index&a=register";
         public static final String Register = "http://2.learncloud.sinaapp.com/registerCheck.php";
-        public static final String Login = "http://139.129.18.117/LearnCloud/index.php?m=Home&c=Index&a=login";
+        public static final String Login = "http://192.168.1.101/LearnCloud/index.php?m=Home&c=Index&a=login";
         //        public static final String Login="http://2.learncloud.sinaapp.com/login.php";
 //        public static final String RequestCourse="http://2.learncloud.sinaapp.com/postRequest.php";
 //        public static final String RequestCourse="http://1.marketonhand.sinaapp.com/requestTest.php";

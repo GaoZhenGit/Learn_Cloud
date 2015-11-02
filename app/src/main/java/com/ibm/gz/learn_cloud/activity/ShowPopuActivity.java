@@ -44,7 +44,7 @@ public class ShowPopuActivity extends BasePageActivity {
     protected void initView() {
         aq.id(R.id.title_mid_text).text(course.getTitle());
         aq.id(R.id.title_left_img).visible();
-        aq.id(R.id.title_left_tv).visible().text("退出");
+//        aq.id(R.id.title_left_tv).visible().text("退出");
         viewPager.setAdapter(new ShowPopuPagerAdapter());
         circleIndicators.setViewPager(viewPager);
     }

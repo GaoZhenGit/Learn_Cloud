@@ -51,6 +51,7 @@
 
         <EditText
             android:id="@+id/et_search"
+            android:paddingLeft="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/btn_search_left"
@@ -60,5 +61,19 @@
             android:background="@drawable/bg_search"/>
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@android:color/transparent"
+        android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
