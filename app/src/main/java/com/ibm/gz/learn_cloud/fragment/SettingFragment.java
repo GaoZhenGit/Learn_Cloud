@@ -1,11 +1,13 @@
 package com.ibm.gz.learn_cloud.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -15,22 +17,32 @@ import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.ActivityManagerUtils;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.LoginActivity;
+import com.ibm.gz.learn_cloud.activity.UserModifyActivity;
 import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * information of user
  * Created by host on 2015/9/4.
  */
-public class SettingFragment extends Fragment implements LeftHideShow{
+public class SettingFragment extends Fragment implements LeftHideShow {
     View convertView;
     User user;
     AQuery aq;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        convertView=inflater.inflate(R.layout.setting_fragment,container,false);
-        aq=new AQuery(getActivity());
+        convertView = inflater.inflate(R.layout.setting_fragment, container, false);
+        aq = new AQuery(getActivity());
         fetchUser();
         initView();
         setListener();
@@ -39,37 +51,131 @@ public class SettingFragment extends Fragment implements LeftHideShow{
     }
 
     private void fetchUser() {
-        SpUtils sp=new SpUtils(getActivity());
-        String userJson=sp.getValue(Constant.DataKey.USER,"{}");
-        Gson gson=new GsonBuilder().disableHtmlEscaping().create();
-        user=gson.fromJson(userJson,User.class);
+        SpUtils sp = new SpUtils(getActivity());
+        String userJson = sp.getValue(Constant.DataKey.USER, "{}");
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        user = gson.fromJson(userJson, User.class);
     }
 
     private void initView() {
-        AQuery inaq=new AQuery(convertView);
+        AQuery inaq = new AQuery(convertView);
         inaq.id(R.id.setting_name).text(user.getUsername());
         inaq.id(R.id.setting_detail).text(user.getDetail());
-        if(user.getPhone()!=null){
+        if (user.getPhone() != null) {
             inaq.id(R.id.setting_phone).text(user.getPhone());
         }
-        if(user.getMail()!=null){
+        if (user.getMail() != null) {
             inaq.id(R.id.setting_mail).text(user.getMail());
         }
     }
 
     private void setListener() {
-        AQuery inaq=new AQuery(convertView);
+        AQuery inaq = new AQuery(convertView);
         inaq.id(R.id.btn_setting_logoff).clicked(this, "aq_logoff");
+        inaq.id(R.id.btn_setting_name).clicked(this, "aq_settingName");
+        inaq.id(R.id.btn_setting_detail).clicked(this, "aq_settingDetail");
     }
 
-    public void aq_logoff(){
-        SpUtils sp=new SpUtils(getActivity());
-        sp.setValue(Constant.DataKey.FIRSTSTART,true);
-        sp.setValue(Constant.DataKey.USER,null);
-        sp.setValue(Constant.DataKey.SESS,null);
+    public void aq_logoff() {
+        SpUtils sp = new SpUtils(getActivity());
+        sp.setValue(Constant.DataKey.FIRSTSTART, true);
+        sp.setValue(Constant.DataKey.USER, null);
+        sp.setValue(Constant.DataKey.SESS, null);
         sp.clear();
         ActivityManagerUtils.getInstance().removeAllActivity();
         getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+    }
+
+    //请求名字更改
+    public void aq_settingName() {
+        Intent intent = new Intent(getActivity(), UserModifyActivity.class);
+        Bundle bundle = new Bundle();
+        //设置请求码和类型都使用同一个int常量Constant.CODE.NameModfiy
+        bundle.putInt(Constant.DataKey.MODIFYTYPE, Constant.CODE.NameModfiy);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, Constant.CODE.NameModfiy);
+    }
+
+    //启动个性签名修改
+    public void aq_settingDetail() {
+        Intent intent = new Intent(getActivity(), UserModifyActivity.class);
+        Bundle bundle = new Bundle();
+        //设置请求码和类型都使用同一个int常量Constant.CODE.DetailModify
+        bundle.putInt(Constant.DataKey.MODIFYTYPE, Constant.CODE.DetailModify);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, Constant.CODE.DetailModify);
+    }
+
+    //从修改页面返回的“用户”结果处理，先发起post请求，待返回成功信息后，修改本地信息，存储信息
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            final String result = data.getStringExtra(Constant.DataKey.MODIFYRESULT);
+            switch (requestCode) {
+                //名字修改部分
+                case Constant.CODE.NameModfiy:
+                    //写入post参数
+                    Map<String, String> nameParam = new HashMap<>();
+                    nameParam.put("username", result);
+                    //网络请求
+                    VolleyUtils.post(Constant.URL.ModifyUser, nameParam, new VolleyUtils.NetworkListener() {
+                        @Override
+                        public void onSuccess(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String state = jsonObject.optString("state");
+                                if (state.equals("success")) {
+                                    aq.id(R.id.setting_name).text(result);
+                                    Toast.makeText(getActivity(), "姓名修改成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    LogUtil.i("modify fail",response);
+                                    Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    break;
+                //个性签名修改部分
+                case Constant.CODE.DetailModify:
+                    //写入post参数
+                    Map<String, String> deatailParam = new HashMap<>();
+                    deatailParam.put("detail", result);
+                    //网络请求
+                    VolleyUtils.post(Constant.URL.ModifyUser, deatailParam, new VolleyUtils.NetworkListener() {
+                        @Override
+                        public void onSuccess(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String state = jsonObject.optString("state");
+                                if (state.equals("success")) {
+                                    aq.id(R.id.setting_detail).text(result);
+                                    Toast.makeText(getActivity(), "个性签名修改成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    LogUtil.i("modify fail",response);
+                                    Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            Toast.makeText(getActivity(), "修改失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    break;
+            }
+        }
     }
 
     @Override

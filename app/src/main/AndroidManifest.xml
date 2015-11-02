@@ -55,6 +55,10 @@
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_search"/>
+        <activity
+            android:name=".activity.UserModifyActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_modify"/>
         <service
             android:name=".service.NotifiyService"
             android:enabled="true"
