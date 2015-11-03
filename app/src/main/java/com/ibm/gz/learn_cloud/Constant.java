@@ -6,7 +6,7 @@ package com.ibm.gz.learn_cloud;
  */
 public interface Constant {
     class ServerIp {
-        public static final boolean isWin = false;
+        public static final boolean isWin = true;
         public static final String IP = isWin ? "192.168.1.101" : "139.129.18.117";
     }
 
@@ -20,6 +20,9 @@ public interface Constant {
         public static final String RequestCourse = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=firstpagecourse";
         public static final String SearchCourse = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=search";
         public static final String ModifyUser = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=user_modify";
+        public static final String AddHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=addHistory";
+        public static final String GetHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=getHistory";
+        public static final String DeleteHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=deleteHistory";
     }
 
     class CODE {

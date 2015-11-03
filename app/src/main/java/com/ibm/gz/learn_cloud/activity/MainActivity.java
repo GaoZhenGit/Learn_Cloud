@@ -36,6 +36,9 @@ public class MainActivity extends BasePageActivity {
     private FragmentManager fragmentManager;
     private User user;
 
+    private SpUtils sp;
+    private Gson gson;
+
     private Fragment currentFragment;
     //左侧每个fragment的引用
     private FirstPageFragment firstPageFragment;
@@ -57,17 +60,17 @@ public class MainActivity extends BasePageActivity {
     @Override
     protected void initData() {
         fragmentManager=getSupportFragmentManager();
-        SpUtils sp=new SpUtils(this);
-        Gson gson =new Gson();
-        user=gson.fromJson(sp.getValue("user",""),User.class);
+        sp=new SpUtils(this);
+        gson =new Gson();
     }
 
     @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_main);
         aq=new AQuery(this);
+        //设置左拉菜单用户显示
+        refreshUserView();
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        aq.id(R.id.username_tv).text(user.getUsername());
     }
 
     @Override
@@ -129,6 +132,12 @@ public class MainActivity extends BasePageActivity {
 
         aq.id(R.id.title_right_btn).clicked(this,"aq_search");
     }
+
+    public void refreshUserView(){
+        user=gson.fromJson(sp.getValue("user",""),User.class);
+        aq.id(R.id.username_tv).text(user.getUsername());
+    }
+
     public void serv(){
         Intent intent=new Intent();
         intent.setAction("notifi");

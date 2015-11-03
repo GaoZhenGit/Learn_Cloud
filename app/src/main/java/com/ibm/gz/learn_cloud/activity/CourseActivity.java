@@ -22,6 +22,7 @@ import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.DensityUtil;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.entire.HistoryCourse;
 import com.ibm.gz.learn_cloud.fragment.FirstPageChildFgm.ChapterFgm;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CourseActivity extends BasePageActivity implements MediaPlayer.OnErrorListener{
+public class CourseActivity extends BasePageActivity implements MediaPlayer.OnErrorListener {
     private AQuery aq;
     private FullScreenVideoView videoView;
     private FullScreenMediaController mediaController;
@@ -56,6 +57,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     private Gson gson;
     private SpUtils sp;
     private DbUtils db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         if (mBundle != null && mBundle.getSerializable(Constant.DataKey.COURSE) != null) {
             course = (Course) mBundle.getSerializable(Constant.DataKey.COURSE);
         }
-        fragments=new ArrayList<>();
+        fragments = new ArrayList<>();
         fragments.add(new DetailFgm());
         fragments.add(new NoteFgm());
         fragments.add(new ChapterFgm());
@@ -82,8 +84,8 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         //获得组件
         videoView = (FullScreenVideoView) findViewById(R.id.video_view);
         mediaController = new FullScreenMediaController(this);
-        mTabWidget=(PagerTabWidget)findViewById(R.id.video_tabwidget);
-        mViewPager=(ViewPager)findViewById(R.id.video_viewpager);
+        mTabWidget = (PagerTabWidget) findViewById(R.id.video_tabwidget);
+        mViewPager = (ViewPager) findViewById(R.id.video_viewpager);
 
         //设置tab相关组件
         mTabWidget.setDividerInvisible();
@@ -138,9 +140,9 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         mediaController.setAnchorView(videoView);
         mediaController.setBringView(aq.id(R.id.btn_fullscreen).getView());
 
-        if(course!=null) {
+        if (course != null) {
             videoView.setVideoURI(Uri.parse(course.getCourse_videos().get(0).getUri()));
-            LogUtil.i("----video uri------",course.getCourse_videos().get(0).getUri());
+            LogUtil.i("----video uri------", course.getCourse_videos().get(0).getUri());
         }
         videoView.setOnErrorListener(this);
         videoView.setOnVideoStartListener(new FullScreenVideoView.onVideoStartListener() {
@@ -151,7 +153,8 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
             }
         });
     }
-    public void reSetVideoUri(String uri){
+
+    public void reSetVideoUri(String uri) {
         videoView.stopPlayback();
         videoView.setVideoURI(Uri.parse(uri));
     }
@@ -200,15 +203,13 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         }
     }
 
-    public void aq_note(){
-        Bundle bundle=new Bundle();
+    public void aq_note() {
+        Bundle bundle = new Bundle();
         bundle.putString(Constant.DataKey.COURSE, course.getCourse_name());
-        Intent intent=new Intent(this,NoteActivity.class);
+        Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
-
 
 
     @Override
@@ -230,7 +231,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     }
 
     //竖屏界面转换
-    private void setPortraitView(){
+    private void setPortraitView() {
 //        aq.id(R.id.btn_start).visible();
 //        aq.id(R.id.btn_stop).visible();
 //        aq.id(R.id.btn_pause).visible();
@@ -239,10 +240,10 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         aq.id(R.id.video_tabwidget).visible();
         aq.id(R.id.video_viewpager).visible();
         //框架参数调整
-        RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams)findViewById(R.id.video_layout).getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) findViewById(R.id.video_layout).getLayoutParams();
         layoutParams.addRule(RelativeLayout.BELOW, R.id.title_bar);
-        layoutParams.width=DensityUtil.getWindowWidth(this);
-        layoutParams.height=DensityUtil.dip2px(this, 200);
+        layoutParams.width = DensityUtil.getWindowWidth(this);
+        layoutParams.height = DensityUtil.dip2px(this, 200);
         //显示状态栏
         DensityUtil.showTitle(this);
         //视频大小适配调整
@@ -251,7 +252,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     }
 
     //横屏界面设置
-    private void setLandscapeView(){
+    private void setLandscapeView() {
 //        aq.id(R.id.btn_start).gone();
 //        aq.id(R.id.btn_stop).gone();
 //        aq.id(R.id.btn_pause).gone();
@@ -260,10 +261,10 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         aq.id(R.id.video_tabwidget).gone();
         aq.id(R.id.video_viewpager).gone();
         //框架参数调整
-        RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams)findViewById(R.id.video_layout).getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) findViewById(R.id.video_layout).getLayoutParams();
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layoutParams.height=RelativeLayout.LayoutParams.MATCH_PARENT;
-        layoutParams.width=RelativeLayout.LayoutParams.MATCH_PARENT;
+        layoutParams.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+        layoutParams.width = RelativeLayout.LayoutParams.MATCH_PARENT;
         //隐藏状态栏
         DensityUtil.hideTitle(this);
         //视频大小适配调整
@@ -272,14 +273,14 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         switch (getRequestedOrientation()) {
             case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE://如果是横屏，返回键表示退出横屏
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 setPortraitView();
                 break;
             case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT://如果是竖屏，返回键表示退出acitvity
-                if(videoView.isPlaying()){
+                if (videoView.isPlaying()) {
                     videoView.stopPlayback();
                 }
                 finish();
@@ -287,14 +288,14 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         }
     }
 
-    public Course getCourse(){
+    public Course getCourse() {
         return course;
     }
 
-    public void saveHistroy(){
-        if(gson==null){
-            gson=new GsonBuilder().disableHtmlEscaping().create();
-        }
+    public void saveHistroy() {
+//        if(gson==null){
+//            gson=new GsonBuilder().disableHtmlEscaping().create();
+//        }
 //        if(sp==null){
 //            sp=new SpUtils(this);
 //        }
@@ -309,18 +310,31 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 //            history.add(this.course);
 //            sp.setValue(Constant.DataKey.HISTORY,gson.toJson(history));
 //        }
-        if(db==null){
-            db=DbUtils.create(this);
-        }
-        try {
-            HistoryCourse historyCourse=new HistoryCourse();
-            historyCourse.setCourse(this.course);
-            HistoryCourse dup=db.findFirst(Selector.from(HistoryCourse.class).where("id", "=", this.course.getCourse_id()));
-            if(dup==null) {
-                db.saveBindingId(historyCourse);
+//        if(db==null){
+//            db=DbUtils.create(this);
+//        }
+//        try {
+//            HistoryCourse historyCourse=new HistoryCourse();
+//            historyCourse.setCourse(this.course);
+//            HistoryCourse dup=db.findFirst(Selector.from(HistoryCourse.class).where("id", "=", this.course.getCourse_id()));
+//            if(dup==null) {
+//                db.saveBindingId(historyCourse);
+//            }
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//        }
+        Map<String, String> param = new HashMap<>();
+        param.put("course_id", course.getCourse_id() + "");
+        VolleyUtils.post(Constant.URL.AddHistory, param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                LogUtil.i("history course id:", course.getCourse_id() + "");
             }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onFail(String error) {
+                LogUtil.i("history fail", error + "");
+            }
+        });
     }
 }

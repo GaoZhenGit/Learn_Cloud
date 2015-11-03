@@ -19,6 +19,7 @@ import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.LoginActivity;
+import com.ibm.gz.learn_cloud.activity.MainActivity;
 import com.ibm.gz.learn_cloud.activity.UserModifyActivity;
 import com.ibm.gz.learn_cloud.entire.User;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
@@ -130,11 +131,13 @@ public class SettingFragment extends Fragment implements LeftHideShow {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String state = jsonObject.optString("state");
                                 if (state.equals("success")) {
-                                    aq.id(R.id.setting_name).text(result);
                                     //写入本地文件
                                     user.setUsername(result);
                                     sp.setValue(Constant.DataKey.USER,gson.toJson(user));
-
+                                    //更改设置页页面
+                                    aq.id(R.id.setting_name).text(result);
+                                    //更改左拉菜单页面
+                                    ((MainActivity)getActivity()).refreshUserView();
                                     Toast.makeText(getActivity(), "姓名修改成功", Toast.LENGTH_SHORT).show();
                                 } else {
                                     LogUtil.i("modify fail",response);
