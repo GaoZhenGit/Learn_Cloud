@@ -68,4 +68,14 @@ public class Course implements Serializable{
         }
         course_videos.add(video);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Course) {
+            Course c = (Course) o;
+            return course_id == c.course_id;
+        } else {
+            return false;
+        }
+    }
 }

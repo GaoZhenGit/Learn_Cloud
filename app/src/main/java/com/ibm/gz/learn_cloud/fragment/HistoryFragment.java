@@ -106,8 +106,6 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-//        Toast.makeText(getActivity(),""+position,Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(),courseList.get(position).getCourse_name(),Toast.LENGTH_SHORT).show();
         Bundle bundle=new Bundle();
         bundle.putSerializable(Constant.DataKey.COURSE, courseList.get(position));
         Intent intent=new Intent(getActivity(), CourseActivity.class);

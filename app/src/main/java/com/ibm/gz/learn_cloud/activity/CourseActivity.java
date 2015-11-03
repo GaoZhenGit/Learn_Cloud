@@ -11,6 +11,7 @@ import android.view.View;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -36,6 +37,10 @@ import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +60,6 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 
 
     private Gson gson;
-    private SpUtils sp;
-    private DbUtils db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     protected void initLayoutView() {
         setContentView(R.layout.activity_course);
         aq = new AQuery(this);
+        gson = new GsonBuilder().disableHtmlEscaping().create();
 
         //获得组件
         videoView = (FullScreenVideoView) findViewById(R.id.video_view);
@@ -165,6 +169,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         aq.id(R.id.title_left_img).visible();
 //        aq.id(R.id.title_left_tv).visible().text("退出");
         aq.id(R.id.title_right_img).visible().image(R.drawable.note);
+        checkCollection();
     }
 
     @Override
@@ -176,6 +181,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         aq.id(R.id.btn_fullscreen).clicked(this, "aq_landscape");
         aq.id(R.id.title_left_btn).clicked(this, "finish");
         aq.id(R.id.title_right_btn).clicked(this, "aq_note");
+
     }
 
 //    public void aq_start_video() {
@@ -190,6 +196,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 //        videoView.stopPlayback();
 //    }
 
+    //全屏按钮
     public void aq_landscape() {
         switch (getRequestedOrientation()) {
             case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
@@ -203,12 +210,68 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         }
     }
 
+    //添加收藏
     public void aq_note() {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.DataKey.COURSE, course.getCourse_name());
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    //添加收藏
+    public void aq_collection(){
+        LogUtil.i("---------","collection");
+        Map<String,String> param =new HashMap<>();
+        param.put("course_id",course.getCourse_id()+"");
+        VolleyUtils.post(Constant.URL.AddCollection, param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String state = jsonObject.optString("state");
+                    if (state.equals("success")){
+                        Toast.makeText(CourseActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                        aq.id(R.id.title_second_right_btn).clicked(this,"aq_unCollection");
+                        aq.id(R.id.title_second_right_img).image(R.drawable.heart_full);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
+    }
+    //取消收藏
+    public void aq_unCollection(){
+        LogUtil.i("---------","unCollection");
+        Map<String,String> param =new HashMap<>();
+        param.put("course_id",course.getCourse_id()+"");
+        VolleyUtils.post(Constant.URL.DellectCollection, param, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String state = jsonObject.optString("state");
+                    if (state.equals("success")){
+                        Toast.makeText(CourseActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                        aq.id(R.id.title_second_right_btn).clicked(this,"aq_collection");
+                        aq.id(R.id.title_second_right_img).image(R.drawable.heart_empty);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
     }
 
 
@@ -293,36 +356,6 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     }
 
     public void saveHistroy() {
-//        if(gson==null){
-//            gson=new GsonBuilder().disableHtmlEscaping().create();
-//        }
-//        if(sp==null){
-//            sp=new SpUtils(this);
-//        }
-//        List<Course> history=gson.fromJson(sp.getValue(Constant.DataKey.HISTORY, ""),
-//                new TypeToken<List<Course>>() {
-//                }.getType());
-//        if (history==null){
-//            history=new ArrayList<>();
-//        }
-//        if(!history.contains(this.course)) {
-//            String his = gson.toJson(this.course);
-//            history.add(this.course);
-//            sp.setValue(Constant.DataKey.HISTORY,gson.toJson(history));
-//        }
-//        if(db==null){
-//            db=DbUtils.create(this);
-//        }
-//        try {
-//            HistoryCourse historyCourse=new HistoryCourse();
-//            historyCourse.setCourse(this.course);
-//            HistoryCourse dup=db.findFirst(Selector.from(HistoryCourse.class).where("id", "=", this.course.getCourse_id()));
-//            if(dup==null) {
-//                db.saveBindingId(historyCourse);
-//            }
-//        } catch (DbException e) {
-//            e.printStackTrace();
-//        }
         Map<String, String> param = new HashMap<>();
         param.put("course_id", course.getCourse_id() + "");
         VolleyUtils.post(Constant.URL.AddHistory, param, new VolleyUtils.NetworkListener() {
@@ -334,6 +367,35 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
             @Override
             public void onFail(String error) {
                 LogUtil.i("history fail", error + "");
+            }
+        });
+    }
+
+    private void checkCollection(){
+        VolleyUtils.post(Constant.URL.GetCollection, null, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<Course> courses =gson.fromJson(jsonArray.toString(),new TypeToken<List<Course>>() {
+                    }.getType());
+                    if(courses.contains(CourseActivity.this.course)){
+                        aq.id(R.id.title_second_right_btn).visible();//收藏按钮可见
+                        aq.id(R.id.title_second_right_btn).clicked(CourseActivity.this,"aq_unCollection");
+                        aq.id(R.id.title_second_right_img).image(R.drawable.heart_full);
+                    }else {
+                        aq.id(R.id.title_second_right_btn).visible();//收藏按钮可见
+                        aq.id(R.id.title_second_right_btn).clicked(CourseActivity.this,"aq_collection");
+                        aq.id(R.id.title_second_right_img).image(R.drawable.heart_empty);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
             }
         });
     }

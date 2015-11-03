@@ -11,14 +11,21 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.entire.Video;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +33,21 @@ import java.util.List;
 public class CollectFragment extends ListFragment implements LeftHideShow {
     private AQuery aq;
     private List<Course> collectList;
+    private CourseAdapter courseAdapter;
+    private Gson gson;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        aq=new AQuery(getActivity());
+        aq = new AQuery(getActivity());
+        gson = new GsonBuilder().disableHtmlEscaping().create();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View contextView =inflater.inflate(R.layout.fragment_collect,container,false);
+        View contextView = inflater.inflate(R.layout.fragment_collect, container, false);
         initListView();
         leftOn();
         return contextView;
@@ -44,69 +55,67 @@ public class CollectFragment extends ListFragment implements LeftHideShow {
 
 
     private void initListView() {
-        Video video =new Video();
-        video.setUri("http://192.168.1.101/show_baofeng.flv");
-        List<Video> videos=new ArrayList<>();
-        videos.add(video);
-        Course course=new Course();
-        course.setCourse_name("HTML");
-        course.setCourse_img("http://img.mukewang.com/55add9c50001040d06000338-280-160.jpg");
-        course.setCourse_videos(videos);
-        course.setDetail("html+css+JavaScript");
-
-        Course course2=new Course();
-        course2.setCourse_name("与MySQL的零距离接触");
-        course2.setCourse_img("http://img.mukewang.com/53b3d133000158e206000338-280-160.jpg");
-        course2.setDetail("不花钱的关系数据库，你懂的");
-
-        Course course3=new Course();
-        course3.setCourse_name("css扁平化风格博客");
-        course3.setCourse_img("http://img.mukewang.com/559b904a0001a9ed06000338-280-160.jpg");
-        course3.setDetail("使用css3和html搭建超酷扁平化风格博客");
-
-        Course course4=new Course();
-        course4.setCourse_name("Sass入门篇");
-        course4.setCourse_img("http://img.mukewang.com/55cc0ac30001a73a06000338-280-160.jpg");
-        course4.setDetail("Sass让你摆脱重复编写css代码的工作");
-        collectList=new ArrayList<Course>();
-        collectList.add(course);
-        collectList.add(course2);
-        collectList.add(course3);
-        collectList.add(course4);
-        setListAdapter(new CourseAdapter(getActivity(), collectList));
+        collectList = new ArrayList<>();
+        courseAdapter = new CourseAdapter(getActivity(), collectList);
+        setListAdapter(courseAdapter);
+        getCollection();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        if(position==0){
-            Bundle bundle=new Bundle();
-            bundle.putSerializable(Constant.DataKey.COURSE,collectList.get(0));
-            Intent intent=new Intent(getActivity(), CourseActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.DataKey.COURSE, collectList.get(position));
+        Intent intent = new Intent(getActivity(), CourseActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
+    //从服务器获取已收藏课程
+    private void getCollection() {
+        VolleyUtils.post(Constant.URL.GetCollection, null, new VolleyUtils.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
+                    }.getType());
+                    collectList.clear();
+                    collectList.addAll(courses);
+                    courseAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFail(String error) {
 
-
+            }
+        });
+    }
 
     @Override
-    public void leftOff(){
+    public void onResume() {
+        super.onResume();
+        getCollection();
+    }
+
+    @Override
+    public void leftOff() {
         LogUtil.i("left", "collect off");
-        if(aq==null){
-            aq=new AQuery(getActivity());
+        if (aq == null) {
+            aq = new AQuery(getActivity());
         }
         aq.id(R.id.btn_collect_course).background(R.color.white);//背景色
         aq.id(R.id.img_collect).image(R.drawable.collect_gray);//图标
         aq.id(R.id.text_collect).getTextView().setTextColor(getResources().getColor(R.color.grey));
     }
+
     @Override
     public void leftOn() {
         LogUtil.i("left", "collect on");
-        if(aq==null){
-            aq=new AQuery(getActivity());
+        if (aq == null) {
+            aq = new AQuery(getActivity());
         }
         aq.id(R.id.btn_collect_course).background(R.color.light_grey);
         aq.id(R.id.img_collect).image(R.drawable.collect_red);
