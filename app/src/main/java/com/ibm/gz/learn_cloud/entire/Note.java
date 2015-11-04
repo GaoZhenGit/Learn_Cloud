@@ -5,21 +5,23 @@ import com.lidroid.xutils.db.annotation.Id;
 import java.io.Serializable;
 
 /**
+ * take note for course
  * Created by host on 2015/9/9.
  */
 public class Note implements Serializable{
     @Id(column = "id")
-    private int id;
+    private int note_id;
     private String time;
     private String courseName;
     private String text;
+    private int course_id;
 
-    public int getId() {
-        return id;
+    public int getNote_id() {
+        return note_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNote_id(int id) {
+        this.note_id = id;
     }
 
     public String getTime() {
@@ -44,5 +46,13 @@ public class Note implements Serializable{
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(int course_id) {
+        this.course_id = course_id;
     }
 }

@@ -76,7 +76,6 @@ public class HistoryFragment extends Fragment implements LeftHideShow{
         courseAdapter = new CourseAdapter(getActivity(),courseList);
         listView.setAdapter(courseAdapter);
         gson = new GsonBuilder().disableHtmlEscaping().create();
-        findHistory();
 
     }
     private void setListener(){

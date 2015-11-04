@@ -213,7 +213,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     //添加收藏
     public void aq_note() {
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.DataKey.COURSE, course.getCourse_name());
+        bundle.putSerializable(Constant.DataKey.COURSE,course);
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -355,6 +355,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         return course;
     }
 
+    //播放后添加历史记录
     public void saveHistroy() {
         Map<String, String> param = new HashMap<>();
         param.put("course_id", course.getCourse_id() + "");

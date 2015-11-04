@@ -23,9 +23,10 @@ public interface Constant {
         public static final String AddHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=addHistory";
         public static final String GetHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=getHistory";
         public static final String DeleteHistory = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=deleteHistory";
-        public static final String GetCollection = "http://"+ServerIp.IP+"/learncloud/index.php?m=Home&c=Index&a=getCollection";
-        public static final String AddCollection = "http://"+ServerIp.IP+"/learncloud/index.php?m=Home&c=Index&a=addCollection";
-        public static final String DellectCollection = "http://"+ServerIp.IP+"/learncloud/index.php?m=Home&c=Index&a=deleteCollection";
+        public static final String GetCollection = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=getCollection";
+        public static final String AddCollection = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=addCollection";
+        public static final String DellectCollection = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=deleteCollection";
+        public static final String Note = "http://"+ServerIp.IP+"/LearnCloud/index.php?m=Home&c=Index&a=note&opration=";
     }
 
     class CODE {

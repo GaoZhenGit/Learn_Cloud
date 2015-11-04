@@ -5,43 +5,51 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
+import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.entire.Note;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.exception.DbException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NoteActivity extends BasePageActivity {
     private AQuery aq;
     private EditText editText;
     private Note note;
-    private String courseName;
+    private Course course;
     private DbUtils db;
-    boolean isNewNote=false;
+    boolean isNewNote = false;
 
     @Override
     protected void initData() {
-        db=DbUtils.create(this);
-        if(mBundle!=null&&mBundle.getSerializable(Constant.DataKey.NOTE)!=null){
-            note=(Note)mBundle.getSerializable(Constant.DataKey.NOTE);
-            isNewNote=false;
-        }else {
-            note=new Note();
-            courseName=mBundle.getString(Constant.DataKey.COURSE);
-            isNewNote=true;
+        db = DbUtils.create(this);
+        if (mBundle != null && mBundle.getSerializable(Constant.DataKey.NOTE) != null) {
+            note = (Note) mBundle.getSerializable(Constant.DataKey.NOTE);
+            isNewNote = false;
+        } else {
+            note = new Note();
+            course = (Course) mBundle.getSerializable(Constant.DataKey.COURSE);
+            isNewNote = true;
         }
     }
 
     @Override
     protected void initLayoutView() {
         setContentView(R.layout.activity_note);
-        aq=new AQuery(this);
-        editText=(EditText)findViewById(R.id.note_text);
+        aq = new AQuery(this);
+        editText = (EditText) findViewById(R.id.note_text);
     }
 
     @Override
@@ -52,10 +60,10 @@ public class NoteActivity extends BasePageActivity {
         aq.id(R.id.title_right_text).visible().text("保存");
 
         //如果是已有的笔记，则显示出来
-        if(!isNewNote){
+        if (!isNewNote) {
             aq.id(R.id.note_date).text(note.getTime());
             aq.id(R.id.note_text).text(note.getText());
-        }else {
+        } else {
             aq.id(R.id.note_date).gone();
         }
     }
@@ -66,34 +74,74 @@ public class NoteActivity extends BasePageActivity {
         aq.id(R.id.title_right_btn).clicked(this, "aq_save");
     }
 
-    public void aq_save(){
-        String text=editText.getText().toString();
-        if(text==null||text.length()==0){
+    //保存笔记
+    public void aq_save() {
+        String text = editText.getText().toString();
+        if (text.length() == 0) {
             ShowToast("请输入内容");
             return;
         }
 
-        if(isNewNote){
-            try {
-                note.setText(text);
-                note.setCourseName(courseName);
-                SimpleDateFormat formats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                note.setTime(formats.format(Calendar.getInstance().getTime()));
-                db.save(note);
-                ShowToast("保存成功");
-                finish();
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
-        }else {
-            try {
-                note.setText(text);
-                db.update(note,"text");
-                ShowToast("更新成功");
-                finish();
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+        if (isNewNote) {
+            //新建笔记add
+            note.setText(text);
+            note.setCourseName(course.getCourse_name());
+            note.setCourse_id(course.getCourse_id());
+            Map<String, String> param = new HashMap<>();
+            param.put("text", note.getText());
+            param.put("course_id", note.getCourse_id() + "");
+            VolleyUtils.post(Constant.URL.Note + "add", param, new VolleyUtils.NetworkListener() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String state = jsonObject.optString("state");
+                        if (state.equals("success")) {
+                            ShowToast("保存成功");
+                            finish();
+                        } else {
+                            throw new JSONException("");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ShowToast("保存失败，请稍后再试");
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    ShowToast("保存失败，请稍后再试");
+                }
+            });
+        } else {
+            //修改笔记update
+            note.setText(text);
+            Map<String, String> param = new HashMap<>();
+            param.put("note_id", note.getNote_id() + "");
+            param.put("text", note.getText());
+            VolleyUtils.post(Constant.URL.Note + "update", param, new VolleyUtils.NetworkListener() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String state = jsonObject.optString("state");
+                        if (state.equals("success")) {
+                            ShowToast("保存成功");
+                            finish();
+                        } else {
+                            throw new JSONException("");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ShowToast("修改失败，请稍后再试");
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    ShowToast("修改失败，请稍后再试");
+                }
+            });
         }
     }
 }
