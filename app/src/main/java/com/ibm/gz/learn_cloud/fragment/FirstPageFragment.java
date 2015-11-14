@@ -280,7 +280,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
         LogUtil.i("first page", "request more");
         Map<String, String> param = new HashMap<>();
         param.put("type", "firstpagecourse_more");
-        VolleyUtils.post("http://1.marketonhand.sinaapp.com/requestTest.php", param, new VolleyUtils.NetworkListener() {
+        VolleyUtils.post(Constant.URL.RequestMore, param, new VolleyUtils.NetworkListener() {
             @Override
             public void onSuccess(String response) {
                 try {
