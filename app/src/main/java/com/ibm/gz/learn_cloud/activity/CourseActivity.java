@@ -221,6 +221,7 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
 
     //添加收藏
     public void aq_collection(){
+        aq.id(R.id.title_second_right_btn).clickable(false);
         LogUtil.i("---------","collection");
         Map<String,String> param =new HashMap<>();
         param.put("course_id",course.getCourse_id()+"");
@@ -232,22 +233,24 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
                     String state = jsonObject.optString("state");
                     if (state.equals("success")){
                         Toast.makeText(CourseActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-                        aq.id(R.id.title_second_right_btn).clicked(this,"aq_unCollection");
+                        aq.id(R.id.title_second_right_btn).clicked(this, "aq_unCollection");
                         aq.id(R.id.title_second_right_img).image(R.drawable.heart_full);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                aq.id(R.id.title_second_right_btn).clickable(true);
             }
 
             @Override
             public void onFail(String error) {
-
+                aq.id(R.id.title_second_right_btn).clickable(true);
             }
         });
     }
     //取消收藏
     public void aq_unCollection(){
+        aq.id(R.id.title_second_right_btn).clickable(false);
         LogUtil.i("---------","unCollection");
         Map<String,String> param =new HashMap<>();
         param.put("course_id",course.getCourse_id()+"");
@@ -259,17 +262,18 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
                     String state = jsonObject.optString("state");
                     if (state.equals("success")){
                         Toast.makeText(CourseActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
-                        aq.id(R.id.title_second_right_btn).clicked(this,"aq_collection");
+                        aq.id(R.id.title_second_right_btn).clicked(this, "aq_collection");
                         aq.id(R.id.title_second_right_img).image(R.drawable.heart_empty);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                aq.id(R.id.title_second_right_btn).clickable(true);
             }
 
             @Override
             public void onFail(String error) {
-
+                aq.id(R.id.title_second_right_btn).clickable(true);
             }
         });
     }

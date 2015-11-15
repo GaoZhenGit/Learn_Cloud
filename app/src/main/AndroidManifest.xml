@@ -59,6 +59,8 @@
             android:name=".activity.UserModifyActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_modify"/>
+        <activity android:name=".activity.QuestionActivity"
+            android:screenOrientation="portrait"/>
         <service
             android:name=".service.NotifiyService"
             android:enabled="true"
