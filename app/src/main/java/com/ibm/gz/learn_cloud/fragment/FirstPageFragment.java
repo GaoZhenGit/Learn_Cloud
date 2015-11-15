@@ -23,10 +23,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.ibm.gz.learn_cloud.Adapter.CourseAdapter;
 import com.ibm.gz.learn_cloud.Constant;
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.Utils.ActivityManagerUtils;
 import com.ibm.gz.learn_cloud.Utils.LogUtil;
 import com.ibm.gz.learn_cloud.Utils.SpUtils;
 import com.ibm.gz.learn_cloud.Utils.VolleyUtils;
 import com.ibm.gz.learn_cloud.activity.CourseActivity;
+import com.ibm.gz.learn_cloud.activity.LoginActivity;
 import com.ibm.gz.learn_cloud.entire.Course;
 import com.ibm.gz.learn_cloud.listener.LeftHideShow;
 import com.ibm.gz.learn_cloud.myview.CircleIndicators;
@@ -165,13 +167,6 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
 
     //初始化横栏图片视频
     private void initImageView() {
-//        images=new ArrayList<>();
-//        images.add("http://img.mukewang.com/55cabf1100013e0806000338-240-135.jpg");
-//        images.add("http://img.mukewang.com/55c33e400001a88f06000338-240-135.jpg");
-//        images.add("http://img.mukewang.com/55a5f5f8000161a806000338-240-135.jpg");
-//        images.add("http://img.mukewang.com/55badcc300017b7006000338-240-135.jpg");
-//        images.add("http://img.mukewang.com/55c17abe0001ffd506000338-240-135.jpg");
-//        images.add("http://img.mukewang.com/55c16f5a000159d406000338-240-135.jpg");
         viewPager = (ViewPager) contextView.findViewById(R.id.viewPager);
         circleIndicator = (CircleIndicators) contextView.findViewById(R.id.indicator);
 
@@ -214,6 +209,16 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     //存储缓存
                     sp.setValue(Constant.DataKey.COURSE_LINE_CACHE, jsonArray.toString());
                     //定时翻页
+                    if(lineCourses.size()==0){
+                        SpUtils sp = new SpUtils(getActivity());
+                        sp.setValue(Constant.DataKey.FIRSTSTART, true);
+                        sp.setValue(Constant.DataKey.USER, null);
+                        sp.setValue(Constant.DataKey.SESS, null);
+                        sp.clear();
+                        ActivityManagerUtils.getInstance().removeAllActivity();
+                        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                        return;
+                    }
                     TimerTask timerTask = new TimerTask() {
                         @Override
                         public void run() {
@@ -259,6 +264,16 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     List<Course> courses = gson.fromJson(jsonArray.toString(), new TypeToken<List<Course>>() {
                     }.getType());
+                    if(courses.size()==0){
+                        SpUtils sp = new SpUtils(getActivity());
+                        sp.setValue(Constant.DataKey.FIRSTSTART, true);
+                        sp.setValue(Constant.DataKey.USER, null);
+                        sp.setValue(Constant.DataKey.SESS, null);
+                        sp.clear();
+                        ActivityManagerUtils.getInstance().removeAllActivity();
+                        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                        return;
+                    }
                     refleshData(courses, true);
 
 

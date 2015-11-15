@@ -4,16 +4,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.ibm.gz.learn_cloud.R;
+import com.ibm.gz.learn_cloud.entire.Question;
+
+import java.util.List;
 
 /**
  * adapter for question dialog
  * Created by host on 2015/11/15.
  */
 public class QuestionAdapter extends BaseAdapter {
+    private static final int TEACHER = 0;
+    private static final int STUDENT = 1;
+
+    List<Question> questionList;
+
+
+    public QuestionAdapter(List<Question> questions) {
+        this.questionList = questions;
+    }
+
     @Override
     public int getCount() {
+        return questionList == null ? 0 : questionList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return questionList.get(position).isFromTeacher() ? TEACHER : STUDENT;
+    }
+
+    @Override
+    public int getViewTypeCount() {
         return 2;
     }
 
@@ -29,15 +53,18 @@ public class QuestionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            if(position==0) {
-                convertView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.adapter_question_right, parent, false);
-            }else {
+        if (convertView == null) {
+            int type = getItemViewType(position);
+            if (type == TEACHER) {
                 convertView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.adapter_question_left, parent, false);
+            } else {
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.adapter_question_right, parent, false);
             }
         }
+        TextView textView = (TextView) convertView.findViewById(R.id.tv_question);
+        textView.setText(questionList.get(position).getContent());
         return convertView;
     }
 }
