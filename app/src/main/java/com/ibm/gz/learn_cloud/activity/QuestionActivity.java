@@ -1,5 +1,6 @@
 package com.ibm.gz.learn_cloud.activity;
 
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.androidquery.AQuery;
@@ -25,6 +26,7 @@ public class QuestionActivity extends BasePageActivity {
     private ListView listView;
     private QuestionAdapter questionAdapter;
     private DiscussAdapter discussAdapter;
+    private EditText send;
 
     private List<Question> questionList;
     private List<Discuss> discussList;
@@ -44,6 +46,7 @@ public class QuestionActivity extends BasePageActivity {
     @Override
     protected void initView() {
         listView = (ListView) findViewById(R.id.listview);
+        send = (EditText) findViewById(R.id.et_send);
 
         questionList = new ArrayList<>();
         discussList = new ArrayList<>();
@@ -62,6 +65,7 @@ public class QuestionActivity extends BasePageActivity {
         aQuery.id(R.id.title_left_btn).clicked(this, "onBackPressed");
         aQuery.id(R.id.title_left).clicked(this, "changeToTeacher");
         aQuery.id(R.id.title_right).clicked(this, "changeToStudent");
+        aQuery.id(R.id.btn_send).clicked(this, "send");
     }
 
     public void changeToTeacher() {
@@ -97,9 +101,9 @@ public class QuestionActivity extends BasePageActivity {
             discussList.add(discuss);
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             Question question = new Question();
-            question.setIsFromTeacher(i < 5);
+            question.setIsFromTeacher(new Random().nextBoolean());
             int radomTime = (int) (Math.random() * 10);
             StringBuilder stringBuilder = new StringBuilder();
             for (int j = 0; j < radomTime; j++) {
@@ -109,5 +113,23 @@ public class QuestionActivity extends BasePageActivity {
 //            question.setContent("你好你好你好你好你好你好你好你好你好你好你好你好");
             questionList.add(question);
         }
+    }
+
+    public void send() {
+        String sendString = send.getText().toString();
+        if (sendString.length() == 0) {
+            return;
+        }
+        if (isTeacher) {
+            Question question = new Question();
+            question.setContent(sendString);
+            question.setIsFromTeacher(false);
+            questionList.add(question);
+            questionAdapter.notifyDataSetChanged();
+            listView.setSelection(questionList.size() - 1);
+        } else {
+
+        }
+        send.setText("");
     }
 }

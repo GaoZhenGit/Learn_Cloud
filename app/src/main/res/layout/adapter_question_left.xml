@@ -16,4 +16,9 @@
         android:layout_marginLeft="@dimen/margin_left"
         android:layout_marginTop="10dp"
         android:background="@drawable/ic_dialog_left"/>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/defalut"
+        android:layout_below="@id/tv_question"
+        android:layout_height="10dp"/>
 </RelativeLayout>

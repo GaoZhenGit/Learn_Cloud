@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * after this request ,the cookie can store in the disk
  * Created by host on 2015/10/30.
  */
 public class CookieStoreRequest extends StringRequest {
@@ -42,14 +43,14 @@ public class CookieStoreRequest extends StringRequest {
         if (m.find()) {
             cookieFromResponse = m.group();
             LogUtil.i("LOG", "cookie from server " + cookieFromResponse);
+
+            //去掉cookie末尾的分号
+            cookieFromResponse = cookieFromResponse.substring(11, cookieFromResponse.length() - 1);
+            LogUtil.i("LOG", "cookie substring " + cookieFromResponse);
+
+            SpUtils spUtils = new SpUtils(context);
+            spUtils.setValue(Constant.DataKey.SESS, cookieFromResponse);
         }
-        //去掉cookie末尾的分号
-        cookieFromResponse = cookieFromResponse.substring(11, cookieFromResponse.length() - 1);
-        LogUtil.i("LOG", "cookie substring " + cookieFromResponse);
-
-        SpUtils spUtils = new SpUtils(context);
-        spUtils.setValue(Constant.DataKey.SESS, cookieFromResponse);
-
         String str = null;
         try {
             str = new String(response.data, "utf-8");
