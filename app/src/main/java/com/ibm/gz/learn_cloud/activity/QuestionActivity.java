@@ -91,26 +91,51 @@ public class QuestionActivity extends BasePageActivity {
     }
 
     private void setStaticData() {
-        for (int i = 0; i < 10; i++) {
+        String[] comment = {
+                "好，看了视频一下就懂了",
+                "昨天上课走神了，没想到内容全在视频这里",
+                "谢谢老师分享",
+                "有人看懂那个是怎么运行起来的吗？",
+                "我们班好多同学在看这个视频",
+                "顶！！！！！",
+                "感觉还不错，就是有些地方讲得有点快"
+        };
+        String[] names = {
+                "小星",
+                "Geek",
+                "karry",
+                "爱德华",
+                "米其林",
+                "哆啦A梦",
+                "Jackson"
+        };
+        String[] avaters = {
+                "http://139.129.18.117/images/u=2160420705,2533030665&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=2584355946,4148531126&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=4131486482,3650592575&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=82957784,1293591806&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=2486134525,1545291788&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=926885119,1486850880&fm=23&gp=0.jpg",
+                "http://139.129.18.117/images/u=3845937323,3814335822&fm=23&gp=0.jpg"
+        };
+        for (int i = 0; i < comment.length; i++) {
             Discuss discuss = new Discuss();
-            discuss.setContent("这个是" + i + "号评论");
+            discuss.setContent(comment[i]);
             User user = new User();
-            user.setAvater("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2728905284,2325510692&fm=116&gp=0.jpg");
-            user.setUsername(i + "tom");
+            user.setAvater(avaters[i]);
+            user.setUsername(names[i]);
             discuss.setUser(user);
             discussList.add(discuss);
         }
 
-        for (int i = 0; i < 10; i++) {
+        String [] content ={
+                "老师，那这些组件到底通过什么方式来连接呢？",
+                "主要是通过网络，一般是局域网",
+                "居然这么快就回复了！谢谢老师，我明白了",};
+        for (int i = 0; i < 3; i++) {
             Question question = new Question();
-            question.setIsFromTeacher(new Random().nextBoolean());
-            int radomTime = (int) (Math.random() * 10);
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int j = 0; j < radomTime; j++) {
-                stringBuilder.append(j + "hello world ");
-            }
-            question.setContent(stringBuilder.toString());
-//            question.setContent("你好你好你好你好你好你好你好你好你好你好你好你好");
+            question.setIsFromTeacher(i % 2 == 1);
+            question.setContent(content[i]);
             questionList.add(question);
         }
     }

@@ -47,12 +47,12 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
     private void initData() {
         courses=new ArrayList<>();
         List<String> images=new ArrayList<>();
-        images.add("http://1.marketonhand.sinaapp.com/ss1.png");
-        images.add("http://1.marketonhand.sinaapp.com/ss2.png");
-        images.add("http://1.marketonhand.sinaapp.com/ss3.png");
-        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002152_1441035884238_1080x1920.jpg");
-        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002130_1441035885744_1080x1920.jpg");
-        images.add("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
+        images.add("http://139.129.18.117/images/ss1.png");
+        images.add("http://139.129.18.117/images/ss2.png");
+        images.add("http://139.129.18.117/images/ss3.png");
+//        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002152_1441035884238_1080x1920.jpg");
+//        images.add("http://imgrt.pconline.com.cn/images/upload/upc/tx/wallpaper/1508/31/c11/spcgroup/12002130_1441035885744_1080x1920.jpg");
+//        images.add("http://img.mukewang.com/55ea64dc0001197b06000338-280-160.jpg");
 
         PopularizationCourse course1 = new PopularizationCourse();
         course1.setTitle("servelet");
@@ -72,9 +72,9 @@ public class PopularizationFragment extends Fragment implements LeftHideShow{
         course3.setPageImage("http://1.marketonhand.sinaapp.com/ss0.png");
         course3.setImages(images);
 
-        courses.add(course1);
-        courses.add(course2);
         courses.add(course3);
+        courses.add(course2);
+        courses.add(course1);
         listView=(ListView)mView.findViewById(R.id.popularization_list);
     }
 
