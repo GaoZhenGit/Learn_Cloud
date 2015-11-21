@@ -76,7 +76,9 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
         fragments = new ArrayList<>();
         fragments.add(new DetailFgm());
         fragments.add(new NoteFgm());
-        fragments.add(new ChapterFgm());
+        ChapterFgm chapterFgm = new ChapterFgm();
+        chapterFgm.setVideoList(course.getCourse_videos());
+        fragments.add(chapterFgm);
     }
 
     @Override
@@ -167,34 +169,17 @@ public class CourseActivity extends BasePageActivity implements MediaPlayer.OnEr
     protected void initView() {
         aq.id(R.id.title_mid_text).text(course.getCourse_name());
         aq.id(R.id.title_left_img).visible();
-//        aq.id(R.id.title_left_tv).visible().text("退出");
         aq.id(R.id.title_right_img).visible().image(R.drawable.note);
         checkCollection();
     }
 
     @Override
     protected void setListener() {
-//        aq.id(R.id.btn_start).clicked(this, "aq_start_video");
-//        aq.id(R.id.btn_stop).clicked(this, "aq_stop_video");
-//        aq.id(R.id.btn_pause).clicked(this, "aq_pause_video");
-//        aq.id(R.id.btn_landscape).clicked(this, "aq_landscape");
         aq.id(R.id.btn_fullscreen).clicked(this, "aq_landscape");
         aq.id(R.id.title_left_btn).clicked(this, "finish");
         aq.id(R.id.title_right_btn).clicked(this, "aq_note");
 
     }
-
-//    public void aq_start_video() {
-//        videoView.start();
-//        mediaController.show();
-//    }
-//    public void aq_pause_video(){
-//        videoView.pause();
-//    }
-//
-//    public void aq_stop_video() {
-//        videoView.stopPlayback();
-//    }
 
     //全屏按钮
     public void aq_landscape() {
