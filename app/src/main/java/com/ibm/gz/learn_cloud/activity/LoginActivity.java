@@ -51,7 +51,7 @@ public class LoginActivity extends BasePageActivity {
     @Override
     protected void initView() {
         aq.id(R.id.title_mid_text).text("登录");
-        aq.id(R.id.title_right_text).visible().text("注册");
+        aq.id(R.id.title_right_img).visible().image(R.drawable.ic_register);
         aq.id(R.id.title_left_tv).visible().text("退出");
         aq.id(R.id.title_left_img).visible();
     }
@@ -65,7 +65,6 @@ public class LoginActivity extends BasePageActivity {
 
     public void aq_register() {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-        finish();
     }
 
     public void aq_login() {

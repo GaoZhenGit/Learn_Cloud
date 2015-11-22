@@ -79,6 +79,7 @@
             android:layout_toRightOf="@+id/choice_tag"
             android:background="@drawable/input_et"
             android:hint="自定义标签"
+            android:textSize="@dimen/text_size_small"
             android:maxLength="4"/>
         <Button
             android:id="@+id/btn_tag_comfirm"

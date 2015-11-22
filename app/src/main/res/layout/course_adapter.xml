@@ -56,7 +56,8 @@
             android:textSize="@dimen/text_size_little"
             android:layout_alignBottom="@+id/img_video"
             android:layout_toRightOf="@+id/img_video"
-            android:layout_toEndOf="@+id/img_video" />
+            android:layout_toEndOf="@+id/img_video"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

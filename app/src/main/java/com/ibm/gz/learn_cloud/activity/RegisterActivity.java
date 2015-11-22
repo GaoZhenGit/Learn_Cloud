@@ -49,7 +49,6 @@ public class RegisterActivity extends BasePageActivity {
         aq.id(R.id.title_left_img).visible();
         aq.id(R.id.title_left_tv).visible().text("退出");
         aq.id(R.id.title_right_img).gone();
-        aq.id(R.id.title_right_text).visible().text("登录");
         mTabWidget=(TwoPagerTabWidget)findViewById(R.id.two_tab);
         mTabWidget.setText_first_tab("手机注册");
         mTabWidget.setText_second_tab("邮箱注册");
@@ -77,7 +76,6 @@ public class RegisterActivity extends BasePageActivity {
             }
         });
         aq.id(R.id.title_left_btn).clicked(this, "aq_back");
-        aq.id(R.id.title_right_btn).clicked(this, "aq_login");
     }
 
     public void aq_back(){
