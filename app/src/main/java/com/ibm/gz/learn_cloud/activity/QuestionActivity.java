@@ -128,16 +128,18 @@ public class QuestionActivity extends BasePageActivity {
             discussList.add(discuss);
         }
 
-        String [] content ={
-                "老师，那这些组件到底通过什么方式来连接呢？",
-                "主要是通过网络，一般是局域网",
-                "居然这么快就回复了！谢谢老师，我明白了",};
-        for (int i = 0; i < 3; i++) {
-            Question question = new Question();
-            question.setIsFromTeacher(i % 2 == 1);
-            question.setContent(content[i]);
-            questionList.add(question);
-        }
+//        String[] content = {
+//                "请问DB2中CURSOR如果带有Sensitive参数是什么意思？",
+//                "敏感的游标意味着在游标打开后，能够看到其他应用对基础表所作的更改，" +
+//                        "结果表中行的数量(其他应用插入或删除)" +
+//                        "在游标打开的整个过程中不变，但是行的内容可变。",
+//                "居然这么快就回复了！谢谢老师，我明白了",};
+//        for (int i = 0; i < 3; i++) {
+//            Question question = new Question();
+//            question.setIsFromTeacher(i % 2 == 1);
+//            question.setContent(content[i]);
+//            questionList.add(question);
+//        }
     }
 
     public void send() {
