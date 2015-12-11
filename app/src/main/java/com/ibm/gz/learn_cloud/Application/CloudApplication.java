@@ -31,6 +31,6 @@ public class CloudApplication extends Application {
         intent.setAction("notifi");
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
         AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
-        manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 10000, pendingIntent);
+        manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 20000, pendingIntent);
     }
 }

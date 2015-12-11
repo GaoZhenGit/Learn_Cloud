@@ -23,8 +23,7 @@ public class NotifiyService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 
     @Override
@@ -43,6 +42,7 @@ public class NotifiyService extends Service {
                 .setSmallIcon(R.drawable.launcher)
                 .setContentTitle("你有新的推荐课程")
                 .setContentText("世界第一台计算机")
+//                .setContentText("傅毓勤博士讲座")
                 .setContentIntent(pendingIntent).build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(NOTIFICATION_FLAG, notification);

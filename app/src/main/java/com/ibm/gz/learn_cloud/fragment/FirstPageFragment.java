@@ -210,6 +210,7 @@ public class FirstPageFragment extends Fragment implements LeftHideShow {
                     sp.setValue(Constant.DataKey.COURSE_LINE_CACHE, jsonArray.toString());
                     //定时翻页
                     if(lineCourses.size()==0){
+                        //若session失效则重新登录
                         SpUtils sp = new SpUtils(getActivity());
                         sp.setValue(Constant.DataKey.FIRSTSTART, true);
                         sp.setValue(Constant.DataKey.USER, null);
