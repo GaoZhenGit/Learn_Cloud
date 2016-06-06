@@ -7,6 +7,5 @@
 .DS_Store
 /build
 /captures
-/app/build.gradle
-/library/bulid
+/library/bulid/
 *.iml
