@@ -7,5 +7,5 @@
 .DS_Store
 /build
 /captures
-/library/bulid/
+/library/build/
 *.iml
